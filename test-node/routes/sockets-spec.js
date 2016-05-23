@@ -1,0 +1,49 @@
+var expect = require('chai').expect;
+var should = require('should');
+var io = require('socket.io-client');
+
+var options ={
+	transports: ['websocket'],
+	'force new connection': true
+};
+
+
+function randomDid() {
+	return '' + Math.round(Math.random() * 1000);
+}
+
+
+/* control tests */
+it('Should connect to control namespace', function(done) {
+	var c1 = io.connect('ws://localhost:3000/control', options);
+	c1.on('connect', function() {
+		done();
+	});
+});
+
+it('Should notify control of new device when device connects', function(done) {
+
+  // Control connects
+  var control = io.connect('ws://localhost:3000/control');
+  control.on('connect', function() {
+  	// Device connects	
+  	var did = randomDid();
+  	var d1 = io.connect('ws://localhost:3000/device?did='+did, options);
+
+
+  	control.on('device-connected', function(data) {
+  		expect(data).to.have.a.property('did', did);
+  		done();
+  	});
+  });
+  
+});
+
+/* device tests */
+it('Should connect to device namespace', function(done){
+	var did = randomDid();
+	var c1 = io.connect('ws://localhost:3000/device?did='+did, options);
+	c1.on('connect', function() {
+		done();
+	});
+});

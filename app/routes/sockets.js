@@ -10,9 +10,9 @@ module.exports = function(app, io) {
 		var did = socket.handshake.query.did;
 		devices[did] = socket;
 		control.emit('device-connected', {did: did, status: 'green'});
-		socket.on('jan', function() {
-			socket.emit('hello');
-		});
+		
+		socket.emit('hello', {data: 'here is the data'});
+
 		socket.on('disconnect', function() {
 			delete devices[did];
 			control.emit('device-disconnected', {did: did});
@@ -21,11 +21,11 @@ module.exports = function(app, io) {
 
 	control.on('connection', function (socket) {
 		socket.on('cmd', function (data) {
-			device.emit('cmd', data);
+			device.emit('cmd', {cmd: data.cmd});
 		});
 
 		_.forEach(devices, function (socket, did) {
-			control.emit('device-connected', {did: did, status: 'green'});
+			// control.emit('device-connected', {did: did, status: 'green'});
 		});
 
 	});
