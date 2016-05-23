@@ -28,7 +28,7 @@ app.use(morgan('dev'));
 // For parsing HTTP responses
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-	extended: true
+    extended: true
 }));
 
 // Express Routes
