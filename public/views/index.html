@@ -24,8 +24,9 @@
 				<div class="form-group">
 				    <label for="cmdInput">CMD</label>
 				    <input type="text" class="form-control" id="cmdInput" ng-model="cmd" />
-    				<input type="color" ng-model="cmd" />
-
+    				<input type="color" class="form-control" ng-model="cmd" />
+    				<label for="devicesInput">Targets:</label>
+					<input type="text"  class="form-control" id="devicesInput" ng-model="deviceTargets" />
 				</div>
 			   <input type="submit" ng-click="sendCmd(cmdInput)" value="Execute" />
 		

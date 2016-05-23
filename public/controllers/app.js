@@ -7,7 +7,8 @@ app.controller('appCtrl', function($scope, socket) {
 });
 
 app.controller('cmdCtrl', function ($scope, socket) {
-	$scope.cmd='red';
+	$scope.cmd = 'red';
+  $scope.deviceTargets = '';
 	socket.on('device-connected', function(data) {
 		$scope.devices[data.did] = data;
 	});
@@ -15,8 +16,20 @@ app.controller('cmdCtrl', function ($scope, socket) {
 		delete $scope.devices[data.did];
 	})
 	$scope.sendCmd = function() {
-		socket.emit('cmd', {cmd: $scope.cmd});
-	}
+    if ($scope.deviceTargets.$pristine || ($scope.deviceTargets == '')) {
+      console.log('normal');
+  		return socket.emit('cmd', {cmd: $scope.cmd});
+    }
+
+    var devices = {};
+    $scope.deviceTargets.split(',').forEach(function(did) {
+      devices[did] = true;
+    });
+    console.log(devices);
+
+    socket.emit('cmd', {cmd: $scope.cmd, devices: devices});
+    	 
+  }
 });
 
 app.factory('socket', function ($rootScope) {

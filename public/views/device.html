@@ -36,6 +36,7 @@
 
     var socket = io('/device?did=' + did);
     socket.on('cmd', function (data) {
+        console.log('hi');
         out(data.cmd);
     });
 

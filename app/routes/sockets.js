@@ -10,8 +10,7 @@ module.exports = function(app, io) {
 		var did = socket.handshake.query.did;
 		devices[did] = socket;
 		control.emit('device-connected', {did: did, status: 'green'});
-		
-		socket.emit('hello', {data: 'here is the data'});
+        socket.emit('hello', {cmd: 'hello'});
 
 		socket.on('disconnect', function() {
 			delete devices[did];
@@ -21,8 +20,32 @@ module.exports = function(app, io) {
 
 	control.on('connection', function (socket) {
 		socket.on('cmd', function (data) {
-			device.emit('cmd', {cmd: data.cmd});
-		});
+			/*
+				data of form:
+				{
+					cmd: '...',
+                    channel: ''
+                    devices:{did1: true, did2:true}
+				}
+                data.channel = '' means broadcast to all devices
+                data.devices = [] means broadcast to all devices
+            */
+
+            // Forward command to all devices
+            if (!data.devices || _.isEmpty(data.devices)) {
+                return device.emit('cmd', {cmd: data.cmd});
+            }
+            // Forward command to specific devices
+            var targetDevices = _.filter(devices, function (socket, did) {
+                console.log(did);
+                return _.has(data.devices, did); 
+            });
+
+            _.forEach(targetDevices, function (socket, did) {
+                socket.emit('cmd', {cmd: data.cmd});
+            });
+
+        });
 
 		_.forEach(devices, function (socket, did) {
 			control.emit('device-connected', {did: did, status: 'green'});
