@@ -1,19 +1,19 @@
 {
-	"name"         : "mean-skeleton",
-	"version"      : "0.4.1",
-	"description"  : "Skeleton for an application using the MEAN stack.",
-	"main"         : "server.js",
-	"author"       : "Alfred",
-	"dependencies" : {
-		"express"    : "latest",
-		"body-parser": "latest",
-		"morgan"		 : "latest",
-		"mongoose"	 : "latest",
-		"request"	 : "latest"
-	},
-	"repository"   :
-		{
-			"type" : "git",
-			"url" : "https://github.com/alfredababio/mean-skeleton.git"
-		}
+  "name": "mean-skeleton",
+  "version": "0.4.1",
+  "description": "Skeleton for an application using the MEAN stack.",
+  "main": "server.js",
+  "author": "Alfred",
+  "dependencies": {
+    "body-parser": "latest",
+    "express": "latest",
+    "mongoose": "latest",
+    "morgan": "latest",
+    "request": "latest",
+    "socket.io": "^1.4.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alfredababio/mean-skeleton.git"
+  }
 }
