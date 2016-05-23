@@ -1,0 +1,45 @@
+<head>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
+<style>
+    body {
+        font-family: arial;
+    }
+    #output {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        transition: background-color 0.5s ease;
+    }
+</style>
+
+</head>
+<body>
+<h1>Linux Device Emulator</h1>
+<div id="didF">
+
+</div>
+
+
+<div id="output">
+
+</div>
+<script>
+    function out(msg) {
+        document.getElementById('output').style.backgroundColor = msg;
+    }
+
+    var did = Math.round(Math.random() * 1000);
+    
+    var didF = document.getElementById('didF');
+    didF.innerHTML = 'DID: ' + did;
+
+    var socket = io('/device?did=' + did);
+    socket.on('cmd', function (data) {
+        out(data.cmd);
+    });
+
+  
+
+</script>
+</body>
