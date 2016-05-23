@@ -25,7 +25,7 @@ module.exports = function(app, io) {
 		});
 
 		_.forEach(devices, function (socket, did) {
-			// control.emit('device-connected', {did: did, status: 'green'});
+			control.emit('device-connected', {did: did, status: 'green'});
 		});
 
 	});
