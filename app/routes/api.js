@@ -3,15 +3,15 @@ module.exports = function(app) {
     var mongoose = require('mongoose'),
         Device = require('../models/device'),
         User   = require('../models/user');
-        
+
     app.get('/insertShit', function (req, res) {
         new Device({did: 505, alias: 'Sams Macbook Pro', description:'Sams Machine'}).save();
         res.send('Done');
     });
 
-    app.get('/insertUser', function (req, res) {
-        new User({username:'paul'}).save();
-        res.send('Done');
+    app.post('/device/', function (req, res) {
+        new Device({username:'paul'}).save();
+        res.send({});
     });
 
     // Example API route

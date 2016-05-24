@@ -27,7 +27,6 @@ module.exports = function(app) {
 
     // Wildcard route serving static html page
     app.get('*', function(req, res) {
-        // Displaying an already made view
-        res.sendfile('web/public/index.html');
+        res.send('M8 i have no idea what you just requested so im just gonna serve this message.  With love, Sam');
     });
 }
