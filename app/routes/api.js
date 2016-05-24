@@ -11,40 +11,20 @@ module.exports = function(router) {
         jwt = require('express-jwt'),
         auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
-
-<<<<<<< HEAD
-    app.post('/device', function (req, res) {
-=======
-
-
- 
-
-
     router.post('/device', function (req, res) {
-
->>>>>>> 049d57ecfb7b58aae78d087344a349662fd8f4f2
         var did = req.body.did,
             alias = req.body.alias,
             description = req.body.description;
-        console.log('Adding device...', did, alias, description);
         new Device({did: did, alias: alias, description: description}).save();
 
         res.send('Done');
     });
 
-<<<<<<< HEAD
-    app.get('/device', function (req, res) {
-
+    router.get('/device', function (req, res) {
         Device.find(function(err, models) {
             res.send(models);
         });
-    })
-
-    // Example API route
-    app.get('/models', function(req, res) {
-=======
->>>>>>> 049d57ecfb7b58aae78d087344a349662fd8f4f2
-
+    });
 
     router.post('/register', function(req, res, next) {
         console.log(req.body.username)
@@ -74,7 +54,6 @@ module.exports = function(router) {
         });
     });
 
-
     router.post('/login', function(req, res, next) {
         if (!req.body.username || !req.body.password) {
             return res.status(400).json({
@@ -96,5 +75,4 @@ module.exports = function(router) {
             }
         })(req, res, next);
     });
-
 }
