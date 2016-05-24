@@ -9,5 +9,4 @@ app.service('deviceService', ['socketService', function (socketService) {
         delete devices[device.did];
     });
 	this.devices = devices;
-
 }]);

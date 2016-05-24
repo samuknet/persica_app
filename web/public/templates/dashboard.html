@@ -52,15 +52,18 @@
 	</div>
 </div>
 
-<div class="row" ng-controller="serverListCtrl">
+<div class="row" ng-controller="deviceListCtrl">
 	<div class="col-lg-6">
 		<rd-widget>
-      		<rd-widget-header icon="fa-tasks" title="Servers">
+      		<rd-widget-header icon="fa-tasks" title="Devices">
 				<a href="#">Manage Devices</a>
       		</rd-widget-header>
       		<rd-widget-body classes="medium no-padding">
 				<div class="table-responsive">
 					<table class="table">
+						<thead>
+							<tr><th class="text-center">DID</th><th>Status</th><th>Icon</th></tr>
+						</thead>
 						<tbody>
 							<tr ng-repeat="device in devices">
 								<td>{{device.did}}</td>

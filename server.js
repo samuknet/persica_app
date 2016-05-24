@@ -10,7 +10,7 @@ var morgan = require('morgan');
 var db = require('./config/db');
 
 // Connect to the DB
-// mongoose.connect(db.url);
+mongoose.connect(db.url);
 
 // Initialize the Express App
 var app = express();
