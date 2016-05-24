@@ -12,10 +12,11 @@ var gulp = require('gulp'),
 
 var paths = {
     scripts: 'src/js/**/*.*',
-    styles: 'src/less/**/*.*',
+    styles: 'src/css/**/*.*',
     images: 'src/img/**/*.*',
     templates: 'src/templates/**/*.html',
     index: 'src/index.html',
+    index: 'src/login.html',
     bower_fonts: 'src/components/**/*.{ttf,woff,eof,svg}',
 };
 
@@ -47,7 +48,7 @@ gulp.task('copy-bower_fonts', function() {
 /**
  * Handle custom files
  */
-gulp.task('build-custom', ['custom-images', 'custom-js', 'custom-less', 'custom-templates']);
+gulp.task('build-custom', ['custom-images', 'custom-js', 'custom-css', 'custom-templates']);
 
 gulp.task('custom-images', function() {
     return gulp.src(paths.images)
@@ -61,9 +62,8 @@ gulp.task('custom-js', function() {
         .pipe(gulp.dest('public/js'));
 });
 
-gulp.task('custom-less', function() {
+gulp.task('custom-css', function() {
     return gulp.src(paths.styles)
-        .pipe(less())
         .pipe(gulp.dest('public/css'));
 });
 

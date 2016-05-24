@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" ng-app="Persica">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Persica</title>
+  <!-- STYLES -->
+  <!-- build:css lib/css/main.min.css -->
+  <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="components/rdash-ui/dist/css/rdash.min.css">
+    <!-- Custom Styles -->
+  <link rel="stylesheet" type="text/css" href="css/login.css">
+
+  <!-- endbuild -->
+  <!-- SCRIPTS -->
+  <!-- build:js lib/js/main.min.js -->
+  <script type="text/javascript" src="components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script type="text/javascript" src="components/angular-cookies/angular-cookies.min.js"></script>
+  <script type="text/javascript" src="components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <!-- endbuild -->
+  <!-- Custom Scripts -->
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script type="text/javascript" src="js/dashboard.min.js"></script>
+
+</head>
+<body ng-controller="MasterCtrl">
+  <div class="wrapper">
+    <form class="form-signin"> 
+        <fieldset class="form-group">
+
+        <h2 class="form-signin-heading">Login</h2>
+
+        <input type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="" />
+          </fieldset>
+                  <fieldset class="form-group">
+        <input type="password" class="form-control" name="password" placeholder="Password" required=""/>      
+
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>  
+        </fieldset> 
+    </form>
+  </div>
+</body>
+</html>

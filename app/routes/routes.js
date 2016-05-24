@@ -21,6 +21,10 @@ module.exports = function(app) {
         res.sendfile('web/public/index.html');
     });
 
+    app.get('/login', function (req, res) {
+        res.sendfile('web/public/login.html');
+    });
+
     app.get('/device', function (req, res) {
         res.sendfile('web/public/device.html');
     });
