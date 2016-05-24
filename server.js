@@ -22,7 +22,6 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-
 // Configure 
 
 // To expose public assets to the world
@@ -40,7 +39,6 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-
 // Api endpoints 
 require('./app/routes/api')(app);
 
@@ -50,4 +48,6 @@ require('./app/routes/routes')(app);
 require('./app/routes/sockets')(app, io);
 
 // Start the app with listen and a port number
-http.listen(3000);
+http.listen(3000, function() {
+	console.log('Listening on port 3000');
+});
