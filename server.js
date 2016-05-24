@@ -20,7 +20,7 @@ var io = require('socket.io')(http);
 // Configure 
 
 // To expose public assets to the world
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/web/public'));
 
 // log every request to the console
 app.use(morgan('dev'));

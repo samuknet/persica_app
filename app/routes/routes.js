@@ -18,7 +18,7 @@ module.exports = function(app) {
     });
 
     app.get('/index', function (req, res) {
-        res.sendfile('public/index.html');
+        res.sendfile('web/public/index.html');
     });
 
     app.get('/device', function (req, res) {
@@ -28,6 +28,6 @@ module.exports = function(app) {
     // Wildcard route serving static html page
     app.get('*', function(req, res) {
         // Displaying an already made view
-        res.sendfile('public/index.html');
+        res.sendfile('web/public/index.html');
     });
 }
