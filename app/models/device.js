@@ -27,4 +27,17 @@ var DeviceSchema = new Schema ({
     }
 });
 
+// DeviceSchema.pre('save', function (next) {
+//     var self = this;
+//     var DeviceModel = mongoose.model('DeviceModel', DeviceSchema);
+//     DeviceModel.find({did : self.did}, function (err, docs) {
+//         if (!docs.length){
+//             next();
+//         }else{                
+//             console.log('Device ' + self.did + ' exists with alias ' + self.alias + '.');
+//             next(new Error("Duplicate Device!"));
+//         }
+//     });
+// });
+
 module.exports = mongoose.model('Device', DeviceSchema);
