@@ -10,7 +10,6 @@ module.exports = function(app, io) {
         var did = socket.handshake.query.did;
         devices[did] = socket;
         control.emit('device-connected', {did: did, status: 'green'});
-        socket.emit('hello', {cmd: 'hello'});
 
         socket.on('disconnect', function() {
             delete devices[did];

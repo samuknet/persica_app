@@ -7,11 +7,9 @@ var options = {
     'force new connection': true
 };
 
-
 function randomDid() {
     return '' + Math.round(Math.random() * 1000);
 }
-
 
 /* control tests */
 it('Should connect to control namespace', function(done) {
@@ -20,7 +18,6 @@ it('Should connect to control namespace', function(done) {
         c1.disconnect();
         done();
     });
-
 });
 
 it('Should notify control of new device when device connects', function(done) {
@@ -66,9 +63,9 @@ it('Should notify control of already connected devices', function(done) {
 /* device tests */
 it('Should connect to device namespace', function(done) {
     var did = randomDid();
-    var c1 = io.connect('ws://localhost:3000/device?did=' + did, options);
-    c1.on('connect', function() {
-        c1.disconnect();
+    var d1 = io.connect('ws://localhost:3000/device?did=' + did, options);
+    d1.on('connect', function() {
+        d1.disconnect();
         done();
     });
 });

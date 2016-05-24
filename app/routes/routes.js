@@ -18,17 +18,16 @@ module.exports = function(app) {
     });
 
     app.get('/index', function (req, res) {
-        res.sendfile('public/views/index.html');
+        res.sendfile('public/index.html');
     });
 
     app.get('/device', function (req, res) {
         res.sendfile('public/views/device.html');
     });
 
-
     // Wildcard route serving static html page
     app.get('*', function(req, res) {
         // Displaying an already made view
-        res.sendfile('public/views/index.html');
+        res.sendfile('public/index.html');
     });
 }
