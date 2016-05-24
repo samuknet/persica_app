@@ -10,7 +10,8 @@
     "mongoose": "latest",
     "morgan": "latest",
     "request": "latest",
-    "socket.io": "^1.4.6"
+    "socket.io": "^1.4.6",
+    "underscore": "^1.8.3"
   },
   "repository": {
     "type": "git",
