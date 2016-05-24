@@ -22,7 +22,7 @@ module.exports = function(app) {
     });
 
     app.get('/device', function (req, res) {
-        res.sendfile('public/views/device.html');
+        res.sendfile('web/public/device.html');
     });
 
     // Wildcard route serving static html page
