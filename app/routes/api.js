@@ -1,4 +1,5 @@
 // Module for API Routes (serving JSON)
+
 module.exports = function(router) {
 
     var mongoose = require('mongoose'),
@@ -23,6 +24,15 @@ module.exports = function(router) {
         new User({
             username: 'paul'
         }).save();
+
+
+    router.post('/device', function (req, res) {
+        var did = req.body.did,
+            alias = req.body.alias,
+            description = req.body.description;
+
+        new Device({did: did, alias: alias, description: description}).save();
+
         res.send('Done');
     });
 
