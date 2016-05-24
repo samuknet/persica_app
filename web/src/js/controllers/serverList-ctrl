@@ -1,0 +1,12 @@
+/**
+ * Dashboard Controller
+ */
+angular
+    .module('Persica')
+    .controller('serverList', ['$scope', 'socketService', ServerListCtrl]);
+
+function ServerListCtrl($scope, socketService) {
+    socketService.on('device-connected', function() {
+        console.log('hi');
+    });
+}
