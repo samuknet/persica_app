@@ -36,4 +36,8 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
+# Front end build
+web/public
+
+#Mac icon files
 .DS_STORE

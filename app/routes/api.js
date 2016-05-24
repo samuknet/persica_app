@@ -1,5 +1,6 @@
 // Module for API Routes (serving JSON)
 module.exports = function(app) {
+
     var mongoose = require('mongoose'),
         Device = require('../models/device'),
         User   = require('../models/user');
@@ -9,9 +10,13 @@ module.exports = function(app) {
         res.send('Done');
     });
 
-    app.post('/device/', function (req, res) {
-        new Device({username:'paul'}).save();
-        res.send({});
+    app.post('/device', function (req, res) {
+        var did = req.body.did,
+            alias = req.body.alias,
+            description = req.body.description;
+
+        new Device({did: did, alias: alias, description: description}).save();
+        res.send('Done');
     });
 
     // Example API route
