@@ -12,25 +12,12 @@ module.exports = function(router) {
         auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 
-    router.get('/insertShit', function(req, res) {
-        new Device({
-            did: 505,
-            alias: 'Sams Macbook Pro',
-            description: 'Sams Machine'
-        }).save();
-        res.send('Done');
-    });
 
-    router.get('/insertUser', function(req, res) {
-        new User({
-            username: 'paul'
-        }).save();
+
+ 
 
 
     router.post('/device', function (req, res) {
-
-
-    app.post('/device', function (req, res) {
 
         var did = req.body.did,
             alias = req.body.alias,
