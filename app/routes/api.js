@@ -1,5 +1,6 @@
 // Module for API Routes (serving JSON)
 
+
 module.exports = function(router) {
 
     var mongoose = require('mongoose'),
@@ -27,6 +28,10 @@ module.exports = function(router) {
 
 
     router.post('/device', function (req, res) {
+
+
+    app.post('/device', function (req, res) {
+
         var did = req.body.did,
             alias = req.body.alias,
             description = req.body.description;
