@@ -6,15 +6,22 @@ Schema = mongoose.Schema;
 
 // Model Schema
 var DeviceSchema = new Schema ({
-    did : {
-        type: Number
+    did: {
+        type: Number,
+        unique: true,
+        required: true,
+        dropDups: true
     },
+
     alias: {
-    	type: String
+    	type: String,
+        required: true
     },
+    
     description: {
     	type: String
     },
+    
     lastOnline: {
     	type: Date
     }
