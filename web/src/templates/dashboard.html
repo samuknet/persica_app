@@ -57,19 +57,23 @@
 		<rd-widget>
             <rd-widget-header icon="fa-tasks" title="Devices">
                 <a href="#">Manage Devices</a>
-                <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+                <!-- <a href="#">Manage Devices</a> -->
+               <div style="text-align: right">
+                   <a href="" ng-click="openNewDeviceModal()"><i class="fa fa-plus"  aria-hidden="true"></i></a>
+                   <a href=""><i class="fa fa-cogs" aria-hidden="true"></i></a>
+               </div>
                 
             </rd-widget-header>
             <rd-widget-body classes="medium no-padding">
                 <div class="table-responsive">
                    <table class="table">
                       <thead>
-                         <tr><th class="text-center">DID</th><th>Status</th><th>Icon</th></tr>
+                         <tr><th class="text-center">DID</th><th>Online</th><th>Icon</th></tr>
                      </thead>
                      <tbody>
                          <tr ng-repeat="device in devices">
                             <td>{{device.did}}</td>
-                            <td>{{device.status}}</td>
+                            <td>{{device.online}}</td>
                             <td>
                                 <span class="fa fa-check"></span>
                             </td>

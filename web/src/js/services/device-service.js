@@ -1,12 +1,30 @@
 var app = angular.module('Persica');
-app.service('deviceService', ['socketService', function (socketService) {
+app.service('deviceService', ['$http', 'socketService', function ($http, socketService) {
 	var devices = {};
+
+	$http.get('/device').then(function(response) {
+		// Success
+		var deviceList = response.data;
+		_.forEach(deviceList, function (device) {
+			device.online = false;
+			devices[device.did] = device;
+
+		});
+
+	}, function (response) {
+		// Error
+	});
 	socketService.on('device-connected', function(device) {
-        devices[device.did] = device;
+        if (devices[device.did]) {
+        	devices[device.did].online = true;
+        } 
     });
 
     socketService.on('device-disconnected', function(device) {
-        delete devices[device.did];
+        if (devices[device.did]) {
+        	devices[device.did].online = false;
+        }
     });
+
 	this.devices = devices;
 }]);

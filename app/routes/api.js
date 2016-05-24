@@ -5,19 +5,21 @@ module.exports = function(app) {
         Device = require('../models/device'),
         User   = require('../models/user');
 
-    app.get('/insertShit', function (req, res) {
-        new Device({did: 505, alias: 'Sams Macbook Pro', description:'Sams Machine'}).save();
-        res.send('Done');
-    });
-
     app.post('/device', function (req, res) {
         var did = req.body.did,
             alias = req.body.alias,
             description = req.body.description;
-
+        console.log('Adding device...', did, alias, description);
         new Device({did: did, alias: alias, description: description}).save();
         res.send('Done');
     });
+
+    app.get('/device', function (req, res) {
+
+        Device.find(function(err, models) {
+            res.send(models);
+        });
+    })
 
     // Example API route
     app.get('/models', function(req, res) {
