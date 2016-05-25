@@ -16,8 +16,8 @@ module.exports = function(router, ioService) {
         var did = req.body.did,
             alias = req.body.alias,
             description = req.body.description;
-
-        new Device({did: did, alias: alias, description: description}).save(function(err, product, numAffected) {
+        var device = {did: did, alias: alias, description: description};
+        new Device(device).save(function(err, product, numAffected) {
             if (err) {
                 switch (err.code) {
                     case 11000:
