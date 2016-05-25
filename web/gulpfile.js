@@ -90,8 +90,10 @@ gulp.task('watch', function() {
     gulp.watch([paths.scripts], ['custom-js']);
     gulp.watch([paths.templates], ['custom-templates']);
     gulp.watch([paths.index], ['usemin']);
+
     gulp.watch([paths.login], ['usemin']);
     gulp.watch([paths.device_emulator], ['usemin']);
+
 });
 
 /**
