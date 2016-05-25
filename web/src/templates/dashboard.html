@@ -12,8 +12,8 @@
 				<div class="widget-icon green pull-left">
 					<i class="fa fa-users"></i>
 				</div>
-				<div class="title">800000</div>
-				<div class="comment">Users</div>
+				<div class="title">{{deviceCount}}</div>
+				<div class="comment">Devices</div>
 			</rd-widget-body>
 		</rd-widget>
 	</div>
@@ -23,7 +23,7 @@
 				<div class="widget-icon red pull-left">
 					<i class="fa fa-tasks"></i>
 				</div>
-				<div class="title">160</div>
+				<div class="title">{{160}}</div>
 				<div class="comment">Servers</div>
 			</rd-widget-body>
 		</rd-widget>
@@ -68,14 +68,17 @@
                 <div class="table-responsive">
                    <table class="table">
                       <thead>
-                         <tr><th class="text-center">DID</th><th>Online</th><th>Icon</th></tr>
+                         <tr><th >DeviceID</th><th>Alias</th><th>Online</th></tr>
                      </thead>
                      <tbody>
                          <tr ng-repeat="device in devices">
                             <td>{{device.did}}</td>
-                            <td>{{device.online}}</td>
+
+                            <td>{{device.alias}}</td>
                             <td>
-                                <span class="fa fa-check"></span>
+
+                                <span class="fa fa-circle" ng-if="device.online"></span>
+                                <span class="fa fa-circle-o" ng-if="!device.online"></span>
                             </td>
                         </tr>
 
