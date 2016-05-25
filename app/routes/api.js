@@ -18,26 +18,36 @@ module.exports = function(router) {
             description = req.body.description;
         new Device({did: did, alias: alias, description: description}).save(function(err, product, numAffected) {
             if (err) {
-                res.send({error: err, description: 'Error occured while adding a device.'});
-            } else {
-                if (numAffected === 0) {
-                    res.send({description: 'Nothing Changed.'});
-                    return;
+                switch (err.code) {
+                    case 11000:
+                        var msg = alias + ' is already a registered device with DID: ' + did + '.';
+                        res.status(406).json({message: msg});
+                        break;
+                    default:
+                        res.status(406).json({message: 'Error occured while adding device.'});
                 }
-                res.send({description: 'Done'});
+            } else {
+                res.status(201).json({message: 'Device added.'});
             }
         });
     });
 
-     router.post('/user', function (req, res) {
+    router.post('/user', function (req, res) {
         var username = req.body.username,
             hash = req.body.hash,
             salt = req.body.salt;
+
         new User({username: username, hash: hash, salt: salt}).save( function (err, product, numAffected) {
             if (err) {
-                res.send({error: err, description: 'Error occurred while adding user'});
+                switch(err.code) {
+                    case 11000:
+                        res.status(406).json({message:'Username already in use.'});
+                        break;
+                    default:
+                        res.status(406).json({message:'Unknown error occurred while adding user.'})
+                }
             } else {
-                res.send({description: 'User added'});
+                res.status(201).json({message: 'User added.'});
             }
         });
     });
@@ -46,7 +56,7 @@ module.exports = function(router) {
         User.find(function(err, models) {
             if (err) {
                 res.send({error: err, description: 'Error while getting users'});
-            } else {            
+            } else {
                 res.send(models);
             }
         });
