@@ -20,6 +20,29 @@ module.exports = function(router) {
         res.send('Done');
     });
 
+     router.post('/user', function (req, res) {
+        var username = req.body.username,
+            hash = req.body.hash,
+            salt = req.body.salt;
+        new User({username: username, hash: hash, salt: salt}).save( function (err, product, numAffected) {
+            if (err) {
+                res.send({error: err, description: 'Error occurred while adding user'});
+            } else {
+                res.send({description: 'User added'});
+            }
+        });
+    });
+
+    router.get('/user', function (req, res) {
+        User.find(function(err, models) {
+            if (err) {
+                res.send({error: err, description: 'Error while getting users'});
+            } else {            
+                res.send(models);
+            }
+        });
+    });
+
     router.get('/device', function (req, res) {
         Device.find(function(err, models) {
             res.send(models);
