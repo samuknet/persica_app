@@ -63,12 +63,12 @@
             </rd-widget-header>
             <rd-widget-body classes="medium no-padding">
                 <div class="table-responsive">
-                   <table class="table">
+                   <table class="table table-hover">
                       <thead>
                          <tr><th>DeviceID</th><th>Alias</th><th>Online</th></tr>
                      </thead>
                      <tbody>
-                         <tr ng-repeat="device in devices" ng-click="navigateToDevice(device.did)" >
+                         <tr style="cursor:pointer;" ng-repeat="device in devices" ng-click="navigateToDevice(device.did)" >
                             <td>{{device.did}}</td>
                             <td>{{device.alias}}</td>
                             <td>
