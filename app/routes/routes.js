@@ -29,8 +29,8 @@ module.exports = function(app) {
         res.sendfile('web/public/device.html');
     });
 
-    // Wildcard route serving static html page
-    app.get('*', function(req, res) {
-        res.send('M8 i have no idea what you just requested so im just gonna serve this message.  With love, Sam');
-    });
+    // // Wildcard route serving static html page
+    // app.get('*', function(req, res) {
+    //     res.send('M8 i have no idea what you just requested so im just gonna serve this message.  With love, Sam');
+    // });
 }

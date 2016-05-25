@@ -1,6 +1,8 @@
 var _ = require('underscore');
+var io = require('socket.io')
+module.exports = function(http) {
+    var io = require('socket.io')(http);
 
-module.exports = function(app, io) {
     var devices = {};
 
     var control = io.of('/control');
@@ -45,11 +47,16 @@ module.exports = function(app, io) {
             });
 
         });
-        console.log('Control connected, the connected devices are', devices.length);
 
         _.forEach(devices, function (socket, did) {
             control.emit('device-connected', {did: did, status: 'green'});
         });
 
     });
+
+    return {
+        newDevice: function (device) {
+            control.emit('device-new', device);
+        }
+    };
 }

@@ -20,11 +20,9 @@ function DeviceListCtrl($scope, deviceService, $uibModal) {
 	        }
 	      }
 	    });
-    };
-
- 	
-
+    };    
 }
+
 app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', function($scope, $uibModalInstance, $http) {
 	$scope.submit = function() {
 		$http.post('/device', {
@@ -39,7 +37,6 @@ app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', fu
 		  	// Error
 		  	$scope.addWarning(response.message);
 		});
-
 	};
 	$scope.cancel = function() {
 		$uibModalInstance.close();
