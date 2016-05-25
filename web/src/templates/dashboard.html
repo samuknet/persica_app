@@ -1,5 +1,4 @@
 <div class="container" ng-controller="DashboardCtrl">
-    <!-- <h1>{{banter}}</h1> -->
     <div class="row alerts-container" data-ng-controller="AlertsCtrl" data-ng-show="alerts.length">
       <div class="col-xs-12">
         <uib-alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
@@ -56,13 +55,11 @@
 	<div class="col-lg-6" ng-controller="DeviceListCtrl">
 		<rd-widget>
             <rd-widget-header icon="fa-tasks" title="Devices">
-                <a href="#">Manage Devices</a>
                 <!-- <a href="#">Manage Devices</a> -->
-               <div style="text-align: right">
-                   <a href="" ng-click="openNewDeviceModal()"><i class="fa fa-plus"  aria-hidden="true"></i></a>
-                   <a href=""><i class="fa fa-cogs" aria-hidden="true"></i></a>
-               </div>
-                
+                    <div style="text-align:right">
+                       <a href="" ng-click="openNewDeviceModal()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+
+                    </div>
             </rd-widget-header>
             <rd-widget-body classes="medium no-padding">
                 <div class="table-responsive">
@@ -71,9 +68,8 @@
                          <tr><th>DeviceID</th><th>Alias</th><th>Online</th></tr>
                      </thead>
                      <tbody>
-                         <tr ng-repeat="device in devices">
-                            <td tooltip="Tooltip on left" tooltip-placement="left">{{device.did}}</td>
-
+                         <tr ng-repeat="device in devices" ng-click="navigateToDevice(device.did)" >
+                            <td>{{device.did}}</td>
                             <td>{{device.alias}}</td>
                             <td>
                                 <span class="fa fa-circle" ng-if="device.online"></span>
@@ -89,7 +85,6 @@
 </div>
 
 <div class="col-lg-6">
-	{{averageUpTime}}
   <rd-widget>
      <rd-widget-header icon="fa-users" title="Users">
         <input type="text" placeholder="Search" class="form-control input-sm" />

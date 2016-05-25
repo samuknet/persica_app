@@ -20,6 +20,7 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 	}, function (response) {
 		// Error
 	});
+
 	socketService.on('device-connected', function(device) {
 		devices[device.did] = _.extend(devices[device.did] || {}, device);
 		devices[device.did].online = true;
@@ -44,5 +45,16 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 
 	this.devices = devices;
 	this.observers = observers;
+
+	// Sends a command to all connected devices
+	this.broadcastCommand = function(cmdName){ 
+		socketService.emit('cmd', {cmd: cmdName});
+	};
+
+	// Sends a command to all devices in a given group
+	this.groupCommand = function (groupName, cmdName) {
+		// TODO: Not implemented! This is a sample of how we might implement it
+		socketService.emit('cmd', {group: groupName, cmd: cmdName})
+	};
 
 }]);

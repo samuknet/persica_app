@@ -4,10 +4,15 @@
 
 var app = angular.module('Persica');
 
-app.controller('DeviceListCtrl', ['$scope', 'deviceService', '$uibModal', DeviceListCtrl]);
+app.controller('DeviceListCtrl', ['$scope', 'deviceService', '$uibModal', '$state', DeviceListCtrl]);
 
-function DeviceListCtrl($scope, deviceService, $uibModal) {
+function DeviceListCtrl($scope, deviceService, $uibModal, $state) {
     $scope.devices = deviceService.devices;
+
+    $scope.navigateToDevice = function(did) { // Called when device table row is clicked
+        // Navigate to device profile page
+        $state.go('device', {did: did});
+    };
 
     $scope.openNewDeviceModal = function () {
 	    var modalInstance = $uibModal.open({
