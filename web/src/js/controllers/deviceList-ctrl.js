@@ -24,45 +24,27 @@ function DeviceListCtrl($scope, deviceService, $uibModal) {
 }
 
 app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', function($scope, $uibModalInstance, $http) {
-	$scope.submit = function() {
+    $scope.alertMsg   = 'Device ID and alias required.';
+    $scope.alertClass = 'alert alert-info';
+    $scope.submit = function() {
 		$http.post('/device', {
 			did: $scope.did,
 			alias: $scope.alias,
 			description: $scope.description
 		}).then(function (response) {
 			// Success
-			$scope.closeAlert();
 			$uibModalInstance.close();
 	    }, function (response) {
 		  	// Error
-		  	$scope.closeAlert();
-		  	console.log(response.data.message);
-		  	$scope.addWarning(response.data.message);
+            $scope.alertMsg = response.data.message;
+            $scope.alertClass = 'alert alert-danger';
 		});
 	};
 	$scope.cancel = function() {
 		$uibModalInstance.close();
 	};
 
-	$scope.alerts = [];
 
-    $scope.addSuccess = function(msg) {
-        $scope.alerts.push({
-            type: 'success',
-            msg: msg
-        });
-    }
-
-    $scope.addWarning = function(msg) {
-        $scope.alerts.push({
-            type: 'danger',
-            msg: msg
-        });
-    };
-
-    $scope.closeAlert = function() {
-        $scope.alerts.splice(0, 1);
-    };
 
 
 }]);

@@ -34,8 +34,8 @@
 				<div class="widget-icon orange pull-left">
 					<i class="fa fa-sitemap"></i>
 				</div>
-				<div class="title">225</div>
-				<div class="comment">Documents</div>
+				<div class="title">100</div>
+				<div class="comment">Lions</div>
 			</rd-widget-body>
 		</rd-widget>
 	</div>
@@ -45,8 +45,8 @@
 				<div class="widget-icon blue pull-left">
 					<i class="fa fa-support"></i>
 				</div>
-				<div class="title">62</div>
-				<div class="comment">Tickets</div>
+				<div class="title">0</div>
+				<div class="comment">Marks</div>
 			</rd-widget-body>
 		</rd-widget>
 	</div>
@@ -68,15 +68,14 @@
                 <div class="table-responsive">
                    <table class="table">
                       <thead>
-                         <tr><th >DeviceID</th><th>Alias</th><th>Online</th></tr>
+                         <tr><th>DeviceID</th><th>Alias</th><th>Online</th></tr>
                      </thead>
                      <tbody>
                          <tr ng-repeat="device in devices">
-                            <td>{{device.did}}</td>
+                            <td tooltip="Tooltip on left" tooltip-placement="left">{{device.did}}</td>
 
                             <td>{{device.alias}}</td>
                             <td>
-
                                 <span class="fa fa-circle" ng-if="device.online"></span>
                                 <span class="fa fa-circle-o" ng-if="!device.online"></span>
                             </td>
