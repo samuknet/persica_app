@@ -38,15 +38,7 @@ web/bower_components
 .node_repl_history
 
 # Front end build
-
 web/public/
 
-#Mac icon files
+# Mac icon files
 .DS_STORE
-
-web/public/
-web/public/*
-
-#Mac icon files
-.DS_STORE
->>>>>>> 9c48b209c8a381cb1c5d88596794d37a731b21a4

@@ -20,10 +20,9 @@ function DeviceListCtrl($scope, deviceService, $uibModal) {
 	        }
 	      }
 	    });
-    };
-
-    
+    };    
 }
+
 app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', function($scope, $uibModalInstance, $http) {
 	$scope.submit = function() {
 		$http.post('/device', {
@@ -36,9 +35,8 @@ app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', fu
 		  }, function (response) {
 		  	// Error
 		  	// TODO: Handle DID already in use error here
+            $scope.error = response.err;
 		  });
-
-
 	};
 	$scope.cancel = function() {
 		$uibModalInstance.close();

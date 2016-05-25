@@ -1,7 +1,7 @@
 // Module for API Routes (serving JSON)
 
 
-module.exports = function(router) {
+module.exports = function(router, ioService) {
 
     var mongoose = require('mongoose'),
         Device = require('../models/device'),
@@ -16,17 +16,22 @@ module.exports = function(router) {
         var did = req.body.did,
             alias = req.body.alias,
             description = req.body.description;
-        new Device({did: did, alias: alias, description: description}).save(function(err, product, numAffected) {
+
+        var device = device;
+        new Device().save(function(err, product, numAffected) {
             if (err) {
                 res.send({error: err, description: 'Error occured while adding a device.'});
             } else {
+                
                 if (numAffected === 0) {
                     res.send({description: 'Nothing Changed.'});
                     return;
                 }
+
                 res.send({description: 'Done'});
             }
-        });
+
+        }); 
     });
 
      router.post('/user', function (req, res) {

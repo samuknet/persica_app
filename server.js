@@ -20,7 +20,6 @@ require('./config/passport');
 // Initialize the Express App
 var app = express();
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
 
 // Configure 
 
@@ -39,12 +38,14 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+var ioService = require('./app/sockets')(app, io);
+
 // Api endpoints 
 require('./app/routes/api')(app);
 
 // Express Routes
 
-require('./app/routes/routes')(app);
+require('./app/routes/routes')(http, ioService);
 require('./app/routes/sockets')(app, io);
 
 // Start the app with listen and a port number
