@@ -17,19 +17,18 @@ module.exports = function(router, ioService) {
             alias = req.body.alias,
             description = req.body.description;
 
-        var device = device;
-        new Device().save(function(err, product, numAffected) {
+        new Device({did: did, alias: alias, description: description}).save(function(err, product, numAffected) {
             if (err) {
                 switch (err.code) {
                     case 11000:
                         var msg = alias + ' is already a registered device with DID: ' + did + '.';
-                        res.status(406).json({message: msg});
+                        res.status(406).send({message: msg});
                         break;
                     default:
-                        res.status(406).json({message: 'Error occured while adding device.'});
+                        res.status(406).send({message: 'Error occured while adding device.'});
                 }
             } else {
-                ioService.newDevice();
+                // ioService.newDevice();
                 res.status(201).json({message: 'Device added.'});                
             }
 

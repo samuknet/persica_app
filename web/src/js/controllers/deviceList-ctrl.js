@@ -35,7 +35,9 @@ app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', fu
 			$uibModalInstance.close();
 	    }, function (response) {
 		  	// Error
-		  	$scope.addWarning(response.message);
+		  	$scope.closeAlert();
+		  	console.log(response.data.message);
+		  	$scope.addWarning(response.data.message);
 		});
 	};
 	$scope.cancel = function() {
