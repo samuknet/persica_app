@@ -18,6 +18,10 @@ angular.module('Persica').config(['$stateProvider', '$urlRouterProvider',
             .state('tables', {
                 url: '/tables',
                 templateUrl: 'templates/tables.html'
+            })
+            .state('device', {
+                url: '/device/:did',
+                templateUrl: 'templates/device.html'
             });
     }
 ]);
