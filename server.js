@@ -40,11 +40,11 @@ app.use(bodyParser.urlencoded({
 var ioService = require('./app/sockets')(http);
 
 // Api endpoints 
-require('./app/routes/api')(app);
+require('./app/routes/api')(app, ioService);
 
 // Express Routes
 
-require('./app/routes/routes')(app, ioService);
+require('./app/routes/routes')(app);
 
 // Start the app with listen and a port number
 http.listen(3000, function() {

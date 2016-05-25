@@ -31,10 +31,13 @@ app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', fu
 			description: $scope.description
 		}).then(function (response) {
 			// Success
-			$scope.closeAlert();
+            console.log("no error");
+
+			// $scope.closeAlert();
 			$uibModalInstance.close();
 	    }, function (response) {
 		  	// Error
+            console.log("error mate");
 		  	$scope.addWarning(response.message);
 		});
 	};

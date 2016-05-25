@@ -17,8 +17,8 @@ module.exports = function(router, ioService) {
             alias = req.body.alias,
             description = req.body.description;
 
-        var device = device;
-        new Device().save(function(err, product, numAffected) {
+        var device = {did: did, alias: alias, description: description};
+        new Device(device).save(function(err, product, numAffected) {
             if (err) {
                 switch (err.code) {
                     case 11000:
@@ -29,7 +29,7 @@ module.exports = function(router, ioService) {
                         res.status(406).json({message: 'Error occured while adding device.'});
                 }
             } else {
-                ioService.newDevice();
+                ioService.newDevice(device);
                 res.status(201).json({message: 'Device added.'});                
             }
 
