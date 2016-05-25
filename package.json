@@ -6,6 +6,7 @@
   "author": "Alfred",
   "dependencies": {
     "body-parser": "latest",
+    "chart.js": "^2.1.3",
     "crypto": "0.0.3",
     "express": "latest",
     "express-jwt": "^3.4.0",
