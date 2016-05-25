@@ -59,7 +59,10 @@ module.exports = function(router, ioService) {
     });
 
     router.get('/device', function (req, res) {
-        Device.find(function(err, models) {
+        var did = req.param('did'),
+            searchObj = did ? {did: did} : {};
+
+        Device.find(searchObj, function(err, models) {
             if (err) {
                 res.send({error: err, description: 'Error occured while getting devices.'});
             } else {
