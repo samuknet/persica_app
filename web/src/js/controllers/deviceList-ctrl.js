@@ -18,12 +18,7 @@ function DeviceListCtrl($scope, deviceService, $uibModal, $state) {
 	    var modalInstance = $uibModal.open({
 	      animation: true,
 	      templateUrl: '/templates/modals/newDeviceModal.html',
-	      controller: 'NewDeviceModalCtrl',
-	      resolve: {
-	        items: function () {
-	          return $scope.items;
-	        }
-	      }
+	      controller: 'NewDeviceModalCtrl'
 	    });
     };    
 }

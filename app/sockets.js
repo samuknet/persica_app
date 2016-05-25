@@ -26,13 +26,12 @@ module.exports = function(http) {
                 {
                     cmd: '...',
                 }
-                data.channel = '' means broadcast to all devices
-                data.devices = [] means broadcast to all devices
             */
-            
+
             // TODO: Implement groups here
             device.emit('cmd', {cmd: data.cmd});
         });
+        
 
         _.forEach(devices, function (socket, did) {
             control.emit('device-connected', {did: did, status: 'green'});
