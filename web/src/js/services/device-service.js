@@ -17,7 +17,10 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 	socketService.on('device-connected', function(device) {
         if (devices[device.did]) {
         	devices[device.did].online = true;
-        } 
+        }  else {
+        	devices[device.did] = device;
+        	device.online = true;
+        }
     });
 
     socketService.on('device-disconnected', function(device) {

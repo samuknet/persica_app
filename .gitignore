@@ -44,7 +44,8 @@ web/public/
 #Mac icon files
 .DS_STORE
 
-web/public
+web/public/
+web/public/*
 
 #Mac icon files
 .DS_STORE
