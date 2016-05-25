@@ -37,15 +37,14 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-var ioService = require('./app/sockets')(app, io);
+var ioService = require('./app/sockets')(http);
 
 // Api endpoints 
 require('./app/routes/api')(app);
 
 // Express Routes
 
-require('./app/routes/routes')(http, ioService);
-require('./app/routes/sockets')(app, io);
+require('./app/routes/routes')(app, ioService);
 
 // Start the app with listen and a port number
 http.listen(3000, function() {

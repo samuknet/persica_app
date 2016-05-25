@@ -8,7 +8,6 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 		_.forEach(deviceList, function (device) {
 			device.online = false;
 			devices[device.did] = device;
-
 		});
 
 	}, function (response) {
