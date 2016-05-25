@@ -32,7 +32,7 @@ gulp.task('usemin', function() {
         .pipe(gulp.dest('public/'));
 });
 
-gulp.task('usemintools', function() {
+gulp.task('usemindevice', function() {
     return gulp.src(paths.device).pipe(usemin({
          js: [minifyJs(), 'concat'],
         css: [minifyCss({keepSpecialComments: 0}), 'concat']
@@ -90,8 +90,8 @@ gulp.task('watch', function() {
     gulp.watch([paths.scripts], ['custom-js']);
     gulp.watch([paths.templates], ['custom-templates']);
     gulp.watch([paths.index], ['usemin']);
-    gulp.watch([paths.login], ['usemin']);
-    gulp.watch([paths.device_emulator], ['usemin']);
+    gulp.watch([paths.device], ['usemindevice']);
+
 });
 
 /**
@@ -114,5 +114,5 @@ gulp.task('livereload', function() {
 /**
  * Gulp tasks
  */
-gulp.task('build', ['usemin', 'usemintools', 'build-assets', 'build-custom']);
+gulp.task('build', ['usemin', 'usemindevice', 'build-assets', 'build-custom']);
 gulp.task('default', ['build', 'webserver', 'livereload', 'watch']);

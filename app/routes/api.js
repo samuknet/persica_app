@@ -28,7 +28,7 @@ module.exports = function(router, ioService) {
                         res.status(406).send({message: 'Error occured while adding device.'});
                 }
             } else {
-                // ioService.newDevice();
+                ioService.newDevice(device);
                 res.status(201).json({message: 'Device added.'});                
             }
 
