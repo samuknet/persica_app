@@ -15,8 +15,11 @@ var paths = {
     styles: 'src/css/**/*.*',
     images: 'src/img/**/*.*',
     templates: 'src/templates/**/*.html',
+    // TODO : fix triple index
     index: 'src/index.html',
     index: 'src/login.html',
+    index: 'src/device.html',
+
     bower_fonts: 'src/components/**/*.{ttf,woff,eof,svg}',
 };
 
@@ -82,6 +85,10 @@ gulp.task('watch', function() {
     gulp.watch([paths.scripts], ['custom-js']);
     gulp.watch([paths.templates], ['custom-templates']);
     gulp.watch([paths.index], ['usemin']);
+    gulp.watch([paths.login], ['usemin']);
+    gulp.watch([paths.device_emulator], ['usemin']);
+
+
 });
 
 /**
