@@ -51,7 +51,7 @@ module.exports = function(router, ioService) {
     router.get('/user', function (req, res) {
         User.find(function(err, models) {
             if (err) {
-                res.send({error: err, description: 'Error while getting users'});
+                res.send({message: 'Error while getting users'});
             } else {
                 res.send(models);
             }
@@ -59,12 +59,11 @@ module.exports = function(router, ioService) {
     });
 
     router.get('/device', function (req, res) {
-        var did = req.param('did'),
+        var did = req.query.did,
             searchObj = did ? {did: did} : {};
-
         Device.find(searchObj, function(err, models) {
             if (err) {
-                res.send({error: err, description: 'Error occured while getting devices.'});
+                res.send({message: 'Error occured while getting devices.'});
             } else {
                 res.send(models);
             }
@@ -72,7 +71,6 @@ module.exports = function(router, ioService) {
     });
 
     router.post('/register', function(req, res, next) {
-        console.log(req.body.username)
         if (!req.body.username || !req.body.password) {
             return res.status(400).json({
                 message: 'Please fill out all fields'
