@@ -16,18 +16,10 @@ module.exports = function(router, ioService) {
         var did = req.body.did,
             alias = req.body.alias,
             description = req.body.description;
-
         var device = {did: did, alias: alias, description: description};
-        new Device(device).save(function(err, product, numAffected) {
+        new Device(device).save(function(err, product) {
             if (err) {
-                switch (err.code) {
-                    case 11000:
-                        var msg = alias + ' is already a registered device with DID: ' + did + '.';
-                        res.status(406).json({message: msg});
-                        break;
-                    default:
-                        res.status(406).json({message: 'Error occured while adding device.'});
-                }
+                res.status(406).json({message: err.message});
             } else {
                 ioService.newDevice(device);
                 res.status(201).json({message: 'Device added.'});                
@@ -59,7 +51,7 @@ module.exports = function(router, ioService) {
     router.get('/user', function (req, res) {
         User.find(function(err, models) {
             if (err) {
-                res.send({error: err, description: 'Error while getting users'});
+                res.send({message: 'Error while getting users'});
             } else {
                 res.send(models);
             }
@@ -67,9 +59,11 @@ module.exports = function(router, ioService) {
     });
 
     router.get('/device', function (req, res) {
-        Device.find(function(err, models) {
+        var did = req.query.did,
+            searchObj = did ? {did: did} : {};
+        Device.find(searchObj, function(err, models) {
             if (err) {
-                res.send({error: err, description: 'Error occured while getting devices.'});
+                res.send({message: 'Error occured while getting devices.'});
             } else {
                 res.send(models);
             }
@@ -77,7 +71,6 @@ module.exports = function(router, ioService) {
     });
 
     router.post('/register', function(req, res, next) {
-        console.log(req.body.username)
         if (!req.body.username || !req.body.password) {
             return res.status(400).json({
                 message: 'Please fill out all fields'

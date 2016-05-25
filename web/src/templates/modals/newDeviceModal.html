@@ -1,28 +1,32 @@
-    <div class="modal-header">
-        <h3 class="modal-title">Add New Device</h3>
-    </div>
+<div class="modal-header">
+    <h3 class="modal-title">Add New Device</h3>
+</div>
 
+<div ng-class="alertClass" class="col-xs-12">
+   {{alertMsg}}
+</div>
 
-    <div class="modal-body">
-        <form>
-            <fieldset class="form-group">
-                <label for="did">Device ID</label>
-                <input type="number" class="form-control" id="did" ng-model="did" placeholder="DID">
-            </fieldset>
+<form method="post" ng-submit="submit()">
+<div class="modal-body">
+        <fieldset class="form-group">
+            <label for="did">Device ID</label>
+            <input required type="number" class="form-control" id="did" ng-model="did" placeholder="DID">
+        </fieldset>
 
-            <fieldset class="form-group">
-                <label for="alias">Alias</label>
-                <input type="text" class="form-control" id="alias" ng-model="alias" placeholder="Alias">
-            </fieldset>
+        <fieldset class="form-group">
+            <label for="alias">Alias</label>
+            <input required type="text" class="form-control" id="alias" ng-model="alias" placeholder="Alias">
+        </fieldset>
 
-            <fieldset class="form-group">
-                <label for="description">Description</label><br>
-                <textarea class="form-control" id="description" ng-model="description" placeholder="Description..."></textarea>
-            </fieldset>
-        </form>
-    </div>
+        <fieldset class="form-group">
+            <label for="description">Description</label><br>
+            <textarea required class="form-control" id="description" ng-model="description" placeholder="Description..."></textarea>
+        </fieldset>
 
-    <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="submit()">Submit</button>
-        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-    </div>   
+</div>
+
+<div class="modal-footer">
+    <input type="submit" class="btn btn-primary" type="button" value="Submit" />
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>   
+</form>
