@@ -29,6 +29,7 @@ build/Release
 # Dependency directories
 node_modules
 jspm_packages
+web/bower_components
 
 # Optional npm cache directory
 .npm
@@ -43,7 +44,8 @@ web/public/
 #Mac icon files
 .DS_STORE
 
-web/public
+web/public/
+web/public/*
 
 #Mac icon files
 .DS_STORE

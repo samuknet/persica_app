@@ -45,6 +45,7 @@ module.exports = function(app, io) {
             });
 
         });
+        console.log('Control connected, the connected devices are', devices.length);
 
         _.forEach(devices, function (socket, did) {
             control.emit('device-connected', {did: did, status: 'green'});

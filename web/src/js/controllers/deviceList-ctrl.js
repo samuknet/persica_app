@@ -9,24 +9,40 @@ app.controller('DeviceListCtrl', ['$scope', 'deviceService', '$uibModal', Device
 function DeviceListCtrl($scope, deviceService, $uibModal) {
     $scope.devices = deviceService.devices;
 
-    $scope.open = function (size) {
-
-    var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: '/templates/modals/newDeviceModal.html',
-      controller: 'ModalInstanceCtrl',
-      size: size,
-      resolve: {
-        items: function () {
-          return $scope.items;
-        }
-      }
-    });
-
-};
+    $scope.openNewDeviceModal = function () {
+	    var modalInstance = $uibModal.open({
+	      animation: true,
+	      templateUrl: '/templates/modals/newDeviceModal.html',
+	      controller: 'NewDeviceModalCtrl',
+	      resolve: {
+	        items: function () {
+	          return $scope.items;
+	        }
+	      }
+	    });
+    };
 
     
 }
-app.controller('ModalInstanceCtrl', ['$scope', function($scope) {
-	$scope.test='hi';
+app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', function($scope, $uibModalInstance, $http) {
+	$scope.submit = function() {
+		$http.post('/device', {
+			did: $scope.did,
+			alias: $scope.alias,
+			description: $scope.description
+		}).then(function (response) {
+			// Success
+			$uibModalInstance.close();
+		  }, function (response) {
+		  	// Error
+		  	// TODO: Handle DID already in use error here
+		  });
+
+
+	};
+	$scope.cancel = function() {
+		$uibModalInstance.close();
+	};
+
+
 }]);

@@ -12,23 +12,55 @@ module.exports = function(router) {
         auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 
-
-
- 
-
-
     router.post('/device', function (req, res) {
-
         var did = req.body.did,
             alias = req.body.alias,
             description = req.body.description;
-
-        new Device({did: did, alias: alias, description: description}).save();
-
-        res.send('Done');
+        new Device({did: did, alias: alias, description: description}).save(function(err, product, numAffected) {
+            if (err) {
+                res.send({error: err, description: 'Error occured while adding a device.'});
+            } else {
+                if (numAffected === 0) {
+                    res.send({description: 'Nothing Changed.'});
+                    return;
+                }
+                res.send({description: 'Done'});
+            }
+        });
     });
 
+     router.post('/user', function (req, res) {
+        var username = req.body.username,
+            hash = req.body.hash,
+            salt = req.body.salt;
+        new User({username: username, hash: hash, salt: salt}).save( function (err, product, numAffected) {
+            if (err) {
+                res.send({error: err, description: 'Error occurred while adding user'});
+            } else {
+                res.send({description: 'User added'});
+            }
+        });
+    });
 
+    router.get('/user', function (req, res) {
+        User.find(function(err, models) {
+            if (err) {
+                res.send({error: err, description: 'Error while getting users'});
+            } else {            
+                res.send(models);
+            }
+        });
+    });
+
+    router.get('/device', function (req, res) {
+        Device.find(function(err, models) {
+            if (err) {
+                res.send({error: err, description: 'Error occured while getting devices.'});
+            } else {
+                res.send(models);
+            }
+        });
+    });
 
     router.post('/register', function(req, res, next) {
         console.log(req.body.username)
@@ -58,7 +90,6 @@ module.exports = function(router) {
         });
     });
 
-
     router.post('/login', function(req, res, next) {
         if (!req.body.username || !req.body.password) {
             return res.status(400).json({
@@ -80,5 +111,4 @@ module.exports = function(router) {
             }
         })(req, res, next);
     });
-
 }
