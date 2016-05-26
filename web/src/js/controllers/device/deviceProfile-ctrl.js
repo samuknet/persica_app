@@ -42,7 +42,7 @@ angular
 function DeviceCmdsController($scope, $stateParams, deviceService) {
     var did = $stateParams.did;
     var cmds_observer = function() {
-        $scope.cmds = deviceService.devices[did] ? deviceService.devices[did].cmds : ['hi'];
+        $scope.cmds = deviceService.devices[did] ? deviceService.devices[did].cmds : [];
     };
     $scope.device = deviceService.devices[did];
 

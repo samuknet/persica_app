@@ -18,7 +18,7 @@ module.exports = function(http) {
             // cmd.cmd
             // check if command already registered
 
-            if (!_.contains(devices[did].cmds, cmd.cmd)) {
+            if (!_.contains(devices[did].device.cmds, cmd.cmd)) {
                 control.emit('device-register-cmd', {did: did, cmd: cmd.cmd});
                 devices[did].device.cmds.push(cmd.cmd);
             }
@@ -58,11 +58,11 @@ module.exports = function(http) {
                     cmd: '...',
                 }
             */
-
-            if (devices[data.did]) {
-                devices[data.did].emit('cmd', {cmd:data.cmd});
+            device.emit('cmd', {cmd: data.cmd});
+            if (data.did) {
+                // devices[data.did].socket.emit('cmd', {cmd:data.cmd});
             } else { // If no specific device specified then send to all devices
-                device.emit('cmd', {cmd: data.cmd});
+
             }
         });
 
@@ -73,13 +73,11 @@ module.exports = function(http) {
 
 
         
-        _.forEach(devices, function (socket, did) {
+        _.forEach(devices, function (obj, did) {
+            console.log('emitting device connected event', devices[did].device);
             control.emit('device-connected', devices[did].device);
         });
     });
-
-
-
 
     return {
         newDevice: function (device) {

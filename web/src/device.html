@@ -27,7 +27,7 @@ Register Cmd: <input type="text" id="cmdF" />
 </div>
 <audio src="/song" id="audio" />
 <script>
-    var audio = document.getElementB
+    var audio = document.getElementById('audio');
 
     // oscillator.start(context.currentTime);
     function out(msg) {
@@ -53,8 +53,9 @@ Register Cmd: <input type="text" id="cmdF" />
     })
 
     socket.emit('device-register-cmd', {cmd: 'play'});
-    
+    console.log('yo');
     socket.on('cmd', function (data) {
+        console.log('hi');
         if (data.cmd === 'play') {
             audio.play();
         };
