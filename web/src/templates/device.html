@@ -21,6 +21,7 @@
                                 <tr><td>Alias</td><td>{{alias}}</td></tr>
                                 <tr><td>DID</td><td>{{did}}</td></tr>
                                 <tr><td>Description</td><td>{{description}}</td></tr>
+                                <tr><td>Last Online</td><td>{{device.lastOnline}}</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -30,17 +31,11 @@
 
         <div class="col-lg-6">
             <rd-widget>
-                <rd-widget-header icon="fa-laptop" title="Device Profile">
+                <rd-widget-header icon="fa-angle-double-up" title="Uptime">
                 </rd-widget-header>
                 <rd-widget-body classes="medium no-padding">
                     <div class="table-responsive">
-                        <table class="table table">
-                            <tbody>
-                                <tr><td>Alias</td><td>{{alias}}</td></tr>
-                                <tr><td>DID</td><td>{{did}}</td></tr>
-                                <tr><td>Description</td><td>{{description}}</td></tr>
-                            </tbody>
-                        </table>
+                        <canvas id="pie" class="chart chart-pie" chart-data="upTime" chart-labels="labels"> </canvas> 
                     </div>
                 </rd-widget-body>
             </rd-widget>
