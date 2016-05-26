@@ -24,7 +24,6 @@ module.exports = function(router, ioService) {
                 ioService.newDevice(device);
                 res.status(201).json({message: 'Device added.'});                
             }
-
         }); 
     });
 
