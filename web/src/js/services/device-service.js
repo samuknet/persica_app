@@ -23,6 +23,7 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 	socketService.on('device-connected', function(device) {
 		devices[device.did] = _.extend(devices[device.did] || {}, device);
 		devices[device.did].online = true;
+        devices[device.did].establishTime = Date.now();
 		notify_observers();
 
     });
@@ -30,6 +31,7 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
     socketService.on('device-disconnected', function(device) {
 		devices[device.did] = _.extend(devices[device.did] || {}, device);
 		devices[device.did].online = false;
+        devices[device.did].lastOnline = Date.now()
 		notify_observers();
 
         
