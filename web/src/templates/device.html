@@ -29,20 +29,18 @@
             </rd-widget>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6"  ng-controller='TimeCtrl'>
             <rd-widget>
                 <rd-widget-header icon="fa-users" title="Users">
                     <input type="text" placeholder="Search" class="form-control input-sm" />
                 </rd-widget-header>
                 <rd-widget-body classes="medium no-padding">
-                    <div ng-controller='TimeCtrl'>
-                        <div ng-show='device.online'>
-                            <p> Device Online Since: <br> {{establishTime | date:'medium'}} </p>
-                            <p> Current Uptime: <br> {{ clock }} </p>
-                        </div>
-                        <div ng-show='!device.online'>
-                            <p> Device is Offline. Last Online: <br> {{lastOnline | date:'medium'}} </p>
-                        </div>
+                    <div ng-show='device.online'>
+                        <p> Device Online Since: <br> {{establishTime | date:'medium'}} </p>
+                        <p> Current Uptime: <br> {{ clock }} </p>
+                    </div>
+                    <div ng-show='!device.online'>
+                        <p> Device is Offline. Last Online: <br> {{lastOnline | date:'medium'}} </p>
                     </div>
                     <div class="table-responsive">
                         <canvas id="pie" class="chart chart-pie" chart-data="upTime" chart-labels="labels"></canvas> 
@@ -61,9 +59,6 @@
 				<rd-widget-body classes="medium no-padding">
 					<div class="table-responsive">
 						<table class="table table-hover">
-<!-- 							<thead>
-								<tr><th>Command</th></tr>
-							</thead> -->
 							<tbody>
 								<tr style="cursor:pointer;" ng-repeat="cmd in cmds">
 									<td>

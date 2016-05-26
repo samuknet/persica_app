@@ -27,6 +27,7 @@ module.exports = function(router, ioService) {
         }); 
     });
 
+
     router.post('/user', function (req, res) {
         var username = req.body.username,
             hash = req.body.hash,
