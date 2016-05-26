@@ -1,1 +1,1 @@
-angular.module('Persica', ['ui.bootstrap', 'ui.router', 'ngCookies']);
+angular.module('Persica', ['ui.bootstrap', 'ui.router', 'ngCookies', 'chart.js']);

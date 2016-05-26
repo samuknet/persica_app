@@ -4,65 +4,47 @@
 
 var app = angular.module('Persica');
 
-app.controller('DeviceListCtrl', ['$scope', 'deviceService', '$uibModal', DeviceListCtrl]);
+app.controller('DeviceListCtrl', ['$scope', 'deviceService', '$uibModal', '$state', DeviceListCtrl]);
 
-function DeviceListCtrl($scope, deviceService, $uibModal) {
+function DeviceListCtrl($scope, deviceService, $uibModal, $state) {
     $scope.devices = deviceService.devices;
+
+    $scope.navigateToDevice = function(did) { // Called when device table row is clicked
+        // Navigate to device profile page
+        $state.go('device', {did: did});
+    };
 
     $scope.openNewDeviceModal = function () {
 	    var modalInstance = $uibModal.open({
 	      animation: true,
 	      templateUrl: '/templates/modals/newDeviceModal.html',
-	      controller: 'NewDeviceModalCtrl',
-	      resolve: {
-	        items: function () {
-	          return $scope.items;
-	        }
-	      }
+	      controller: 'NewDeviceModalCtrl'
 	    });
     };    
 }
 
 app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', function($scope, $uibModalInstance, $http) {
-	$scope.submit = function() {
+    $scope.alertMsg   = 'Device ID and alias required.';
+    $scope.alertClass = 'alert alert-info';
+    $scope.submit = function() {
 		$http.post('/device', {
 			did: $scope.did,
 			alias: $scope.alias,
 			description: $scope.description
 		}).then(function (response) {
 			// Success
-			$scope.closeAlert();
 			$uibModalInstance.close();
 	    }, function (response) {
 		  	// Error
-		  	$scope.closeAlert();
-		  	console.log(response.data.message);
-		  	$scope.addWarning(response.data.message);
+            $scope.alertMsg = response.data.message;
+            $scope.alertClass = 'alert alert-danger';
 		});
 	};
 	$scope.cancel = function() {
 		$uibModalInstance.close();
 	};
 
-	$scope.alerts = [];
 
-    $scope.addSuccess = function(msg) {
-        $scope.alerts.push({
-            type: 'success',
-            msg: msg
-        });
-    }
-
-    $scope.addWarning = function(msg) {
-        $scope.alerts.push({
-            type: 'danger',
-            msg: msg
-        });
-    };
-
-    $scope.closeAlert = function() {
-        $scope.alerts.splice(0, 1);
-    };
 
 
 }]);

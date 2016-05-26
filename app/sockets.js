@@ -25,28 +25,13 @@ module.exports = function(http) {
                 data of form:
                 {
                     cmd: '...',
-                    channel: ''
-                    devices:{did1: true, did2:true}
                 }
-                data.channel = '' means broadcast to all devices
-                data.devices = [] means broadcast to all devices
             */
 
-            // Forward command to all devices
-            if (!data.devices || _.isEmpty(data.devices)) {
-                return device.emit('cmd', {cmd: data.cmd});
-            }
-            // Forward command to specific devices
-            var targetDevices = _.filter(devices, function (socket, did) {
-                console.log(did);
-                return _.has(data.devices, did); 
-            });
-
-            _.forEach(targetDevices, function (socket, did) {
-                socket.emit('cmd', {cmd: data.cmd});
-            });
-
+            // TODO: Implement groups here
+            device.emit('cmd', {cmd: data.cmd});
         });
+        
 
         _.forEach(devices, function (socket, did) {
             control.emit('device-connected', {did: did, status: 'green'});
