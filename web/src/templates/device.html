@@ -3,8 +3,8 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h1>
-				{{alias}}
-				<span class="fa fa-circle" style="color:#5cb85c" ng-if="!device.online"></span>
+				{{device.alias}}
+				<span class="fa fa-circle" style="color:#5cb85c" ng-if="device.online"></span>
 				<span class="fa fa-circle-o" style="color:#d9534f" ng-if="!device.online"></span>
 			</h1>
 		</div>
@@ -29,17 +29,27 @@
             </rd-widget>
         </div>
 
-		<div class="col-lg-6">
-			<rd-widget>
-				<rd-widget-header icon="fa-angle-double-up" title="Uptime">
-				</rd-widget-header>
-				<rd-widget-body classes="medium no-padding">
-					<div class="table-responsive">
-						<canvas id="pie" class="chart chart-pie" chart-data="upTime" chart-labels="labels"> </canvas> 
-					</div>
-				</rd-widget-body>
-			</rd-widget>
-		</div>
+        <div class="col-lg-6">
+            <rd-widget>
+                <rd-widget-header icon="fa-users" title="Users">
+                    <input type="text" placeholder="Search" class="form-control input-sm" />
+                </rd-widget-header>
+                <rd-widget-body classes="medium no-padding">
+                    <div ng-controller='TimeCtrl'>
+                        <div ng-show='device.online'>
+                            <p> Device Online Since: <br> {{establishTime | date:'medium'}} </p>
+                            <p> Current Uptime: <br> {{ clock }} </p>
+                        </div>
+                        <div ng-show='!device.online'>
+                            <p> Device is Offline. Last Online: <br> {{lastOnline | date:'medium'}} </p>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <canvas id="pie" class="chart chart-pie" chart-data="upTime" chart-labels="labels"></canvas> 
+                    </div>
+                </rd-widget-body>
+            </rd-widget>
+        </div>
 	</div>
 
 	<div class="row">
@@ -47,23 +57,21 @@
 		<div class="col-lg-6" ng-controller="DeviceCmdsCtrl">
 			<rd-widget>
 				<rd-widget-header icon="fa-tasks" title="Commands">
-					<!-- <a href="#">Manage Devices</a> -->
-					<div style="text-align:right">
-
-					</div>
 				</rd-widget-header>
 				<rd-widget-body classes="medium no-padding">
 					<div class="table-responsive">
 						<table class="table table-hover">
-							<thead>
-								<tr><th>Cmd</th></tr>
-							</thead>
+<!-- 							<thead>
+								<tr><th>Command</th></tr>
+							</thead> -->
 							<tbody>
 								<tr style="cursor:pointer;" ng-repeat="cmd in cmds">
-									<td><button ng-click="sendCmd(cmd)" ng-enabled="device.online" class="btn btn-primary btn-block">{{cmd}}</button></td>
-
+									<td>
+                                        <button ng-click="sendCmd(cmd)" ng-enabled="device.online" class="btn btn-primary btn-block">
+                                            {{cmd}}
+                                        </button>
+                                    </td>
 								</tr>
-
 							</tbody>
 						</table>
 					</div>
