@@ -10,7 +10,6 @@ module.exports = function(http) {
 
     device.on('connection', function (socket) {
         var did = socket.handshake.query.did;
-<<<<<<< HEAD
         devices[did] = {socket: socket, device: {did: did, cmds : []}};
         devices[did].cmds = [];
         control.emit('device-connected', devices[did].device);
@@ -23,11 +22,6 @@ module.exports = function(http) {
                 control.emit('device-register-cmd', {did: did, cmd: cmd.cmd, cmds: []});
             }
         });
-=======
-
-        devices[did] = socket;
-        control.emit('device-connected', {did: did, status: 'green'});
->>>>>>> 56d19a03b7e269b0560992dfde61f20f53d771b9
 
         socket.on('disconnect', function() {
             delete devices[did];
@@ -56,7 +50,6 @@ module.exports = function(http) {
 
 
     control.on('connection', function (socket) {
-        socket.join('control-chat');
         socket.on('cmd', function (data) {
             /*
                 data of form:
@@ -74,7 +67,7 @@ module.exports = function(http) {
 
         socket.on('control-chat-msg', function (msg) {
             // msg.from, msg.msg
-            io.sockets.in('control-chat').emit(msg);
+            control.emit('control-chat-msg', msg);
         });
 
 

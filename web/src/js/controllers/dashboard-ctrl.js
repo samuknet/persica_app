@@ -4,18 +4,33 @@
 
 angular
     .module('Persica')
-    .controller('DashboardCtrl', ['$scope', 'deviceService', 'chatService', DashboardCtrl]);
+    .controller('DashboardCtrl', ['$scope', 'deviceService', DashboardCtrl]);
 
-function DashboardCtrl($scope, deviceService, chatService, $uibModal) {
-
+function DashboardCtrl($scope, deviceService) {
 	var devices_observer = function() {
 		$scope.deviceCount = Object.keys(deviceService.devices).length;
 	};
     deviceService.observers.push(devices_observer);
+}
 
+angular
+    .module('Persica')
+    .controller('ChatCtrl', ['$scope',  'chatService', ChatCtrl]);
+function ChatCtrl($scope, chatService) {
     var chat_observer = function() {
         $scope.messages = chatService.messages;
     };
-    chatService.observers.push(chat_observer);
-}
 
+    var sendMessage = function(from, msg) {
+    	chatService.sendMessage({from: from, msg: msg});
+    };
+
+    $scope.checkkey = function(evt, from, msg) {
+    	if (evt.keyCode === 13) {
+    		sendMessage(from, msg);
+    	}
+    }
+
+    chatService.observers.push(chat_observer);
+    chat_observer();
+}

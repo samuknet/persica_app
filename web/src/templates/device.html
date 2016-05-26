@@ -12,23 +12,22 @@
 
 	<div class="row">
 		<div class="col-lg-6">
-			<rd-widget>
-				<rd-widget-header icon="fa-laptop" title="Device Profile">
-				</rd-widget-header>
-				<rd-widget-body classes="medium no-padding">
-					<div class="table-responsive">
-						<table class="table table">
-							<tbody>
-								<tr><td>Alias</td><td>{{alias}}</td></tr>
-								<tr><td>DID</td><td>{{did}}</td></tr>
-								<tr><td>Description</td><td>{{description}}</td></tr>
-								<tr><td>Last Online</td><td>{{device.lastOnline}}</td></tr>
-							</tbody>
-						</table>
-					</div>
-				</rd-widget-body>
-			</rd-widget>
-		</div>
+            <rd-widget>
+                <rd-widget-header icon="fa-laptop" title="Device Profile">
+                </rd-widget-header>
+                <rd-widget-body classes="medium no-padding">
+                    <div class="table-responsive">
+                        <table class="table table">
+                            <tbody>
+                                <tr><td>Alias</td><td>{{device.alias}}</td></tr>
+                                <tr><td>DID</td><td>{{device.did}}</td></tr>
+                                <tr><td>Description</td><td>{{device.description}}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </rd-widget-body>
+            </rd-widget>
+        </div>
 
 		<div class="col-lg-6">
 			<rd-widget>
@@ -44,29 +43,13 @@
 	</div>
 
 	<div class="row">
-		<div class="col-lg-6">
-			<rd-widget>
-				<rd-widget-header icon="fa-laptop" title="Device Profile">
-				</rd-widget-header>
-				<rd-widget-body classes="medium no-padding">
-					<div class="table-responsive">
-						<table class="table table">
-							<tbody>
-								<tr><td>Alias</td><td>{{device.alias}}</td></tr>
-								<tr><td>DID</td><td>{{device.did}}</td></tr>
-								<tr><td>Description</td><td>{{device.description}}</td></tr>
-							</tbody>
-						</table>
-					</div>
-				</rd-widget-body>
-			</rd-widget>
-		</div>
+		
 		<div class="col-lg-6" ng-controller="DeviceCmdsCtrl">
 			<rd-widget>
 				<rd-widget-header icon="fa-tasks" title="Commands">
 					<!-- <a href="#">Manage Devices</a> -->
 					<div style="text-align:right">
-						
+
 					</div>
 				</rd-widget-header>
 				<rd-widget-body classes="medium no-padding">
@@ -78,7 +61,7 @@
 							<tbody>
 								<tr style="cursor:pointer;" ng-repeat="cmd in cmds">
 									<td><button ng-enabled="device.online" class="btn btn-primary btn-block">{{cmd}}</button></td>
-									
+
 								</tr>
 
 							</tbody>

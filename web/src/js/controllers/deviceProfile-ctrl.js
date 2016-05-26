@@ -9,11 +9,11 @@ function DeviceProfileCtrl($scope, $stateParams, $http, deviceService) {
     var did = $stateParams.did;
     var device_observer = function() {
         $scope.device = deviceService.devices[did];
-
     };
 
     deviceService.observers.push(device_observer);
-
+    device_observer();
+    
     $scope.labels = ["22nd January 2016", "15th March 2016", "7th April 2016"];
     $scope.upTime = [50 , 20, 60];
     $scope.uptimePairs = [[100, 150], [180, 300], [350, 410]];

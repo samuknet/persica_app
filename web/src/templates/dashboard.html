@@ -3,7 +3,7 @@
       <div class="col-xs-12">
         <uib-alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
     </div>
-</div>
+    </div>
 <div class="row">
 	<div class="col-lg-3 col-md-6 col-xs-12">
 		<rd-widget>
@@ -84,36 +84,38 @@
     </rd-widget>
 </div>
 
-<div class="col-lg-6">
+<div class="col-lg-6" ng-controller="ChatCtrl">
     <rd-widget>
-        <rd-widget-header icon="fa-users" title="Message Board">
-            <input type="text" placeholder="Enter Name" class="form-control input-sm" />
+        <rd-widget-header icon="fa-users" title="Squad 27 Message Board">
+               
         </rd-widget-header>
         <rd-widget-body classes="medium no-padding">
             <div class="table-responsive">
-                   <table class="table table-hover">
-                      <thead>
-                         <tr><th>Squad 27</th></tr>
-                     </thead>
-                     <tbody>
-                         <tr style="cursor:pointer;" ng-repeat="msg in messages" >
-                            <td>{{msg.from}}</td>
-                            <td>{{msg.msg}}</td>
-                            <td>
-                                <span class="fa fa-circle" style="color:#5cb85c" ng-if="device.online"></span>
-                                <span class="fa fa-circle-o" style="color:#d9534f" ng-if="!device.online"></span>
-                            </td>
-                        </tr>
+           <table class="table table-hover">
+                    <tr>
 
-                    </tbody>
-                </table>
-            </div>
+                         <form novalidate>
+                           <td> <input type="text" data-ng-model="from" placeholder="Enter Handle" class="form-control input-sm" /></td>
+                             <td><input class="form-control input-sm" type="text" data-ng-model="msg" placeholder="Message..." ng-keypress="checkkey($event, from, msg);" /></td>
+                        </form>
+                    </tr>
+
+            </table>
+
+            </div>     
+        	<div class="table-responsive">
+				<table class="table table-hover">
+					<tr ng-repeat="msg in messages"><td>{{msg.from}}: {{msg.msg}}</td></tr>
+				</table>
+        	</div>
+           
         </rd-widget-body>
     </rd-widget>
 </div>
 
-</div>
 
+</div>
+</div>
 <!--
 <div class="row">
 	<div class="col-lg-6">
@@ -145,6 +147,3 @@
 </div>
 
 !-->
-
- 
-</div>
