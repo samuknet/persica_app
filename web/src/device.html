@@ -22,12 +22,15 @@
 
 Register Cmd: <input type="text" id="cmdF" />
 
+Register variable name: <input type="text" id="varNameF" />
+Register variable value: <input type="text" id="varValueF" />
+
 <div id="output">
 
 </div>
 <audio src="/song" id="audio" />
 <script>
-    var audio = document.getElementB
+    var audio = document.getElementById('audio');
 
     // oscillator.start(context.currentTime);
     function out(msg) {
@@ -37,6 +40,9 @@ Register Cmd: <input type="text" id="cmdF" />
     var did = 500;
     
     var cmdF = document.getElementById('cmdF');
+    var varNameF = document.getElementById('varNameF');
+    var varValueF = document.getElementById('varValueF');
+
     var didF = document.getElementById('didF');
 
     didF.innerHTML = 'DID: ' + did;
@@ -50,16 +56,24 @@ Register Cmd: <input type="text" id="cmdF" />
         if (evt.keyCode === 13) {
             socket.emit('device-register-cmd', {cmd: cmdF.value});
         }
-    })
+    });
+
+     varValueF.addEventListener('keydown', function (evt) {
+        if (evt.keyCode === 13) {
+            socket.emit('device-updateVariable', {handle: varNameF.value, value : varValueF.value})
+
+        };
+     });
+
+    
 
     socket.emit('device-register-cmd', {cmd: 'play'});
-    
     socket.on('cmd', function (data) {
+        console.log('hi');
         if (data.cmd === 'play') {
             audio.play();
         };
     });
-    socket.emit('device-updateVariable', {handle: "test", value : "test"})
 
 </script>
 </body>

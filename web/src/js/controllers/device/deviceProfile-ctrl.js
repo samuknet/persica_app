@@ -79,12 +79,12 @@ function TimeCtrl($scope, $stateParams, $timeout, deviceService) {
  */
 angular
     .module('Persica')
-    .controller('DeviceCmdsCtrl', ['$scope', '$stateParams', 'deviceService', DeviceCmdsController]);
+    .controller('DeviceCmdsCtrl', ['$scope', '$stateParams', 'deviceService', DeviceCmdsCtrl]);
 
-function DeviceCmdsController($scope, $stateParams, deviceService) {
+function DeviceCmdsCtrl($scope, $stateParams, deviceService) {
     var did = $stateParams.did;
     var cmds_observer = function() {
-        $scope.cmds = deviceService.devices[did] ? deviceService.devices[did].cmds : ['hi'];
+        $scope.cmds = deviceService.devices[did] ? deviceService.devices[did].cmds : [];
     };
     $scope.device = deviceService.devices[did];
 
@@ -94,4 +94,23 @@ function DeviceCmdsController($scope, $stateParams, deviceService) {
 
     deviceService.observers.push(cmds_observer);
     cmds_observer();
+}
+
+/**
+ * Device Cmds Controller
+ */
+angular
+    .module('Persica')
+    .controller('DeviceVarsCtrl', ['$scope', '$stateParams', 'deviceService', DeviceVarsCtrl]);
+
+function DeviceVarsCtrl($scope, $stateParams, deviceService) {
+    var did = $stateParams.did;
+
+    var vars_observer = function() {
+        
+        $scope.vars = deviceService.devices[did] ? deviceService.devices[did].vars : [];
+        console.log($scope.vars)
+    };
+    deviceService.observers.push(vars_observer);
+    vars_observer();
 }
