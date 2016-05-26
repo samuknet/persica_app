@@ -43,6 +43,4 @@ app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', fu
 	$scope.cancel = function() {
 		$uibModalInstance.close();
 	};
-
-
 }]);

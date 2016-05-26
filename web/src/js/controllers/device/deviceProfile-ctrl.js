@@ -13,7 +13,7 @@ function DeviceProfileCtrl($scope, $stateParams, $http, deviceService) {
 
     deviceService.observers.push(device_observer);
     device_observer();
-    
+
     $scope.labels = ["22nd January 2016", "15th March 2016", "7th April 2016", "ello", "sd", "asd"];
     $scope.upTime = [50 , 20, 60, 20, 10, 40];
     $scope.uptimePairs = [[100, 150], [180, 300], [350, 410]];
@@ -102,16 +102,32 @@ function DeviceCmdsCtrl($scope, $stateParams, deviceService) {
  */
 angular
     .module('Persica')
-    .controller('DeviceVarsCtrl', ['$scope', '$stateParams', 'deviceService', DeviceVarsCtrl]);
+    .controller('DeviceVarsCtrl', ['$scope', '$stateParams', '$uibModal', 'deviceService', DeviceVarsCtrl]);
 
-function DeviceVarsCtrl($scope, $stateParams, deviceService) {
+function DeviceVarsCtrl($scope, $stateParams, $uibModal, deviceService) {
     var did = $stateParams.did;
 
+    $scope.openGraphModal = function(varName) {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: '/templates/modals/deviceVariableGraphModal.html',
+            controller: 'DeviceVariableGraphModalCtrl',
+            resolve: {
+                varName: function () {
+                    return varName;
+                }
+            }
+        });
+    };
+
     var vars_observer = function() {
-        
         $scope.vars = deviceService.devices[did] ? deviceService.devices[did].vars : [];
-        console.log($scope.vars)
     };
     deviceService.observers.push(vars_observer);
     vars_observer();
 }
+
+/* Controller for the graph modal for a device variable */
+angular.module('Persica').controller('DeviceVariableGraphModalCtrl', ['$scope', '$uibModalInstance', '$http', 'varName', function($scope, $uibModalInstance, $http, varName) {
+   $scope.varName = varName;
+}]);

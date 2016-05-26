@@ -96,7 +96,7 @@
 							</thead>
 							<tbody>
 								
-								<tr style="cursor:pointer;" ng-repeat="(handle, var) in vars">
+								<tr style="cursor:pointer;" ng-click="openGraphModal(handle)" ng-repeat="(handle, var) in vars">
 									<td>{{handle}}</td><td>{{var.value}}</td><td>{{var.lastChange|date:'short'}}</td>
 
 								</tr>
