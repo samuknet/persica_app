@@ -46,6 +46,18 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
     	notify_observers();
     });
 
+    socketService.on('device-updateVariable', function(updateObj) {
+    	var variable = {
+    		value : updateObj.value,
+    		lastChange : updateObj.timestamp
+    	}
+    	var device = devices[updateObj.did]
+    	device.vars = device.vars || {}
+    	device.vars[updateObj.handle] = variable
+    	console.log("variable received")
+    	notify_observers()
+    });
+
 	this.devices = devices;
 	this.observers = observers;
 

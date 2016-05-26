@@ -72,5 +72,33 @@
 		</div>
 
 
+		<div class="col-lg-6" ng-controller="DeviceVarsCtrl">
+			<rd-widget>
+				<rd-widget-header icon="fa-anchor" title="Live variables">
+					<!-- <a href="#">Manage Devices</a> -->
+					<div style="text-align:right">
+
+					</div>
+				</rd-widget-header>
+				<rd-widget-body classes="medium no-padding">
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<thead>
+								<tr><th>Variable</th><th>Value</th><th>Last change</th></tr>
+							</thead>
+							<tbody>
+								
+								<tr style="cursor:pointer;" ng-repeat="(handle, var) in vars">
+									<td>{{handle}}</td><td>{{var.value}}</td><td>{{var.lastChange|date:'short'}}</td>
+
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</rd-widget-body>
+			</rd-widget>
+		</div>
+
 	</div>
 

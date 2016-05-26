@@ -8,7 +8,7 @@ angular
 
 function DashboardCtrl($scope, deviceService) {
 	var devices_observer = function() {
-		$scope.deviceCount = Object.keys(deviceService.devices).length;
+		$scope.deviceCount = Object.keys(deviceService.devices ? deviceService.devices : []).length;
 	};
 
 	$scope.labels = ["22nd January 2016", "15th March 2016", "7th April 2016", "ello", "sd", "asd"];
@@ -28,6 +28,7 @@ function DashboardCtrl($scope, deviceService) {
 		return averageUpTime;
 	}
     deviceService.observers.push(devices_observer);
+    devices_observer();
 }
 
 angular
@@ -55,9 +56,6 @@ function ChatCtrl($scope, chatService) {
 angular
   .module('Persica')
   .controller('TimeCtrl', ['$scope', '$timeout', 'deviceService', TimeCtrl]);
-
-
-
 function TimeCtrl($scope, $timeout, deviceService) {
 	var updateTimerOnlineStatus = function () {
 	 	$scope.online = deviceService.devices[500] ? deviceService.devices[500].online : false; 
