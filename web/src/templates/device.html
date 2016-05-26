@@ -61,24 +61,27 @@
             </rd-widget>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6" ng-controller="DeviceListCtrl">
             <rd-widget>
-                <rd-widget-header icon="fa-laptop" title="Device Profile">
+                <rd-widget-header icon="fa-tasks" title="Live Variable Analysis">
                 </rd-widget-header>
                 <rd-widget-body classes="medium no-padding">
                     <div class="table-responsive">
-                        <table class="table table">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr><th>Variable Name</th><th>Current Value</th></tr>
+                            </thead>
                             <tbody>
-                                <tr><td>Alias</td><td>{{alias}}</td></tr>
-                                <tr><td>DID</td><td>{{did}}</td></tr>
-                                <tr><td>Description</td><td>{{description}}</td></tr>
+                                <tr style="cursor:pointer;" ng-repeat="device in devices" ng-click="navigateToDevice(device.did)" >
+                                    <td>{{device.alias}}</td>
+                                    <td>{{device.did}}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </rd-widget-body>
             </rd-widget>
         </div>
-    </div>
 
 </div>
 
