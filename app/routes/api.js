@@ -7,9 +7,9 @@ module.exports = function(router, ioService) {
         Device = require('../models/device'),
         User = require('../models/user'),
         passport = require('passport'),
-
         jwt = require('express-jwt'),
-        auth = jwt({secret: 'SECRET', userProperty: 'payload'});
+        auth = jwt({secret: 'SECRET', userProperty: 'payload'}),
+        _ = require('underscore');
 
 
     router.post('/device', function (req, res) {
@@ -61,11 +61,14 @@ module.exports = function(router, ioService) {
     router.get('/device', function (req, res) {
         var did = req.query.did,
             searchObj = did ? {did: did} : {};
-        Device.find(searchObj, function(err, models) {
+        Device.find(searchObj, function(err, devices) {
             if (err) {
                 res.send({message: 'Error occured while getting devices.'});
             } else {
-                res.send(models);
+                _.forEach(devices, function (device) {
+                    device.cmds = [];
+                });
+                res.send(devices);
             }
         });
     });

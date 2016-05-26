@@ -1,5 +1,35 @@
 <div class="container" ng-controller="DeviceProfileCtrl">
-	<h1>Alias: {{alias}}</h1>
-	<h2>DID: {{did}}</h2>
-	<p>Description: {{description}}</p>
+	<h1>Alias: {{device.alias}}</h1>
+	<h2>DID: {{device.did}}</h2>
+	<p>Description: {{device.description}}</p>
+
+
+<div class="row">
+	<div class="col-lg-6" ng-controller="DeviceCmdsCtrl">
+		<rd-widget>
+            <rd-widget-header icon="fa-tasks" title="Commands">
+                <!-- <a href="#">Manage Devices</a> -->
+                    <div style="text-align:right">
+                      
+                    </div>
+            </rd-widget-header>
+            <rd-widget-body classes="medium no-padding">
+                <div class="table-responsive">
+                   <table class="table table-hover">
+                      <thead>
+                         <tr><th>Cmd</th></tr>
+                     </thead>
+                     <tbody>
+                         <tr style="cursor:pointer;" ng-repeat="cmd in cmds">
+                            <td><button ng-enabled="device.online" class="btn btn-primary btn-block">{{cmd}}</button></td>
+                           
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </rd-widget-body>
+    </rd-widget>
+</div>
+
 </div>

@@ -12,8 +12,8 @@ function DashboardCtrl($scope, deviceService, $uibModal) {
 		$scope.deviceCount = Object.keys(deviceService.devices).length;
 	};
 
-	$scope.labels = ["22nd January 2016", "15th March 2016", "7th April 2016"];
-    $scope.upTime = [50 , 20, 60];
+	$scope.labels = ["22nd January 2016", "15th March 2016", "7th April 2016", "hello"];
+    $scope.upTime = [50 , 20, 60, 20];
     $scope.uptimePairs = [[100, 150], [180, 300], [350, 410]];
     $scope.averageUpTime = calcAverageUpTime($scope.uptimePairs);
 

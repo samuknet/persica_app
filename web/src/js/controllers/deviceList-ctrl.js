@@ -45,6 +45,4 @@ app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', fu
 	};
 
 
-
-
 }]);
