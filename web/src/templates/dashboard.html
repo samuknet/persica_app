@@ -86,29 +86,7 @@
     </rd-widget>
 </div>
 
-<div class="col-lg-6">
 
-  <rd-widget>
-     <rd-widget-header icon="fa-users" title="Users">
-        <input type="text" placeholder="Search" class="form-control input-sm" />
-    </rd-widget-header>
-    <rd-widget-body classes="medium no-padding">
-            <div ng-controller='TimeCtrl'>
-                <div ng-show='online'>
-                    <p> Device Online Since: <br> {{lastConnected | date:'medium'}} </p>
-                    <p> Current Uptime: <br> {{ clock }} </p>
-                </div>
-                <div ng-show='!online'>
-                	<p> Device is Offline. Last Online: <br> {{lastConnected | date:'medium'}} </p>
-                </div>
-            </div>
-
-        <div class="table-responsive">
-          <canvas id="pie" class="chart chart-pie" chart-data="upTime" chart-labels="labels"> </canvas> 
-        </div>
- </rd-widget-body>
-</rd-widget>
-</div>
 
 </div>
 
