@@ -24,9 +24,9 @@ module.exports = function(router, ioService) {
                 ioService.newDevice(device);
                 res.status(201).json({message: 'Device added.'});                
             }
-
         }); 
     });
+
 
     router.post('/user', function (req, res) {
         var username = req.body.username,

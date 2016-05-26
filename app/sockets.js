@@ -12,6 +12,8 @@ module.exports = function(http) {
         var did = socket.handshake.query.did;
         devices[did] = {socket: socket, device: {did: did, cmds : []}};
         devices[did].device.cmds = [];
+        devices[did].device.establishTime = Date.now();
+
         control.emit('device-connected', devices[did].device);
         
 
@@ -26,10 +28,15 @@ module.exports = function(http) {
         });
 
         socket.on('disconnect', function() {
+            var lastOnline = Date.now();
             delete devices[did];
-            control.emit('device-disconnected', {did: did, cmds: []});
+            new Device({lastOnline: lastOnline}).update(function(err, product) {
+                if (err) { 
+                    console.error(err);
+                }
+            });
+            control.emit('device-disconnected', {did: did, cmds: [], lastOnline: lastOnline});
         });
-
 
         socket.on('device-updateVariable', function(data) {
 

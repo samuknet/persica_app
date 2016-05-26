@@ -49,7 +49,6 @@ function TimeCtrl($scope, $stateParams, $timeout, deviceService) {
 
     $scope.clock = "loading clock..."; // initialise the time variable
     $scope.tickInterval = 1000; //ms
-    console.log(deviceService.devices[did]);
 
     var tick = function() {
             var upTime = Math.floor((Date.now() - $scope.establishTime)/1000);
