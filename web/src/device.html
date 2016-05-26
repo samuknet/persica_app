@@ -25,7 +25,11 @@ Register Cmd: <input type="text" id="cmdF" />
 <div id="output">
 
 </div>
+<audio src="/song" id="audio" />
 <script>
+    var audio = document.getElementB
+
+    // oscillator.start(context.currentTime);
     function out(msg) {
         document.getElementById('output').style.backgroundColor = msg;
     }
@@ -47,9 +51,13 @@ Register Cmd: <input type="text" id="cmdF" />
             socket.emit('device-register-cmd', {cmd: cmdF.value});
         }
     })
+
+    socket.emit('device-register-cmd', {cmd: 'play'});
+    
     socket.on('cmd', function (data) {
-        console.log('hi');
-        out(data.cmd);
+        if (data.cmd === 'play') {
+            audio.play();
+        };
     });
     socket.emit('device-updateVariable', {handle: "test", value : "test"})
 

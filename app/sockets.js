@@ -11,15 +11,16 @@ module.exports = function(http) {
     device.on('connection', function (socket) {
         var did = socket.handshake.query.did;
         devices[did] = {socket: socket, device: {did: did, cmds : []}};
-        devices[did].cmds = [];
+        devices[did].device.cmds = [];
         control.emit('device-connected', devices[did].device);
 
         socket.on('device-register-cmd', function (cmd) {
             // cmd.cmd
-
             // check if command already registered
+
             if (!_.contains(devices[did].cmds, cmd.cmd)) {
-                control.emit('device-register-cmd', {did: did, cmd: cmd.cmd, cmds: []});
+                control.emit('device-register-cmd', {did: did, cmd: cmd.cmd});
+                devices[did].device.cmds.push(cmd.cmd);
             }
         });
 
