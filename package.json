@@ -6,6 +6,7 @@
   "author": "Alfred",
   "dependencies": {
     "body-parser": "latest",
+    "chai": "^3.5.0",
     "crypto": "0.0.3",
     "express": "latest",
     "express-jwt": "^3.4.0",
@@ -20,13 +21,16 @@
     "gulp-watch": "^4.3.6",
     "gulp-wrap": "^0.13.0",
     "jsonwebtoken": "^7.0.0",
+    "mocha": "^2.5.3",
     "mongoose": "latest",
     "morgan": "latest",
     "nodemon": "^1.9.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "request": "latest",
+    "should": "^8.4.0",
     "socket.io": "^1.4.6",
+    "socket.io-client": "^1.4.6",
     "underscore": "^1.8.3"
   },
   "repository": {
