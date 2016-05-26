@@ -38,15 +38,9 @@ function ChatCtrl($scope, chatService) {
         $scope.messages = chatService.messages;
     };
 
-    var sendMessage = function(from, msg) {
+    $scope.sendMessage = function(from, msg) {
     	chatService.sendMessage({from: from, msg: msg});
     };
-
-    $scope.checkkey = function(evt, from, msg) {
-    	if (evt.keyCode === 13) {
-    		sendMessage(from, msg);
-    	}
-    }
 
     chatService.observers.push(chat_observer);
     chat_observer();
@@ -55,8 +49,6 @@ function ChatCtrl($scope, chatService) {
 angular
   .module('Persica')
   .controller('TimeCtrl', ['$scope', '$timeout', 'deviceService', TimeCtrl]);
-
-
 
 function TimeCtrl($scope, $timeout, deviceService) {
 	var updateTimerOnlineStatus = function () {
