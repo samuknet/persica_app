@@ -4,12 +4,13 @@ module.exports = function(http) {
     var io = require('socket.io')(http);
 
     var devices = {};
-
+    var Device = require('./models/device');
     var control = io.of('/control');
     var device = io.of('/device');
 
     device.on('connection', function (socket) {
         var did = socket.handshake.query.did;
+<<<<<<< HEAD
         devices[did] = {socket: socket, device: {did: did, cmds : []}};
         devices[did].cmds = [];
         control.emit('device-connected', devices[did].device);
@@ -22,12 +23,37 @@ module.exports = function(http) {
                 control.emit('device-register-cmd', {did: did, cmd: cmd.cmd, cmds: []});
             }
         });
+=======
+
+        devices[did] = socket;
+        control.emit('device-connected', {did: did, status: 'green'});
+>>>>>>> 56d19a03b7e269b0560992dfde61f20f53d771b9
 
         socket.on('disconnect', function() {
             delete devices[did];
             control.emit('device-disconnected', {did: did, cmds: []});
         });
+
+
+        socket.on('device-updateVariable', function(data) {
+            var updateObj = {handle: data.handle, value: data.value, timestamp : Date.now() }
+            Device.findOneAndUpdate(
+                    {did:did},
+                    {$push: {"varUpdates": updateObj}},
+                    {safe: true, upsert: true, new : true},
+                    function(err, model) {
+                        console.log(err);
+                    }
+            );
+            console.log("var updated", updateObj)
+
+            control.emit('control-updateVariable', updateObj)
+        });
     });
+
+
+
+
 
     control.on('connection', function (socket) {
         socket.join('control-chat');
@@ -57,6 +83,9 @@ module.exports = function(http) {
             control.emit('device-connected', devices[did].device);
         });
     });
+
+
+
 
     return {
         newDevice: function (device) {

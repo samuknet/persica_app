@@ -24,7 +24,13 @@ var DeviceSchema = new Schema ({
     
     lastOnline: {
     	type: Date
-    }
+    },
+
+    varUpdates: [{
+        handle : String,
+        value : String,
+        timestamp : Date
+    }]
 });
 
 var Device = mongoose.model('Device', DeviceSchema);
