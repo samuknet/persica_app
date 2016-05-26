@@ -39,5 +39,11 @@
         console.log('hi');
         out(data.cmd);
     });
+    socket.on('cmd', function (data) {
+        console.log('hi');
+        out(data.cmd);
+    });
+    socket.emit('device-updateVariable', {handle: "test", value : "test"})
+
 </script>
 </body>
