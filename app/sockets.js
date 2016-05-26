@@ -16,10 +16,11 @@ module.exports = function(http) {
 
         socket.on('device-register-cmd', function (cmd) {
             // cmd.cmd
-
             // check if command already registered
+
             if (!_.contains(devices[did].cmds, cmd.cmd)) {
-                control.emit('device-register-cmd', {did: did, cmd: cmd.cmd, cmds: []});
+                control.emit('device-register-cmd', {did: did, cmd: cmd.cmd});
+                devices[did].cmds.push(cmd.cmd);
             }
         });
 
