@@ -8,7 +8,7 @@ angular
 
 function DashboardCtrl($scope, deviceService) {
 	var devices_observer = function() {
-		$scope.deviceCount = Object.keys(deviceService.devices ? deviceService.devices : []).length;
+		$scope.deviceCount = Object.keys(deviceService.devices).length;
 	};
 
 	$scope.labels = ["22nd January 2016", "15th March 2016", "7th April 2016", "ello", "sd", "asd"];
@@ -28,7 +28,22 @@ function DashboardCtrl($scope, deviceService) {
 		return averageUpTime;
 	}
     deviceService.observers.push(devices_observer);
-    devices_observer();
+}
+
+angular
+    .module('Persica')
+    .controller('ChatCtrl', ['$scope',  'chatService', ChatCtrl]);
+function ChatCtrl($scope, chatService) {
+    var chat_observer = function() {
+        $scope.messages = chatService.messages;
+    };
+
+    $scope.sendMessage = function(from, msg) {
+    	chatService.sendMessage({from: from, msg: msg});
+    };
+
+    chatService.observers.push(chat_observer);
+    chat_observer();
 }
 
 angular

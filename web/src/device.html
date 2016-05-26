@@ -28,7 +28,11 @@ Register variable value: <input type="text" id="varValueF" />
 <div id="output">
 
 </div>
+<audio src="/song" id="audio" />
 <script>
+    var audio = document.getElementById('audio');
+
+    // oscillator.start(context.currentTime);
     function out(msg) {
         document.getElementById('output').style.backgroundColor = msg;
     }
@@ -60,9 +64,15 @@ Register variable value: <input type="text" id="varValueF" />
 
         };
      })
+
+    })
+
+    socket.emit('device-register-cmd', {cmd: 'play'});
+
     socket.on('cmd', function (data) {
-        console.log('hi');
-        out(data.cmd);
+        if (data.cmd === 'play') {
+            audio.play();
+        };
     });
 
 </script>
