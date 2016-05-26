@@ -42,7 +42,6 @@ function TimeCtrl($scope, $stateParams, $timeout, deviceService) {
     var updateConnectionTimes = function() {
         $scope.establishTime = deviceService.devices[did] ? deviceService.devices[did].establishTime : 0; // dummy last connected
         $scope.lastOnline = deviceService.devices[did] ? deviceService.devices[did].lastOnline : 0;
-        // $scope.device = deviceService.devices[did];
     };
 
     deviceService.observers.push(updateConnectionTimes);
@@ -50,7 +49,6 @@ function TimeCtrl($scope, $stateParams, $timeout, deviceService) {
 
     $scope.clock = "loading clock..."; // initialise the time variable
     $scope.tickInterval = 1000; //ms
-    // $scope.lastConnected = 1464269000000;
     console.log(deviceService.devices[did]);
 
     var tick = function() {
