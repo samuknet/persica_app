@@ -13,6 +13,7 @@ module.exports = function(http) {
         devices[did] = {socket: socket, device: {did: did, cmds : []}};
         devices[did].device.cmds = [];
         control.emit('device-connected', devices[did].device);
+        
 
         socket.on('device-register-cmd', function (cmd) {
             // cmd.cmd
@@ -31,7 +32,8 @@ module.exports = function(http) {
 
 
         socket.on('device-updateVariable', function(data) {
-            var updateObj = {handle: data.handle, value: data.value, timestamp : Date.now() }
+
+            var updateObj = {did:did, handle: data.handle, value: data.value, timestamp : Date.now() }
             Device.findOneAndUpdate(
                     {did:did},
                     {$push: {"varUpdates": updateObj}},
@@ -42,7 +44,7 @@ module.exports = function(http) {
             );
             console.log("var updated", updateObj)
 
-            control.emit('control-updateVariable', updateObj)
+            control.emit('device-updateVariable', updateObj)
         });
     });
 
