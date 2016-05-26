@@ -65,15 +65,17 @@
                 <div class="table-responsive">
                    <table class="table table-hover">
                       <thead>
-                         <tr><th>DeviceID</th><th>Alias</th><th>Online</th></tr>
+                         <tr><th>DeviceID</th><th>Alias</th><th><center>Online</center></th></tr>
                      </thead>
                      <tbody>
                          <tr style="cursor:pointer;" ng-repeat="device in devices" ng-click="navigateToDevice(device.did)" >
                             <td>{{device.did}}</td>
                             <td>{{device.alias}}</td>
                             <td>
-                                <span class="fa fa-circle" style="color:#5cb85c" ng-if="device.online"></span>
-                                <span class="fa fa-circle-o" style="color:#d9534f" ng-if="!device.online"></span>
+                                <center>
+                                    <span class="fa fa-circle" style="color:#5cb85c" ng-if="device.online"></span>
+                                    <span class="fa fa-circle-o" style="color:#d9534f" ng-if="!device.online"></span>
+                                </center>
                             </td>
                         </tr>
 
