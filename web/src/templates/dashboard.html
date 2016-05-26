@@ -85,6 +85,7 @@
 </div>
 
 <div class="col-lg-6">
+
   <rd-widget>
      <rd-widget-header icon="fa-users" title="Users">
         <input type="text" placeholder="Search" class="form-control input-sm" />
@@ -96,7 +97,7 @@
                     <p> Current Uptime: <br> {{ clock }} </p>
                 </div>
                 <div ng-show='!online'>
-                	<p> Device is Offline. Last Online: <br> {{lastConnected | date:'medium'}} <p>
+                	<p> Device is Offline. Last Online: <br> {{lastConnected | date:'medium'}} </p>
                 </div>
             </div>
 
@@ -106,6 +107,39 @@
  </rd-widget-body>
 </rd-widget>
 </div>
+
+</div>
+
+<div class="row">
+<div class="col-lg-6">
+    <rd-widget>
+        <rd-widget-header icon="fa-users" title="Message Board">
+            <input type="text" placeholder="Enter Name" class="form-control input-sm" />
+        </rd-widget-header>
+        <rd-widget-body classes="medium no-padding">
+            <div class="table-responsive">
+                   <table class="table table-hover">
+                      <thead>
+                         <tr><th>Squad 27</th></tr>
+                     </thead>
+                     <tbody>
+                         <tr style="cursor:pointer;" ng-repeat="msg in messages" >
+                            <td>{{msg.from}}</td>
+                            <td>{{msg.msg}}</td>
+                            <td>
+                                <span class="fa fa-circle" style="color:#5cb85c" ng-if="device.online"></span>
+                                <span class="fa fa-circle-o" style="color:#d9534f" ng-if="!device.online"></span>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </rd-widget-body>
+    </rd-widget>
+</div>
+	</div>
+
 </div>
 
 <!--

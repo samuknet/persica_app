@@ -4,13 +4,14 @@
 
 angular
     .module('Persica')
-    .controller('DashboardCtrl', ['$scope', 'deviceService', DashboardCtrl]);
+    .controller('DashboardCtrl', ['$scope', 'deviceService', 'chatService', DashboardCtrl]);
 
-function DashboardCtrl($scope, deviceService, $uibModal) {
+function DashboardCtrl($scope, deviceService, chatService, $uibModal) {
 
 	var devices_observer = function() {
 		$scope.deviceCount = Object.keys(deviceService.devices).length;
 	};
+<<<<<<< HEAD
 
 	$scope.labels = ["22nd January 2016", "15th March 2016", "7th April 2016", "ello", "sd", "asd"];
     $scope.upTime = [50 , 20, 60, 20, 10, 40];
@@ -28,7 +29,14 @@ function DashboardCtrl($scope, deviceService, $uibModal) {
 		var averageUpTime = sum / uptimePairs.length;
 		return averageUpTime;
 	}
+=======
+>>>>>>> b3f40abceadc693ed748fd755ae10013af3af3dc
     deviceService.observers.push(devices_observer);
+
+    var chat_observer = function() {
+        $scope.messages = chatService.messages;
+    };
+    chatService.observers.push(chat_observer);
 }
 
 

@@ -7,8 +7,7 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 		_.forEach(observers, function(observer) {
 			observer();
 		})
-
-	}
+	};
 
 	$http.get('/device').then(function(response) {
 		// Success
@@ -39,8 +38,12 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
     socketService.on('device-new', function(device) {
     	devices[device.did] = _.extend(devices[device.did] || {}, device);
 		notify_observers();
+    });
 
-		
+    socketService.on('device-register-cmd', function (register) {
+    	devices[register.did] = _.extend(devices[register.did] || {}, {did: register.did});
+    	devices[register.did].cmds.push(register.cmd);
+    	notify_observers();
     });
 
 	this.devices = devices;
@@ -49,6 +52,10 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 	// Sends a command to all connected devices
 	this.broadcastCommand = function(cmdName){ 
 		socketService.emit('cmd', {cmd: cmdName});
+	};
+
+	this.sendCommand = function (did, cmdName) {
+		socketService.emit('cmd', {did: did, cmd: cmdName});
 	};
 
 	// Sends a command to all devices in a given group
