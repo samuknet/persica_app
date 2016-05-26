@@ -91,5 +91,3 @@ function TimeCtrl($scope, $timeout, deviceService) {
     // Start the timer
     $timeout(tick, $scope.tickInterval);
 }
-
->>>>>>> 9fa46379f3b4aa43114eb349dc47bef9b8fea883
