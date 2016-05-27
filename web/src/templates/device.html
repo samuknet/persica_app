@@ -24,7 +24,6 @@
                                 <tr><td>Description</td><td>{{device.description}} </td></tr>
                 					<tr ng-show="device.online"><td> Device Online Since:</td><td> {{establishTime | date:'medium'}} </td></tr>
                						<tr ng-show="device.online"><td> Current Uptime: </td><td> {{ clock }} </td></tr>
-               						<tr ng-show="!device.online"><td> Device Offline. </td><td> -- </td></tr>
                						<tr ng-show="!device.online"><td> Last Online: </td><td> {{device.lastOnline | date:'medium'}} </td></tr>
                             </tbody>
                         </table>
