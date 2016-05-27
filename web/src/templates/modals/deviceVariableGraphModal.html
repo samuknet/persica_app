@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">Graph for <i>{{varName}}</i></h3>
+    <h3 class="modal-title">Graph for <i>{{varHandle}}</i></h3>
 </div>
 
 <div class="modal-body">
@@ -11,6 +11,5 @@
 </div>
 
 <div class="modal-footer">
-    <input type="submit" class="btn btn-primary" type="button" value="Submit" />
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <input ng-click="close()" type="submit" class="btn btn-primary" type="button" value="Close" />
 </div>   

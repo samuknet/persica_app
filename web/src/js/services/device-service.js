@@ -51,8 +51,8 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
     		timestamp : updateObj.timestamp
     	}
     	var device = devices[updateObj.did]
-    	device.vars = device.vars || {}
-    	device.vars[updateObj.handle] = variable
+    	device.liveVars = device.liveVars || {}
+    	device.liveVars[updateObj.handle] = variable
     	notify_observers()
     });
 
