@@ -1,15 +1,13 @@
 {
-  "name": "mean-skeleton",
-  "version": "0.4.1",
-  "description": "Skeleton for an application using the MEAN stack.",
+  "name": "Persica.io",
+  "version": "0.0.1",
+  "description": "Fluid development and deployment engine for Internet of Things.",
   "main": "server.js",
-  "author": "Alfred",
+  "author": "Web Apps Group 27",
   "dependencies": {
     "body-parser": "latest",
     "chai": "^3.5.0",
-
     "chart.js": "^2.1.3",
-
     "crypto": "0.0.3",
     "express": "latest",
     "express-jwt": "^3.4.0",
@@ -38,6 +36,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alfredababio/mean-skeleton.git"
+    "url": "https://github.com/samuknet/persica_app.git"
+  },
+  "scripts": {
+    "pretest": "node server.js > dummy.txt &",
+    "test": "mocha test-node/routes/sockets-spec.js --timeout 5000"
   }
 }

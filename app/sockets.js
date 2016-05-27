@@ -32,11 +32,16 @@ module.exports = function(http) {
         socket.on('disconnect', function() {
             var lastOnline = Date.now();
             delete devices[did];
-            new Device({lastOnline: lastOnline}).update(function(err, product) {
-                if (err) { 
-                    console.error(err);
-                }
-            });
+            Device.findOneAndUpdate(
+                    {did:did},
+                    {"lastOnline": lastOnline},
+                    function(err, model) {
+                        if (err) {
+                            console.error(err);
+                        }
+                    }
+            );
+
             control.emit('device-disconnected', {did: did, cmds: [], lastOnline: lastOnline});
         });
 
