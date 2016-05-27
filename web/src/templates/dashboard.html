@@ -4,119 +4,22 @@
         <uib-alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
     </div>
     </div>
-<div class="row">
-	<div class="col-lg-3 col-md-6 col-xs-12">
-		<rd-widget>
-			<rd-widget-body>
-				<div class="widget-icon green pull-left">
-					<i class="fa fa-users"></i>
-				</div>
-				<div class="title">{{deviceCount}}</div>
-				<div class="comment">Devices</div>
-			</rd-widget-body>
-		</rd-widget>
-	</div>
-	<div class="col-lg-3 col-md-6 col-xs-12">
-		<rd-widget>
-			<rd-widget-body>
-				<div class="widget-icon red pull-left">
-					<i class="fa fa-tasks"></i>
-				</div>
-				<div class="title">{{160}}</div>
-				<div class="comment">Servers</div>
-			</rd-widget-body>
-		</rd-widget>
-	</div>
-	<div class="col-lg-3 col-md-6 col-xs-12">
-		<rd-widget>
-			<rd-widget-body>
-				<div class="widget-icon orange pull-left">
-					<i class="fa fa-sitemap"></i>
-				</div>
-				<div class="title">100</div>
-				<div class="comment">Lions</div>
-			</rd-widget-body>
-		</rd-widget>
-	</div>
-	<div class="col-lg-3 col-md-6 col-xs-12">
-		<rd-widget>
-			<rd-widget-body>
-				<div class="widget-icon blue pull-left">
-					<i class="fa fa-support"></i>
-				</div>
-				<div class="title">0</div>
-				<div class="comment">Marks</div>
-			</rd-widget-body>
-		</rd-widget>
-	</div>
+
+<div class="row" ng-controller="DashboardHeaderCtrl" ng-include="'templates/dashboard/dashboardHeaderWidgets.html'">
+	
 </div>
 
 <div class="row">
-	<div class="col-lg-6" ng-controller="DeviceListCtrl">
-		<rd-widget>
-            <rd-widget-header icon="fa-tasks" title="Devices">
-                <!-- <a href="#">Manage Devices</a> -->
-                    <div style="text-align:right">
-                       <a href="" ng-click="openNewDeviceModal()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+	<div class="col-lg-6" ng-include="'templates/dashboard/deviceListWidget.html'" ng-controller="DeviceListCtrl">
+		
 
-                    </div>
-            </rd-widget-header>
-            <rd-widget-body classes="medium no-padding">
-                <div class="table-responsive">
-                   <table class="table table-hover">
-                      <thead>
-                         <tr><th>DeviceID</th><th>Alias</th><th><center>Online</center></th></tr>
-                     </thead>
-                     <tbody>
-                         <tr style="cursor:pointer;" ng-repeat="device in devices" ng-click="navigateToDevice(device.did)" >
-                            <td>{{device.did}}</td>
-                            <td>{{device.alias}}</td>
-                            <td>
-                                <center>
-                                    <span class="fa fa-circle" style="color:#5cb85c" ng-if="device.online"></span>
-                                    <span class="fa fa-circle-o" style="color:#d9534f" ng-if="!device.online"></span>
-                                </center>
-                            </td>
-                        </tr>
+	</div>
 
-                    </tbody>
-                </table>
-            </div>
-        </rd-widget-body>
-    </rd-widget>
-</div>
-
-<div class="col-lg-6" ng-controller="ChatCtrl">
-    <rd-widget>
-        <rd-widget-header icon="fa-users" title="Squad 27 Live Chat">
-               
-        </rd-widget-header>
-        <rd-widget-body classes="medium no-padding">
-            <div class="table-responsive">
-           <table class="table table-hover">
-                    <tr>
-                         <form>
-                           <td> <input type="text" data-ng-model="from" placeholder="Enter Handle" class="form-control input-sm" size="2" /></td>
-                             <td><input class="form-control input-sm" type="text" data-ng-model="msg" placeholder="Message..." ng-enter="sendMessage(from, msg);msg=''" /></td>
-                        </form>
-                    </tr>
-
-            </table>
-
-            </div>     
-        	<div class="table-responsive">
-				<table class="table table-hover">
-					<tr ng-repeat="msg in messages"><td>{{msg.from}}: {{msg.msg}}</td></tr>
-				</table>
-        	</div>
-           
-        </rd-widget-body>
-    </rd-widget>
-</div>
+	<div class="col-lg-6" ng-include="'templates/dashboard/chatWidget.html'" ng-controller="ChatCtrl">
+   
+	</div>
 
 </div>
-
-
 
 </div>
 <!--

@@ -1,0 +1,25 @@
+ <rd-widget>
+        <rd-widget-header icon="fa-users" title="Squad 27 Live Chat">
+               
+        </rd-widget-header>
+        <rd-widget-body classes="medium no-padding">
+            <div class="table-responsive">
+           <table class="table table-hover">
+                    <tr>
+                         <form>
+                           <td> <input type="text" data-ng-model="from" placeholder="Enter Handle" class="form-control input-sm" size="2" /></td>
+                             <td><input class="form-control input-sm" type="text" data-ng-model="msg" placeholder="Message..." ng-enter="sendMessage(from, msg);msg=''" /></td>
+                        </form>
+                    </tr>
+
+            </table>
+
+            </div>     
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr ng-repeat="msg in messages"><td>{{msg.from}}: {{msg.msg}}</td></tr>
+                </table>
+            </div>
+           
+        </rd-widget-body>
+    </rd-widget>
