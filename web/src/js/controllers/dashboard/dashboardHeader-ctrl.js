@@ -9,5 +9,4 @@ function DashboardHeaderCtrl($scope, deviceService) {
 
     deviceService.observers.push(devices_observer);
     devices_observer();
-
 }
