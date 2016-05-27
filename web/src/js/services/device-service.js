@@ -20,6 +20,7 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 		// Error
 	});
 
+
 	socketService.on('device-connected', function(device) {
 		devices[device.did] = _.extend(devices[device.did] || {}, device);
 		devices[device.did].online = true;
@@ -47,12 +48,11 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
     socketService.on('device-updateVariable', function(updateObj) {
     	var variable = {
     		value : updateObj.value,
-    		lastChange : updateObj.timestamp
+    		timestamp : updateObj.timestamp
     	}
     	var device = devices[updateObj.did]
     	device.vars = device.vars || {}
     	device.vars[updateObj.handle] = variable
-    	console.log("variable received")
     	notify_observers()
     });
 

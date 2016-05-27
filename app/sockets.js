@@ -49,15 +49,10 @@ module.exports = function(http) {
                         console.log(err);
                     }
             );
-            console.log("var updated", updateObj)
 
             control.emit('device-updateVariable', updateObj)
         });
     });
-
-
-
-
 
     control.on('connection', function (socket) {
         socket.on('cmd', function (data) {

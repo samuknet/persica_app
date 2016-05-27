@@ -73,32 +73,20 @@ module.exports = function(router, ioService) {
         });
     });
 
-    router.get('/device/:did/variable', function (req, res) {
+    router.get('/device/variable', function (req, res) {
         var did = req.query.did,
+            varName = req.query.varName;
             searchObj = did ? {did: did} : {};
-        Device.find(searchObj, function(err, devices) {
+        Device.findOne(searchObj, function(err, device) {
             if (err) {
                 res.send({message: 'Error occured while getting devices.'});
             } else {
-                _.forEach(devices, function (device) {
-                    device.cmds = [];
+               
+                var filteredVariables = _.filter(device.varUpdates, function (varUpdate) {
+                    return varName === varUpdate.handle;
                 });
-                res.send(devices);
-            }
-        });
-    });
 
-    router.get('/device/:did/variable/:handle', function (req, res) {
-        var did = req.query.did,
-            searchObj = did ? {did: did} : {};
-        Device.find(searchObj, function(err, devices) {
-            if (err) {
-                res.send({message: 'Error occured while getting devices.'});
-            } else {
-                _.forEach(devices, function (device) {
-                    device.cmds = [];
-                });
-                res.send(devices);
+                res.send(filteredVariables);
             }
         });
     });

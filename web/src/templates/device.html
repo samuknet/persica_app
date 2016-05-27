@@ -29,7 +29,7 @@
             </rd-widget>
         </div>
 
-        <div class="col-lg-6"  ng-controller='TimeCtrl'>
+        <div class="col-lg-6" ng-controller='TimeCtrl'>
             <rd-widget>
                 <rd-widget-header icon="fa-angle-double-up" title="Uptime">
                     <input type="text" placeholder="Search" class="form-control input-sm" />
@@ -92,7 +92,7 @@
 							<tbody>
 								
 								<tr style="cursor:pointer;" ng-click="openGraphModal(handle)" ng-repeat="(handle, var) in vars">
-									<td>{{handle}}</td><td>{{var.value}}</td><td>{{var.lastChange|date:'short'}}</td>
+									<td>{{handle}}</td><td>{{var.lastValue}}</td><td>{{var[0].timestamp|date:'short'}}</td>
 
 								</tr>
 
