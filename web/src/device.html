@@ -1,29 +1,42 @@
-<head>
-<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<!doctype html>
+<html>
+    <head>
+        <title>
+            Bootstrap HTML5 Skeleton
+        </title>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 
-<style>
-    body {
-        font-family: arial;
-    }
-    #output {
-        width: 100px;
-        height: 100px;
-        border: 1px solid black;
-        transition: background-color 0.5s ease;
-    }
-</style>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
-</head>
-<body>
-<h1>Linux Device Emulator</h1>
-<div id="didF">
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
-</div>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>IOT Device Emulator</h1>
+            <div id="didF">
 
-Register Cmd: <input type="text" id="cmdF" />
+            </div>
 
-Register variable name: <input type="text" id="varNameF" />
-Register variable value: <input type="text" id="varValueF" />
+            <form class="form">
+                <fielset class="form-group">
+                    <label for="cmdF">Register Cmd:</label> <input class="form-control" type="text" id="cmdF" />
+                </fielset>
+
+                <fieldset class="form-group">
+                    <label for="varHandleF">Register variable name:</label> <input class="form-control" type="text" id="varNameF" />
+                    <label for="varValueF">Register variable value:</label> <input class="form-control" type="text" id="varValueF" />
+                </fieldset>
+
+            </form>
+
+
+        </div>
+    </body>
+</html>
+
 
 <div id="output">
 
@@ -40,7 +53,7 @@ Register variable value: <input type="text" id="varValueF" />
     var did = 500;
     
     var cmdF = document.getElementById('cmdF');
-    var varNameF = document.getElementById('varNameF');
+    var varHandleF = document.getElementById('varNameF');
     var varValueF = document.getElementById('varValueF');
 
     var didF = document.getElementById('didF');
@@ -60,7 +73,7 @@ Register variable value: <input type="text" id="varValueF" />
 
      varValueF.addEventListener('keydown', function (evt) {
         if (evt.keyCode === 13) {
-            socket.emit('device-updateVariable', {handle: varNameF.value, value : varValueF.value})
+            socket.emit('device-updateVariable', {handle: varHandleF.value, value : varValueF.value})
 
         };
      });
@@ -76,3 +89,4 @@ Register variable value: <input type="text" id="varValueF" />
 
 </script>
 </body>
+</html>
