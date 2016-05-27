@@ -59,6 +59,14 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 	this.devices = devices;
 	this.observers = observers;
 
+    this.newDevice = function(device, success, fail) {
+        $http.post('/device', {
+            did: device.did,
+            alias: device.alias,
+            description: device.description
+        }).then(success, fail);
+    }
+
 	// Sends a command to all connected devices
 	this.broadcastCommand = function(cmdName){ 
 		socketService.emit('cmd', {cmd: cmdName});
