@@ -1,75 +1,155 @@
-<head>
-<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<!doctype html>
+<html>
+    <head>
+        <title>
+            IOT Device
+        </title>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 
-<style>
-    body {
-        font-family: arial;
-    }
-    #output {
-        width: 100px;
-        height: 100px;
-        border: 1px solid black;
-        transition: background-color 0.5s ease;
-    }
-</style>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
-</head>
-<body>
-<h1>Linux Device Emulator</h1>
-<div id="didF">
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+        
 
-</div>
 
-Register Cmd: <input type="text" id="cmdF" />
+<script type="text/javascript">
+    window.addEventListener('load', function() {
+        var audio = document.getElementById('audio');
+        var socket;
 
-Register variable name: <input type="text" id="varNameF" />
-Register variable value: <input type="text" id="varValueF" />
+        function onEnter(f) {
+            return function (evt) {
 
-<div id="output">
-
-</div>
-<audio src="/song" id="audio" />
-<script>
-    var audio = document.getElementById('audio');
-
-    // oscillator.start(context.currentTime);
-    function out(msg) {
-        document.getElementById('output').style.backgroundColor = msg;
-    }
-
-    var did = 500;
-    
-    var cmdF = document.getElementById('cmdF');
-    var varNameF = document.getElementById('varNameF');
-    var varValueF = document.getElementById('varValueF');
-
-    var didF = document.getElementById('didF');
-
-    didF.innerHTML = 'DID: ' + did;
-
-    var socket = io('/device?did=' + did);
-    socket.on('cmd', function (data) {
-        out(data.cmd);
-    });
-    
-     cmdF.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === 13) {
-            socket.emit('device-register-cmd', {cmd: cmdF.value});
-        }
-    });
-
-     varValueF.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === 13) {
-            socket.emit('device-updateVariable', {handle: varNameF.value, value : varValueF.value});
-        }
-     });
-
-    socket.emit('device-register-cmd', {cmd: 'play'});
-    socket.on('cmd', function (data) {
-        if (data.cmd === 'play') {
-            audio.play();
+                if (evt.keyCode === 13) {
+                    return f.apply(this, arguments);
+                }
+            }
         };
-    });
 
+        function out(msg) {
+            document.getElementById('output').style.backgroundColor = msg;
+        }
+
+        $('#connectForm').show();
+        $('#inputForm').hide();
+
+        $('#connectForm').on('submit', function(evt) {
+            var did = $('#didF').val();
+            $('#connectForm').hide();
+            $('#inputForm').show();
+            var socket = io('/device?did=' + did);
+            socket.on('cmd', function (data) {
+                $('#output').append('Received command: ' + data.cmd +'<br />');
+                if (data.cmd === 'play') {
+                    audio.play();
+                };
+            });
+
+            $('#cmdF').on('keydown', onEnter(function (evt) {
+                socket.emit('device-register-cmd', {cmd: cmdF.value});
+                $('#cmdF').val('');
+            }));
+
+            $('#varValueF').on('keydown', onEnter(function (evt) {
+                var varHandle = $('#varHandleF').val(),
+                    varValue = $('#varValueF').val();
+
+                socket.emit('device-updateVariable', {handle: varHandle, value : varValue})
+                $('#varValueF').val('');
+            }));
+
+
+            $('#fakeDataBtn').on('click', function(evt) {
+                // Sine graph
+                var x,
+                    max = 360,
+                    value;
+                for (x = 0; x < max; x += 22.5) {
+                    value = Math.sin(x * (Math.PI / 180 )) * 6;
+                    socket.emit('device-updateVariable', {handle: 'signal', value: value})
+                }
+
+                evt.preventDefault();
+            });
+            evt.preventDefault();
+            
+
+        });
+        
+    /*    var cmdF = document.getElementById('cmdF');
+        var varHandleF = document.getElementById('varNameF');
+        var varValueF = document.getElementById('varValueF');
+
+        var didF = document.getElementById('didF');
+
+        didF.innerHTML = 'DID: ' + did;
+
+        
+        
+         cmdF.addEventListener('keydown', function (evt) {
+            if (evt.keyCode === 13) {
+            }
+        });
+
+         varValueF.addEventListener('keydown', function (evt) {
+            if (evt.keyCode === 13) {
+                socket.emit('device-updateVariable', {handle: varHandleF.value, value : varValueF.value})
+            };
+
+         });*/
+
+       
+    });
 </script>
+
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>IOT Device</h1>
+
+             <form id="connectForm" class="form row">
+                <fielset class="form-group col-lg-2">
+                    <table>
+                    <tr>
+                    <td>
+                    <input placeholder="500" class="form-control" type="text" id="didF" />
+                    </td>
+
+                    <td>
+                    <button type="submit" class="btn btn-primary" id="connectBtn">Connect</button>
+                    </td>
+
+                    </tr>
+                    </table>
+                </fielset>
+              
+            </form>
+
+              
+            <div id="inputForm">
+
+
+            <form class="form">
+                <fielset class="form-group">
+                    <label for="cmdF">Register Cmd:</label> <input placeholder="cmd" class="form-control" type="text" id="cmdF" />
+                </fielset>
+                <br />
+                <fieldset class="form-group">
+                    <label for="varHandleF">Register variable name:</label> <input placeholder="variable name" class="form-control" type="text" id="varHandleF" />
+                    <label for="varValueF">Register variable value:</label> <input placeholder="value" class="form-control" type="text" id="varValueF" />
+                </fieldset>
+                
+                <!-- <button class="btn btn-primary" id="fakeDataBtn">Submit Fake Signal Variable Data</button> -->
+            </form>
+            </div>
+            <div id="output">
+        
+            </div>
+            <audio src="/song" id="audio" />
+        </div>
+    </body>
+</html>
 </body>
+</html>
