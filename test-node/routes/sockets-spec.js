@@ -39,27 +39,27 @@ it('Should notify control of new device when device connects', function(done) {
 
 });
 
-it('Should notify control when device is added', function(done) {
-    // Device connects
-    var control = io.connect('ws://localhost:3000/control');
-    control.on('device-new', function(device) {
+// it('Should notify control when device is added', function(done) {
+//     // Device connects
+//     var control = io.connect('ws://localhost:3000/control');
+//     control.on('device-new', function(device) {
         
-    })
-    control.on('connect', function() {
-        var request = require('request');
+//     })
+//     control.on('connect', function() {
+//         var request = require('request');
 
-        request.post('http://localhost:3000/device',
-            { form: { did: 23813001, alias: "Hello", description: "Test" } },
-            function (err, response, body) {
-                if (!err && response.statusCode === 201) {
-                    
-                }
+//         request.post('http://localhost:3000/device',
+//             { form: { did: 23813001, alias: "Hello", description: "Test" } },
+//             function (err, response, body) {
+//                 if (!err && response.statusCode === 201) {
+                        
+//                 }
 
 
-            }
-        );
-    });
-});
+//             }
+//         );
+//     });
+// });
 
 
 it('Should notify control of already connected devices', function(done) {
