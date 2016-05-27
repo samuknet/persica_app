@@ -58,14 +58,7 @@ function TimeCtrl($scope, $stateParams, $timeout, deviceService) {
             var stringTime = '';
             for (var k = 0; k < timeVars.length; k++) {
                 if (upTime>0) {
-                    var up;
-                    if (k===3) {
-                        //days can be a LOT
-                        up = upTime;
-                    } else {
-                        // hours, mins and secs
-                        up = upTime%60
-                    }
+                    var up = upTime%60
                     var word = timeVars[k] + ( up!==1 ? 's': '');
                     stringTime = up + ' ' + word + ', ' + stringTime;
                     upTime = Math.floor(upTime/60);
