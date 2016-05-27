@@ -12,4 +12,5 @@ function DashboardCtrl($scope, deviceService) {
     };
 
     deviceService.observers.push(devices_observer);
+    devices_observer();
 }
