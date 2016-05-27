@@ -140,7 +140,14 @@ angular.module('Persica').controller('DeviceVariableGraphModalCtrl', ['$scope', 
     $scope.data = [_.pluck(varUpdates, 'value')];
     $scope.labels = _.pluck(varUpdates, 'timestamp');
     $scope.series = [varHandle];
-
+    $scope.options = {
+      
+      showScale: false,
+      showTooltips: true,
+      pointDot: false,
+      datasetStrokeWidth: 1,
+      pointDotRadius: 1,
+    };
     $scope.close = function() {
         $uibModalInstance.close();
     }
