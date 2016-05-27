@@ -60,15 +60,12 @@ Register variable value: <input type="text" id="varValueF" />
 
      varValueF.addEventListener('keydown', function (evt) {
         if (evt.keyCode === 13) {
-            socket.emit('device-updateVariable', {handle: varNameF.value, value : varValueF.value})
-
-        };
+            socket.emit('device-updateVariable', {handle: varNameF.value, value : varValueF.value});
+        }
      });
 
-    
     socket.emit('device-register-cmd', {cmd: 'play'});
     socket.on('cmd', function (data) {
-        console.log('hi');
         if (data.cmd === 'play') {
             audio.play();
         };

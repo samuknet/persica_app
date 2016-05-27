@@ -40,7 +40,7 @@ function TimeCtrl($scope, $stateParams, $timeout, deviceService) {
     var did = $stateParams.did;
 
     var updateConnectionTimes = function() {
-        $scope.establishTime = deviceService.devices[did] ? deviceService.devices[did].establishTime : 0; // dummy last connected
+        $scope.establishTime = deviceService.devices[did] ? deviceService.devices[did].establishTime : 0;
         $scope.lastOnline = deviceService.devices[did] ? deviceService.devices[did].lastOnline : 0;
     };
 
