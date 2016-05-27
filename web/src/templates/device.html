@@ -11,17 +11,21 @@
 	</div>
 
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-6" >
             <rd-widget>
                 <rd-widget-header icon="fa-laptop" title="Device Profile">
                 </rd-widget-header>
                 <rd-widget-body classes="medium no-padding">
                     <div class="table-responsive">
-                        <table class="table table">
+                        <table class="table table" ng-controller='TimeCtrl'>
                             <tbody>
                                 <tr><td>Alias</td><td>{{device.alias}}</td></tr>
                                 <tr><td>DID</td><td>{{device.did}}</td></tr>
-                                <tr><td>Description</td><td>{{device.description}}</td></tr>
+                                <tr><td>Description</td><td>{{device.description}} </td></tr>
+                					<tr ng-show="device.online"><td> Device Online Since:</td><td> {{establishTime | date:'medium'}} </td></tr>
+               						<tr ng-show="device.online"><td> Current Uptime: </td><td> {{ clock }} </td></tr>
+               						<tr ng-show="!device.online"><td> Device Offline. </td><td> -- </td></tr>
+               						<tr ng-show="!device.online"><td> Last Online: </td><td> {{device.lastOnline | date:'medium'}} </td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -29,19 +33,12 @@
             </rd-widget>
         </div>
 
-        <div class="col-lg-6" ng-controller='TimeCtrl'>
+        <div class="col-lg-6">
             <rd-widget>
                 <rd-widget-header icon="fa-angle-double-up" title="Uptime">
                     <input type="text" placeholder="Search" class="form-control input-sm" />
                 </rd-widget-header>
                 <rd-widget-body classes="medium no-padding">
-                    <div ng-show='device.online'>
-                        <p> Device Online Since: <br> {{establishTime | date:'medium'}} </p>
-                        <p> Current Uptime: <br> {{ clock }} </p>
-                    </div>
-                    <div ng-show='!device.online'>
-                        <p> Device is Offline. Last Online: <br> {{lastOnline | date:'medium'}} </p>
-                    </div>
                     <div class="table-responsive">
                         <canvas id="pie" class="chart chart-pie" chart-data="upTime" chart-labels="labels"></canvas> 
                     </div>
@@ -91,8 +88,8 @@
 							</thead>
 							<tbody>
 								
-								<tr style="cursor:pointer;" ng-click="openGraphModal(handle)" ng-repeat="(handle, var) in vars">
-									<td>{{handle}}</td><td>{{var.lastValue}}</td><td>{{var[0].timestamp|date:'short'}}</td>
+								<tr style="cursor:pointer;" ng-click="openGraphModal(handle)" ng-repeat="(handle, var) in liveVars">
+									<td>{{handle}}</td><td>{{var.value}}</td><td>{{var.timestamp|date:'short'}}</td>
 
 								</tr>
 

@@ -12,6 +12,8 @@ module.exports = function(http) {
         var did = socket.handshake.query.did;
         devices[did] = {socket: socket, device: {did: did, cmds : []}};
         devices[did].device.cmds = [];
+        devices[did].device.liveVars = {};
+
         devices[did].device.establishTime = Date.now();
 
         control.emit('device-connected', devices[did].device);
@@ -38,6 +40,7 @@ module.exports = function(http) {
             control.emit('device-disconnected', {did: did, cmds: [], lastOnline: lastOnline});
         });
 
+
         socket.on('device-updateVariable', function(data) {
 
             var updateObj = {did:did, handle: data.handle, value: data.value, timestamp : Date.now() }
@@ -46,10 +49,12 @@ module.exports = function(http) {
                     {$push: {"varUpdates": updateObj}},
                     {safe: true, upsert: true, new : true},
                     function(err, model) {
+
                         console.log(err);
                     }
             );
 
+            devices[did].device.liveVars[data.handle] = updateObj;
             control.emit('device-updateVariable', updateObj)
         });
     });

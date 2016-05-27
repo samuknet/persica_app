@@ -40,7 +40,7 @@ function TimeCtrl($scope, $stateParams, $timeout, deviceService) {
     var did = $stateParams.did;
 
     var updateConnectionTimes = function() {
-        $scope.establishTime = deviceService.devices[did] ? deviceService.devices[did].establishTime : 0; // dummy last connected
+        $scope.establishTime = deviceService.devices[did] ? deviceService.devices[did].establishTime : 0;
         $scope.lastOnline = deviceService.devices[did] ? deviceService.devices[did].lastOnline : 0;
     };
 
@@ -115,7 +115,7 @@ function DeviceVarsCtrl($scope, $stateParams, $uibModal, deviceService) {
                 did: function() {
                     return did;
                 },
-                varName: function () {
+                varHandle: function () {
                     return varName;
                 }
             }
@@ -123,32 +123,24 @@ function DeviceVarsCtrl($scope, $stateParams, $uibModal, deviceService) {
     };
 
     var vars_observer = function() {
-        var vars = {};
-        if (deviceService.devices[did]) {
-             _.forEach(deviceService.devices[did].varUpdates, function (varUpdate) {
-                    
-                if (vars[varUpdate.handle]) {
-                    vars[varUpdate.handle].push(varUpdate);
-                } else {
-                    vars[varUpdate.handle] = [varUpdate];
-                }
-                vars[varUpdate.handle].lastValue = _.last(vars[varUpdate.handle]).value;
-            });
-        }
-        $scope.vars = vars;
-    };
-
+        var device = deviceService.devices[did];
+        $scope.liveVars = device ? device.liveVars : {};
+    }
     deviceService.observers.push(vars_observer);
     vars_observer();
 }
 
 /* Controller for the graph modal for a device variable */
-angular.module('Persica').controller('DeviceVariableGraphModalCtrl', ['$scope', '$uibModalInstance', '$http', 'did', 'varName', function($scope, $uibModalInstance, $http, did, varName) {
-    $scope.varName = varName;
-    var varUpdates = _.filter(varUpdates, function (update) { return update.handle === varName; });
-
+angular.module('Persica').controller('DeviceVariableGraphModalCtrl', ['$scope', '$uibModalInstance', '$http', 'deviceService', 'did', 'varHandle', function($scope, $uibModalInstance, $http, deviceService, did, varHandle) {
+    $scope.varHandle = varHandle;
+    var varUpdates = deviceService.devices[did].varUpdates;
+        varUpdates = _.filter(varUpdates, function (update) { return update.handle === varHandle; });
     $scope.data = [_.pluck(varUpdates, 'value')];
     $scope.labels = _.pluck(varUpdates, 'timestamp');
-    $scope.series = [varName];
+    $scope.series = [varHandle];
+
+    $scope.close = function() {
+        $uibModalInstance.close();
+    }
 
 }]);
