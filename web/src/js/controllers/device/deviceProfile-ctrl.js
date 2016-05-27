@@ -53,12 +53,21 @@ function TimeCtrl($scope, $stateParams, $timeout, deviceService) {
     var tick = function() {
             var upTime = Math.floor((Date.now() - $scope.establishTime)/1000);
 
-            var timeVars = ['secs', 'mins', 'hours', 'days'];
+            var timeVars = ['sec', 'min', 'hour', 'day'];
 
             var stringTime = '';
             for (var k = 0; k < timeVars.length; k++) {
                 if (upTime>0) {
-                    stringTime = upTime%60 + ' ' + timeVars[k] + ', ' + stringTime;
+                    var up;
+                    if (k===3) {
+                        //days can be a LOT
+                        up = upTime;
+                    } else {
+                        // hours, mins and secs
+                        up = upTime%60
+                    }
+                    var word = timeVars[k] + ( up!==1 ? 's': '');
+                    stringTime = up + ' ' + word + ', ' + stringTime;
                     upTime = Math.floor(upTime/60);
                 } else {
                     break;
