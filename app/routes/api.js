@@ -27,27 +27,6 @@ module.exports = function(router, ioService) {
         }); 
     });
 
-
-    router.post('/user', function (req, res) {
-        var username = req.body.username,
-            hash = req.body.hash,
-            salt = req.body.salt;
-
-        new User({username: username, hash: hash, salt: salt}).save( function (err, product, numAffected) {
-            if (err) {
-                switch(err.code) {
-                    case 11000:
-                        res.status(406).json({message:'Username already in use.'});
-                        break;
-                    default:
-                        res.status(406).json({message:'Unknown error occurred while adding user.'})
-                }
-            } else {
-                res.status(201).json({message: 'User added.'});
-            }
-        });
-    });
-
     router.get('/user', function (req, res) {
         User.find(function(err, models) {
             if (err) {
@@ -113,6 +92,7 @@ module.exports = function(router, ioService) {
             }
 
             return res.json({
+                username: user.username,
                 token: user.generateJWT()
             })
         });
@@ -132,6 +112,7 @@ module.exports = function(router, ioService) {
 
             if (user) {
                 return res.json({
+                    username: req.body.username,
                     token: user.generateJWT()
                 });
             } else {
