@@ -4,8 +4,10 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var jwt = require('express-jwt');
 
 // Configs
+var config = require('./config/secret');
 var db = require('./config/db');
 
 // Connect to the DB
@@ -38,6 +40,9 @@ app.use(bodyParser.urlencoded({
 }));
 
 var ioService = require('./app/sockets')(http);
+
+// Authenticating routes
+app.use(jwt({ secret: config.super_secret}).unless({path: config.unprotected}));
 
 // Api endpoints 
 require('./app/routes/api')(app, ioService);
