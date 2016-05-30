@@ -25,20 +25,47 @@ angular.module('Persica').config(['$stateProvider', '$urlRouterProvider', '$http
                 templateUrl: 'templates/device.html',
                 data: {requireLogin: true}
             });
+
+        $httpProvider.interceptors.push(['$injector', function($injector) {
+            // var $state = $injector.get('$state');
+            var requestInterceptor = {
+                request: function(config) {            
+                    return config;
+                },
+                response: function(response) {
+                    if (response.status === 401) {
+                        $injector.invoke(function($state) {
+                            // $state.go('index');
+                        });
+                    }
+                    return response;
+                }
+            };
+            return requestInterceptor;
+        }]);
     }
 ]);
 
-angular.module('Persica').run(['$rootScope', '$state', '$http', 'loginModalService', function ($rootScope, $state, $http, loginModalService) {
+angular.module('Persica').run(['$window', '$rootScope', '$state', '$http', 'loginModalService', function ($window, $rootScope, $state, $http, loginModalService) {
     $rootScope.user = {};
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+        var storedUser;
+        try {
+            storedUser = JSON.parse($window.localStorage['persica-user']);
+        } catch (err) {
+            storedUser = false;
+        }
+        
         var requireLogin = toState.data.requireLogin;
-
-        if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
+        if (storedUser && storedUser.token && typeof $rootScope.currentUser === 'undefined') {
+            // The case we need to fill in the user in scope
+            authorizeUser(storedUser);
+            return;
+        } else if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
             event.preventDefault();
             loginModalService()
             .then(function (user) {
-                console.log(user);
-                $http.defaults.headers.common.Authorization = 'Bearer ' + user.token;
+                authorizeUser(user);                
                 $state.go(toState.name, toParams);   
             })
             .catch(function(err) { // Hopefully defunct as modal handles everything
@@ -46,7 +73,13 @@ angular.module('Persica').run(['$rootScope', '$state', '$http', 'loginModalServi
                 console.log('An error occured.');
             });
         }
-        // Otherwise just carry on as normal
     });
+
+
+    function authorizeUser(user) {
+        $http.defaults.headers.common.Authorization = 'Bearer ' + user.token;
+        $window.localStorage['persica-user'] = JSON.stringify(user);
+        $rootScope.currentUser = user;
+    }
 
 }]);
