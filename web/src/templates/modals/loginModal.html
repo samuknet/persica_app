@@ -1,6 +1,6 @@
 <div class="modal-header">
         <h2 class="modal-title form-signin-heading">Login</h2>
-        Not registered? <a ng-click="openRegisterModal()">Register</a>
+        Not registered? <a style="cursor:pointer" ng-click="openRegisterModal()">Register</a>
 </div>
 
 <div ng-class="alertClass" class="col-xs-12">
@@ -9,15 +9,11 @@
 
 <form method="post" class="form-signin" ng-submit="login(username, password)"> 
 <div class="modal-body">
-        <fieldset class="form-group">
 
             <input ng-model="username" type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="" />
-        </fieldset>
-        <fieldset class="form-group">
+            <br />
             <input ng-model="password" type="password" class="form-control" name="password" placeholder="Password" required=""/>      
 
-        <br />
-        </fieldset> 
 </div>
 
 <div class="modal-footer">

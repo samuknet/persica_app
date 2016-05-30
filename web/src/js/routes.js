@@ -75,7 +75,6 @@ angular.module('Persica').run(['$window', '$rootScope', '$state', '$http', 'logi
         }
     });
 
-
     function authorizeUser(user) {
         $http.defaults.headers.common.Authorization = 'Bearer ' + user.token;
         $window.localStorage['persica-user'] = JSON.stringify(user);

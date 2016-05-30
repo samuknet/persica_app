@@ -17,7 +17,6 @@ var paths = {
     templates: 'src/templates/**/*.html',
     index: 'src/index.html',
     device: 'src/device.html',
-    login: 'src/login.html',
     bower_fonts: 'src/components/**/*.{ttf,woff,eof,svg}',
 };
 
@@ -39,14 +38,6 @@ gulp.task('usemindevice', function() {
         css: [minifyCss({keepSpecialComments: 0}), 'concat']
     })).pipe(gulp.dest('public/'));
 });
-
-gulp.task('useminlogin', function() {
-    return gulp.src(paths.login).pipe(usemin({
-         js: [minifyJs(), 'concat'],
-        css: [minifyCss({keepSpecialComments: 0}), 'concat']
-    })).pipe(gulp.dest('public/'));
-});
-
 
 /**
  * Copy assets
@@ -94,12 +85,11 @@ gulp.task('custom-templates', function() {
  */
 gulp.task('watch', function() {
     gulp.watch([paths.images], ['custom-images']);
-    gulp.watch([paths.styles], ['custom-less']);
+    gulp.watch([paths.styles], ['custom-css']);
     gulp.watch([paths.scripts], ['custom-js']);
     gulp.watch([paths.templates], ['custom-templates']);
     gulp.watch([paths.index], ['usemin']);
     gulp.watch([paths.device], ['usemindevice']);
-    gulp.watch([paths.login], ['useminlogin']);
 });
 
 /**
@@ -122,5 +112,5 @@ gulp.task('livereload', function() {
 /**
  * Gulp tasks
  */
-gulp.task('build', ['usemin', 'usemindevice', 'useminlogin', 'build-assets', 'build-custom']);
+gulp.task('build', ['usemin', 'usemindevice', 'build-assets', 'build-custom']);
 gulp.task('default', ['build', 'webserver', 'livereload', 'watch']);
