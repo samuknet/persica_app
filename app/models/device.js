@@ -30,6 +30,12 @@ var DeviceSchema = new Schema ({
         handle : String,
         value : String,
         timestamp : Date
+    }],
+
+    logs: [{
+            critical: Number, 
+            log: String,
+            timestamp: Date
     }]
 });
 

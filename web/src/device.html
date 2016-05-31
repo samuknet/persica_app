@@ -47,7 +47,7 @@
             });
 
             $('#cmdF').on('keydown', onEnter(function (evt) {
-                socket.emit('device-register-cmd', {cmd: cmdF.value});
+                socket.emit('device-register-cmd', {cmd: $('#cmdF').val()});
                 $('#cmdF').val('');
             }));
 
@@ -59,6 +59,12 @@
                 $('#varValueF').val('');
             }));
 
+
+             $('#logF').on('keydown', onEnter(function (evt) {
+                console.log({critical: $('#criticalLevelF').val(), log: $('#logF').val()});
+                socket.emit('device-log', {critical: $('#criticalLevelF').val(), log: $('#logF').val()});
+                $('#logF').val('');
+            }));
 
             $('#fakeDataBtn').on('click', function(evt) {
                 // Sine graph
@@ -76,30 +82,6 @@
             
 
         });
-        
-    /*    var cmdF = document.getElementById('cmdF');
-        var varHandleF = document.getElementById('varNameF');
-        var varValueF = document.getElementById('varValueF');
-
-        var didF = document.getElementById('didF');
-
-        didF.innerHTML = 'DID: ' + did;
-
-        
-        
-         cmdF.addEventListener('keydown', function (evt) {
-            if (evt.keyCode === 13) {
-            }
-        });
-
-         varValueF.addEventListener('keydown', function (evt) {
-            if (evt.keyCode === 13) {
-                socket.emit('device-updateVariable', {handle: varHandleF.value, value : varValueF.value})
-            };
-
-         });*/
-
-       
     });
 </script>
 
@@ -140,14 +122,16 @@
                     <label for="varHandleF">Register variable name:</label> <input placeholder="variable name" class="form-control" type="text" id="varHandleF" />
                     <label for="varValueF">Register variable value:</label> <input placeholder="value" class="form-control" type="text" id="varValueF" />
                 </fieldset>
-                
+                <fielset class="form-group">
+                    <label for="logF">Log:</label> <input placeholder="Log evt" class="form-control" type="text" id="logF" /><label for="criticalLevelF">Critical Level</label>&nbsp;&nbsp;<input type="number" id="criticalLevelF" placeholder="0" />
+                </fielset>
                 <!-- <button class="btn btn-primary" id="fakeDataBtn">Submit Fake Signal Variable Data</button> -->
             </form>
             </div>
             <div id="output">
         
             </div>
-            <audio src="/song" id="audio" />
+            <!-- <audio src="/song" id="audio" /> -->
         </div>
     </body>
 </html>

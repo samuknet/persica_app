@@ -151,5 +151,30 @@ angular.module('Persica').controller('DeviceVariableGraphModalCtrl', ['$scope', 
     $scope.close = function() {
         $uibModalInstance.close();
     }
+}]);
 
+/* Controller for the graph modal for a device variable */
+angular.module('Persica').controller('DeviceLogsCtrl', ['$scope', '$stateParams', 'deviceService', function($scope, $stateParams, deviceService) {
+    var did = $stateParams.did;
+
+    // Styles for each critical value
+    $scope.criticalStyles = [{
+        'background-color': '#FFFFFF'
+    }, {
+        'background-color': '#FFCCCC'
+    }, {
+        'background-color': '#FFB0B0'
+    }, {
+        'background-color': '#FF9090'
+    }, {
+        'background-color': '#FF7070'
+    }, {
+        'background-color': '#FF5050'
+    }];
+    var logs_observer = function() {
+        $scope.logs = deviceService.devices[did] ? deviceService.devices[did].logs : [];
+    };
+
+    deviceService.observers.push(logs_observer);
+    logs_observer();
 }]);

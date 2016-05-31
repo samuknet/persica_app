@@ -32,14 +32,25 @@
             </rd-widget>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6" ng-controller="DeviceLogsCtrl">
             <rd-widget>
-                <rd-widget-header icon="fa-angle-double-up" title="Uptime">
+                <rd-widget-header icon="fa-angle-double-up" title="Logs">
                     <input type="text" placeholder="Search" class="form-control input-sm" />
                 </rd-widget-header>
                 <rd-widget-body classes="medium no-padding">
-                    <div class="table-responsive">
-                        <canvas id="pie" class="chart chart-pie" chart-data="upTime" chart-labels="labels"></canvas> 
+                   <div class="table-responsive">
+                        <table class="table table" ng-controller='TimeCtrl'>
+                        	<thead>
+								<tr><th>Timestamp</th><th>Log</th><th>Critical Level</th></tr>
+                        	</thead>
+                            <tbody>
+                                <tr ng-repeat="log in logs" ng-style="criticalStyles[log.critical]">
+									<td>{{log.timestamp | date:'medium'}}</td>
+									<td>{{log.log}}</td>
+									<td>{{log.critical}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </rd-widget-body>
             </rd-widget>

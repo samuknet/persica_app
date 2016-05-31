@@ -49,12 +49,27 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
     	var variable = {
     		value : updateObj.value,
     		timestamp : updateObj.timestamp
-    	}
+    	};
     	var device = devices[updateObj.did]
     	device.liveVars = device.liveVars || {}
     	device.liveVars[updateObj.handle] = variable
     	notify_observers()
     });
+
+    socketService.on('device-log', function(updateObj) {
+    	var log = {
+    		did: updateObj.did,
+    		critical : updateObj.critical,
+    		log: updateObj.log,
+    		timestamp : updateObj.timestamp
+    	};
+
+    	var device = devices[updateObj.did]
+    	device.logs = device.logs || [];
+    	device.logs.push(log);
+    	notify_observers()
+    });
+
 
 	this.devices = devices;
 	this.observers = observers;

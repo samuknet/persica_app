@@ -5,6 +5,7 @@ module.exports = function(http) {
 
     var devices = {};
     var Device = require('./models/device');
+    var User = require('./models/user');
     var control = io.of('/control');
     var device = io.of('/device');
 
@@ -13,7 +14,6 @@ module.exports = function(http) {
         devices[did] = {socket: socket, device: {did: did, cmds : []}};
         devices[did].device.cmds = [];
         devices[did].device.liveVars = {};
-
         devices[did].device.establishTime = Date.now();
 
         control.emit('device-connected', devices[did].device);
@@ -62,6 +62,29 @@ module.exports = function(http) {
             devices[did].device.liveVars[data.handle] = updateObj;
             control.emit('device-updateVariable', updateObj)
         });
+
+        socket.on('device-log', function (data) {
+            // data has a log property and critical property which is a number
+             var logObj = {did: did, critical: data.critical, log: data.log, timestamp: Date.now()};
+
+             Device.findOneAndUpdate(
+                    {did:did},
+                    {$push: {"logs": logObj}},
+                    {safe: true, upsert: true, new : true},
+                    function(err, model) {
+                        if (err) {console.log(err); }
+                    }
+            );
+             if (data.critical == 5) { // The case that we send notifications
+                var notification = {type: 'criticalLog', did: did, message: data.log };
+                var bulk = User.collection.initializeOrderedBulkOp();
+                bulk.find({}).update({$push: {"notifications": notification}});
+                console.log("fdsafdsaf");
+                control.emit('user-notification', notification);
+             }
+            control.emit('device-log', logObj);
+
+        })
     });
 
     control.on('connection', function (socket) {

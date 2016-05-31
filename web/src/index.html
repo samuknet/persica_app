@@ -70,7 +70,7 @@
       <div class="page-content">
 
         <!-- Header Bar -->
-        <div class="row header">
+        <div class="row header" ng-controller="HeaderCtrl">
           <div class="col-xs-12">
             <div class="user pull-right">
               <div class="item dropdown" uib-dropdown>
@@ -114,8 +114,8 @@
                     Notifications
                   </li>
                   <li class="divider"></li>
-                  <li>
-                    <a href="#">Variable temperature exceeded critical value on device 200.</a>
+                  <li ng-repeat = "notification in notifications">
+                    {{notification.did}} logged {{notification.message}}
                   </li>
                 </ul>
               </div>
@@ -126,7 +126,7 @@
               </div>
               <div class="breadcrumb-links">
                 The Lions Sleep Tonight
-              </div>
+              </div>  
             </div>
           </div>
         </div>
