@@ -3,17 +3,14 @@
  */
 
 angular.module('Persica')
-    .controller('HeaderCtrl', ['$scope', 'userService', HeaderCtrl]);
+    .controller('HeaderCtrl', ['$scope','notificationService', HeaderCtrl]);
 
-function HeaderCtrl($scope, userService) {
-    $scope.currentUser = userService.currentUser;
-    $scope.notifications = [{did: 'test'}];
+function HeaderCtrl($scope, notificationService) {
+    $scope.notifications = [];
     var notifications_observer = function() {
-        console.log('hh');
-        $scope.notifications = userService.currentUser.notifications;
-        console.log($scope.notifications);
+        $scope.notifications = notificationService.notifications;
     };
 
-    userService.observers.push(notifications_observer);
+    notificationService.observers.push(notifications_observer);
     notifications_observer();
 }
