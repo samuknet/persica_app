@@ -50,6 +50,6 @@ angular.module('Persica').service('notificationService', ['$http', '$state', '$n
 
 	this.notifications = notifications;
 	this.getNotifications = getNotifications;
-	this.deleteNotifications = deleteNotifications;
+	this.deleteNotification = deleteNotification;
 	this.observers = observers;
 }]);
