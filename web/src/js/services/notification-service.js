@@ -1,14 +1,15 @@
-angular.module('Persica').service('notificationService', ['$http', 'socketService', function ($http, socketService) {
-	
-	var observers = [];
-	var notifications = [];
+angular.module('Persica').service('notificationService', ['$http', '$state', '$notification', 'pageVisibilityService', 'socketService', function ($http, $state, $notification, pageVisibilityService, socketService) {
+	$notification.requestPermission();
 
+	var notifications =[];
+	var observers = [];
 	var notifyObservers = function (){
 		_.forEach(observers, function(observer) {
 			observer();
 		});
 	}
 
+	
 	var getNotifications = function(user) {
 
 		$http.get('/notification/' + user.username).then(function(response) {
@@ -17,7 +18,6 @@ angular.module('Persica').service('notificationService', ['$http', 'socketServic
 			_.forEach(response.data, function(notification) {
 				notifications.push(notification);
 			})
-			console.log(notifications);
 			notifyObservers();
 			
 		}, function (error) {
@@ -25,9 +25,20 @@ angular.module('Persica').service('notificationService', ['$http', 'socketServic
 		});
 	}
 
-
 	socketService.on('notification-new', function (notification) {
-		
+		var did = notification.did,
+			message = notification.message;
+		if (!pageVisibilityService.isPageVisible()) { //If page isn't visible then send a web notification
+			var n = $notification('Device ' + did + ' Notification', {
+			    body: message,
+			    icon: 'img/favicon.png'
+			 });
+
+			n.$on('click', function() {
+				$state.go('device', {did: did});
+			})
+		}
+		notifications.push(notification);
 		notifyObservers();
 	});
 

@@ -8,9 +8,7 @@ angular.module('Persica')
 function HeaderCtrl($scope, notificationService) {
     $scope.notifications = [];
     var notifications_observer = function() {
-       
         $scope.notifications = notificationService.notifications;
-        console.log($scope.notifications)
     };
 
     notificationService.observers.push(notifications_observer);

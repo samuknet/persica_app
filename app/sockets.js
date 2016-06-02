@@ -86,8 +86,7 @@ module.exports = function(http) {
                             }
                             console.log('Added notification for user', user.username);
                         });
-                    })
-                  
+                    })                  
                 });
                 control.emit('notification-new', {type: 'criticalLog', did: did, message: data.log});
              }
@@ -118,7 +117,7 @@ module.exports = function(http) {
         });
 
 
-        
+        console.log('control connected');
         _.forEach(devices, function (obj, did) {
             console.log('emitting device connected event', devices[did].device);
             control.emit('device-connected', devices[did].device);
