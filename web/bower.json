@@ -28,7 +28,8 @@
     "bootstrap": "~3.3.6",
     "font-awesome": "~4.5.0",
     "angular-modal-service": "^0.9.10",
-    "Chart.js": "^2.1.3"
+    "Chart.js": "^2.1.3",
+    "angular-web-notification": "^0.0.74"
   },
   "repository": {
     "type": "git",
