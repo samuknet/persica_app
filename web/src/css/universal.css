@@ -16,17 +16,17 @@
 .notifications {
    min-width:420px; 
   }
-  
+
   .notifications-wrapper {
      overflow:auto;
       max-height:250px;
     }
     
  .menu-title {
-     color:#ff7788;
+     color:#30426a;
      font-size:1.5rem;
       display:inline-block;
-      }
+}
  
 .glyphicon-circle-arrow-right {
       margin-left:10px;     
@@ -49,17 +49,22 @@
     
 }
 
+
+.item-info {
+}
+
 .notifications a.content {
  text-decoration:none;
- background:#ccc;
+ background:#30426a;
 
  }
     
 .notification-item {
  padding:10px;
  margin:5px;
- background:#ccc;
+ background-color:#e66625;
  border-radius:4px;
+ color:white;
  }
 
  

@@ -156,7 +156,7 @@ angular.module('Persica').controller('DeviceVariableGraphModalCtrl', ['$scope', 
 /* Controller for the graph modal for a device variable */
 angular.module('Persica').controller('DeviceLogsCtrl', ['$scope', '$stateParams', 'deviceService', function($scope, $stateParams, deviceService) {
     var did = $stateParams.did;
-
+    $scope.test = '';
     // Styles for each critical value
     $scope.criticalStyles = [{
         'background-color': '#FFFFFF'

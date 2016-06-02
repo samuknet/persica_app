@@ -124,45 +124,15 @@
     </div>
     <li class="divider"></li>
    <div class="notifications-wrapper">
-     <a class="content" href="#">
+     <a ng-repeat="notification in notifications" class="content" href="#">
       
        <div class="notification-item">
-        <h4 class="item-title">Evaluation Deadline 1 · day ago</h4>
-        <p class="item-info">Marketing 101, Video Assignment</p>
+        <h4 class="item-title">{{notification.did}}</h4>
+        <p class="item-info">{{notification.message}}</p>
       </div>
        
     </a>
-     <a class="content" href="#">
-      <div class="notification-item">
-        <h4 class="item-title">Evaluation Deadline 1 · day ago</h4>
-        <p class="item-info">Marketing 101, Video Assignment</p>
-      </div>
-    </a>
-     <a class="content" href="#">
-      <div class="notification-item">
-        <h4 class="item-title">Evaluation Deadline 1 • day ago</h4>
-        <p class="item-info">Marketing 101, Video Assignment</p>
-      </div>
-    </a>
-     <a class="content" href="#">
-      <div class="notification-item">
-        <h4 class="item-title">Evaluation Deadline 1 • day ago</h4>
-        <p class="item-info">Marketing 101, Video Assignment</p>
-      </div>
-
-    </a>
-     <a class="content" href="#">
-      <div class="notification-item">
-        <h4 class="item-title">Evaluation Deadline 1 • day ago</h4>
-        <p class="item-info">Marketing 101, Video Assignment</p>
-      </div>
-    </a>
-     <a class="content" href="#">
-      <div class="notification-item">
-        <h4 class="item-title">Evaluation Deadline 1 • day ago</h4>
-        <p class="item-info">Marketing 101, Video Assignment</p>
-      </div>
-    </a>
+    
 
    </div>
     <li class="divider"></li>
@@ -202,7 +172,7 @@
               Persica
             </div>
             <div class="breadcrumb-links">
-              The Lions Sleep Tonight
+              The Lions Feed Tonight
             </div>  
           </div>
         </div>
@@ -216,7 +186,7 @@
   </div><!-- End Content Wrapper -->
 </div><!-- End Page Wrapper -->
 
-<div class="dropdown">
+<!-- <div class="dropdown">
   <a id="dLabel" role="button" data-toggle="dropdown" >
     <i class="glyphicon glyphicon-bell"></i>
   </a>
@@ -224,6 +194,6 @@
   
   
 </div>
-
+ -->
 </body>
 </html>
