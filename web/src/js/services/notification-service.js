@@ -1,7 +1,7 @@
 angular.module('Persica').service('notificationService', ['$http', 'socketService', function ($http, socketService) {
-	var notifications =[];
+	
 	var observers = [];
-
+	var notifications = [];
 
 	var notifyObservers = function (){
 		_.forEach(observers, function(observer) {
@@ -9,13 +9,17 @@ angular.module('Persica').service('notificationService', ['$http', 'socketServic
 		});
 	}
 
-	this.getNotifications = function(user) {
+	var getNotifications = function(user) {
 
 		$http.get('/notification/' + user.username).then(function(response) {
 			// Success
-			notifications  = notifications.concat(response.data);
-			notifyObservers();
+
+			_.forEach(response.data, function(notification) {
+				notifications.push(notification);
+			})
 			console.log(notifications);
+			notifyObservers();
+			
 		}, function (error) {
 			console.log("Error when getting notifications: " + error);
 		});
@@ -23,10 +27,11 @@ angular.module('Persica').service('notificationService', ['$http', 'socketServic
 
 
 	socketService.on('notification-new', function (notification) {
-		notifications.push(notification);
+		
 		notifyObservers();
 	});
 
-
+	this.notifications = notifications;
+	this.getNotifications = getNotifications;
 	this.observers = observers;
 }]);
