@@ -13,8 +13,9 @@ angular.module('Persica').service('notificationService', ['$http', 'socketServic
 
 		$http.get('/notification/' + user.username).then(function(response) {
 			// Success
-			notifications  = notifications.concat(response);
-			notify_observers();
+			notifications  = notifications.concat(response.data);
+			notifyObservers();
+			console.log(notifications);
 		}, function (error) {
 			console.log("Error when getting notifications: " + error);
 		});

@@ -77,16 +77,17 @@ module.exports = function(http) {
                     }
             );
              if (data.critical == 5) { // The case that we send must send a notification
-                var bulk = User.initializeOrderedBulkOp();
-                bulk.find({}).update({}, function (err, model) {
-                    var notification = {type: 'criticalLog', did: did, message: data.log, username: model.username};
-                    new Notification(notification).save(function (err, model) {
-                        if (err) {
-                            console.log(err);
-                        }
-                    });
-                    console.log('Added notification for user', model.username);
-                    
+                User.find({}, function (err, users) {
+                    _.forEach(users, function (user) {
+                        var notification = {type: 'criticalLog', did: did, message: data.log, username: user.username};
+                        new Notification(notification).save(function (err, model) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log('Added notification for user', user.username);
+                        });
+                    })
+                  
                 });
                 control.emit('notification-new', {type: 'criticalLog', did: did, message: data.log});
              }
