@@ -1,5 +1,5 @@
 var app = angular.module('Persica');
-app.service('userService', ['$window', '$http', 'socketService', function ($window, $http, socketService) {
+app.service('userService', ['$window', '$http', 'socketService', 'notificationService', function ($window, $http, socketService, notificationService) {
     var observers = [];
 	var notify_observers = function (){
 		_.forEach(observers, function(observer) {
@@ -7,17 +7,14 @@ app.service('userService', ['$window', '$http', 'socketService', function ($wind
 		})
 	};
 
-	socketService.on('user-notification', function(notification) {
-        this.currentUser = this.currentUser || {notifcations: []};
-        this.currentUser.notifications = this.currentUser.notifications || [];
-        this.currentUser.notifications.push(notification);
-		notify_observers();
-    });
+
 
     this.authorizeUser = function (user) {
+        notificationService.getNotifications(user);
         $http.defaults.headers.common.Authorization = 'Bearer ' + user.token;
         $window.localStorage['persica-user'] = JSON.stringify(user);
-        this.currentUser = _.extend(this.currentUser || {notifications: []}, user);
+
+        this.currentUser = user;
     }
 
     this.currentUser = {};
