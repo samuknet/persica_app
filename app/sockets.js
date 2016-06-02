@@ -6,6 +6,7 @@ module.exports = function(http) {
     var devices = {};
     var Device = require('./models/device');
     var User = require('./models/user');
+    var Notification = require('./models/Notification');
     var control = io.of('/control');
     var device = io.of('/device');
 
@@ -75,12 +76,19 @@ module.exports = function(http) {
                         if (err) {console.log(err); }
                     }
             );
-             if (data.critical == 5) { // The case that we send notifications
-                var notification = {type: 'criticalLog', did: did, message: data.log };
-                var bulk = User.collection.initializeOrderedBulkOp();
-                bulk.find({}).update({$push: {"notifications": notification}});
-                console.log("fdsafdsaf");
-                control.emit('user-notification', notification);
+             if (data.critical == 5) { // The case that we send must send a notification
+                var bulk = User.initializeOrderedBulkOp();
+                bulk.find({}).update({}, function (err, model) {
+                    var notification = {type: 'criticalLog', did: did, message: data.log, username: model.username};
+                    new Notification(notification).save(function (err, model) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                    console.log('Added notification for user', model.username);
+                    
+                });
+                control.emit('notification-new', {type: 'criticalLog', did: did, message: data.log});
              }
             control.emit('device-log', logObj);
 

@@ -6,6 +6,7 @@ module.exports = function(router, ioService) {
     var mongoose = require('mongoose'),
         Device = require('../models/device'),
         User = require('../models/user'),
+        Notification = require('../models/Notification'),
         passport = require('passport'),
         jwt = require('express-jwt'),
         auth = jwt({secret: 'SECRET', userProperty: 'payload'}),
@@ -50,6 +51,18 @@ module.exports = function(router, ioService) {
                 res.send(devices);
             }
         });
+    });
+
+    router.get('/notification/:username', function (req, res) {
+        var username = req.params.username;
+        Notification.find({username: username}, function (err, nots) {
+            if (err) {
+                return res.status(501).json({message: 'An error occured fetching notifications for ' + username});
+            }
+
+            res.json(nots);
+        });      
+
     });
 
     router.get('/device/variable', function (req, res) {
