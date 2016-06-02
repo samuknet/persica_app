@@ -74,7 +74,7 @@ module.exports = function(router, ioService) {
             if (numRemoved === 0) {
                 return res.status(406).json({message: 'Notifcation specified could not be deleted'});
             } else {
-                return res.json({message: 'Notification deleted successfully'});
+                return res.status(200).json({message: 'Notification deleted successfully'});
             }
         });
     });

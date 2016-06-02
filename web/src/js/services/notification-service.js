@@ -3,6 +3,7 @@ angular.module('Persica').service('notificationService', ['$http', '$state', '$n
 
 	var notifications =[];
 	var observers = [];
+	var currentUser = {};
 	var notifyObservers = function (){
 		_.forEach(observers, function(observer) {
 			observer();
@@ -10,6 +11,7 @@ angular.module('Persica').service('notificationService', ['$http', '$state', '$n
 	}
 
 	var getNotifications = function(user) {
+		currentUser = user;
 		$http.get('/notification/' + user.username).then(function(response) {
 			// Success
 
@@ -19,19 +21,27 @@ angular.module('Persica').service('notificationService', ['$http', '$state', '$n
 			notifyObservers();
 			
 		}, function (error) {
-			console.log("Error when getting notifications: " + error);
+			console.log("Error when getting notifications: ",  error);
 		});
 	};
 
-	var deleteNotification = function (notification, succ, err) { // id is the mongo entry id of the notication
-		$http.delete('/notifcation/'+ notifcation._id, function (response) {
-			succ(response.data);
+	var deleteNotification = function (notification) { // id is the mongo entry id of the notication
+		
+		$http.delete('/notification/'+ notification._id).then(function (response) {
+			var removeIndex = _.indexOf(notifications, notification);
+			notifications.splice(removeIndex, 1);
+			notifyObservers();
 		}, function (error) {
-			err(error);
+			console.log('error', error);
 		});
 	};
 
 	socketService.on('notification-new', function (notification) {
+		if (notification.username !== currentUser.username) {
+			//Ignore
+			return;
+		}
+
 		var did = notification.did,
 			message = notification.message;
 		if (!pageVisibilityService.isPageVisible()) { //If page isn't visible then send a web notification

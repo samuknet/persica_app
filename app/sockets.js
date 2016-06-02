@@ -85,10 +85,10 @@ module.exports = function(http) {
                                 console.log(err);
                             }
                             console.log('Added notification for user', user.username);
+                            control.emit('notification-new', model);
                         });
                     })                  
                 });
-                control.emit('notification-new', {type: 'criticalLog', did: did, message: data.log});
              }
             control.emit('device-log', logObj);
 

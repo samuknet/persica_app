@@ -11,6 +11,8 @@ function HeaderCtrl($scope, notificationService) {
         $scope.notifications = notificationService.notifications;
     };
 
+    $scope.dismissNotification = function (not) {notificationService.deleteNotification(not);};
+
     notificationService.observers.push(notifications_observer);
     notifications_observer();
 }
