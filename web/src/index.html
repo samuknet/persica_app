@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Persica</title>
+  <title>Persica</title>
   <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
 
   <!-- STYLES -->
@@ -15,12 +15,12 @@
   <link rel="stylesheet" type="text/css" href="components/rdash-ui/dist/css/rdash.min.css" />  
   <link rel="stylesheet" type="text/css" href="components/angular-chart.js/dist/angular-chart.css" />
   <link rel="stylesheet" type="text/css" href="components/angular-chart.js/dist/angular-chart.css" />
-
+  <link rel="stylesheet" type="text/css" href="css/universal.css" />
 
   <!-- endbuild -->
   <!-- SCRIPTS -->
   <!-- build:js lib/js/main.min.js -->
- 
+
 
   <script type="text/javascript" src="components/angular/angular.min.js"></script>
   <script type="text/javascript" src="components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -105,41 +105,123 @@
                   </li>
                 </ul>
               </div>
-              <div class="item dropdown" uib-dropdown>
+
+
+
+              <div class="item dropdown" uib-dropdown >
                <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
-                  <i class="fa fa-bell-o"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-right">
-                  <li class="dropdown-header">
-                    Notifications
+                <i class="fa fa-bell-o"></i>
+              </a>
+
+
+
+
+              <ul class="dropdown-menu dropdown-menu-right notifications" role="menu" aria-labelledby="dLabel">
+    
+    <div class="notification-heading"><h4 class="menu-title">Notifications</h4>
+    </div>
+    <li class="divider"></li>
+   <div class="notifications-wrapper">
+     <a class="content" href="#">
+      
+       <div class="notification-item">
+        <h4 class="item-title">Evaluation Deadline 1 · day ago</h4>
+        <p class="item-info">Marketing 101, Video Assignment</p>
+      </div>
+       
+    </a>
+     <a class="content" href="#">
+      <div class="notification-item">
+        <h4 class="item-title">Evaluation Deadline 1 · day ago</h4>
+        <p class="item-info">Marketing 101, Video Assignment</p>
+      </div>
+    </a>
+     <a class="content" href="#">
+      <div class="notification-item">
+        <h4 class="item-title">Evaluation Deadline 1 • day ago</h4>
+        <p class="item-info">Marketing 101, Video Assignment</p>
+      </div>
+    </a>
+     <a class="content" href="#">
+      <div class="notification-item">
+        <h4 class="item-title">Evaluation Deadline 1 • day ago</h4>
+        <p class="item-info">Marketing 101, Video Assignment</p>
+      </div>
+
+    </a>
+     <a class="content" href="#">
+      <div class="notification-item">
+        <h4 class="item-title">Evaluation Deadline 1 • day ago</h4>
+        <p class="item-info">Marketing 101, Video Assignment</p>
+      </div>
+    </a>
+     <a class="content" href="#">
+      <div class="notification-item">
+        <h4 class="item-title">Evaluation Deadline 1 • day ago</h4>
+        <p class="item-info">Marketing 101, Video Assignment</p>
+      </div>
+    </a>
+
+   </div>
+    <li class="divider"></li>
+
+  </ul>
+
+             <!--  <ul class="dropdown-menu ">
+
+                <li class="dropdown-header">
+                  Notifications
+                </li>
+                
+                <div class="alert alert-info" ng-repeat = "notification in notifications">
+                  <li >
+           
+                      <i class="fa fa-check-circle"></i>
+
+                      {{notification.did}} logged {{notification.message}}
+                    
+                    
+                      
+                   
+
+
+
                   </li>
                   <li class="divider"></li>
-                  <li ng-repeat = "notification in notifications">
-                    {{notification.did}} logged {{notification.message}}
-                  </li>
-                </ul>
+
+                </div>
               </div>
+            </ul>
+ -->
+
+          </div>
+          <div class="meta">
+            <div class="page">
+              Persica
             </div>
-            <div class="meta">
-              <div class="page">
-                Persica
-              </div>
-              <div class="breadcrumb-links">
-                The Lions Sleep Tonight
-              </div>  
-            </div>
+            <div class="breadcrumb-links">
+              The Lions Sleep Tonight
+            </div>  
           </div>
         </div>
-        <!-- End Header Bar -->
+      </div>
+      <!-- End Header Bar -->
 
-        <!-- Main Content -->
-        <div ui-view></div>
+      <!-- Main Content -->
+      <div ui-view></div>
 
-      </div><!-- End Page Content -->
-    </div><!-- End Content Wrapper -->
-  </div><!-- End Page Wrapper -->
+    </div><!-- End Page Content -->
+  </div><!-- End Content Wrapper -->
+</div><!-- End Page Wrapper -->
 
- 
+<div class="dropdown">
+  <a id="dLabel" role="button" data-toggle="dropdown" >
+    <i class="glyphicon glyphicon-bell"></i>
+  </a>
+  
+  
+  
+</div>
 
 </body>
 </html>

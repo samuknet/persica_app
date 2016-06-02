@@ -70,6 +70,7 @@ gulp.task('custom-js', function() {
 });
 
 gulp.task('custom-css', function() {
+    console.log("processing css")
     return gulp.src(paths.styles)
         .pipe(gulp.dest('public/css'));
 });
