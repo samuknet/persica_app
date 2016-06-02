@@ -62,7 +62,21 @@ module.exports = function(router, ioService) {
 
             res.json(nots);
         });      
+    });
 
+    router.delete('/notification/:id', function (req, res) {
+        var id = req.params.id;
+        Notification.find({_id: id}).remove().exec(function(err, numRemoved) {
+            if (err) {
+                return res.status(501).json({message: 'Error occured deleting'});
+            }
+
+            if (numRemoved === 0) {
+                return res.status(406).json({message: 'Notifcation specified could not be deleted'});
+            } else {
+                return res.json({message: 'Notification deleted successfully'});
+            }
+        });
     });
 
     router.get('/device/variable', function (req, res) {

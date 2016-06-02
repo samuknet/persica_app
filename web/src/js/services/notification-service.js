@@ -9,9 +9,7 @@ angular.module('Persica').service('notificationService', ['$http', '$state', '$n
 		});
 	}
 
-	
 	var getNotifications = function(user) {
-
 		$http.get('/notification/' + user.username).then(function(response) {
 			// Success
 
@@ -23,7 +21,15 @@ angular.module('Persica').service('notificationService', ['$http', '$state', '$n
 		}, function (error) {
 			console.log("Error when getting notifications: " + error);
 		});
-	}
+	};
+
+	var deleteNotification = function (notification, succ, err) { // id is the mongo entry id of the notication
+		$http.delete('/notifcation/'+ notifcation._id, function (response) {
+			succ(response.data);
+		}, function (error) {
+			err(error);
+		});
+	};
 
 	socketService.on('notification-new', function (notification) {
 		var did = notification.did,
@@ -44,5 +50,6 @@ angular.module('Persica').service('notificationService', ['$http', '$state', '$n
 
 	this.notifications = notifications;
 	this.getNotifications = getNotifications;
+	this.deleteNotifications = deleteNotifications;
 	this.observers = observers;
 }]);
