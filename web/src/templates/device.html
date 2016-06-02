@@ -35,17 +35,18 @@
         <div class="col-lg-6" ng-init="fields={}" ng-controller="DeviceLogsCtrl">
             <rd-widget>
                 <rd-widget-header icon="fa-angle-double-up" title="Logs">
-                    <input type="text" ng-model="fields.search" placeholder="Search" class="form-control input-sm" />
+                    	Filter by: 
+                    		<input type="text" ng-model="fields.search" placeholder="Log"  />
+                    		<input type="text" ng-model="fields.critical" placeholder="Critical Value" />
                 </rd-widget-header>
                 <rd-widget-body classes="medium no-padding">
                    <div class="table-responsive">
-		                TESTING: {{fields.search}}
                         <table class="table table" ng-controller='TimeCtrl'>
                         	<thead>
 								<tr><th>Timestamp</th><th>Log</th><th>Critical Level</th></tr>
                         	</thead>
                             <tbody>
-                                <tr ng-repeat="log in logs" ng-style="criticalStyles[log.critical]">
+                                <tr ng-repeat="log in logs | filter: {log: fields.search, critical: fields.critical}" ng-style="criticalStyles[log.critical]">
 									<td>{{log.timestamp | date:'medium'}}</td>
 									<td>{{log.log}}</td>
 									<td>{{log.critical}}</td>
