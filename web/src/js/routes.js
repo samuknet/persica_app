@@ -5,7 +5,6 @@
  */
 angular.module('Persica').config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function($stateProvider, $urlRouterProvider, $httpProvider) {
-
         // For unmatched routes
         $urlRouterProvider.otherwise('/');
 
@@ -27,16 +26,13 @@ angular.module('Persica').config(['$stateProvider', '$urlRouterProvider', '$http
             });
 
         $httpProvider.interceptors.push(['$injector', function($injector) {
-            // var $state = $injector.get('$state');
             var requestInterceptor = {
                 request: function(config) {            
                     return config;
                 },
                 response: function(response) {
                     if (response.status === 401) {
-                        $injector.invoke(function($state) {
-                            // $state.go('index');
-                        });
+                        
                     }
                     return response;
                 }
@@ -48,7 +44,7 @@ angular.module('Persica').config(['$stateProvider', '$urlRouterProvider', '$http
 
 angular.module('Persica').run(['$window', '$rootScope', '$state', '$http', 'userService', 'loginModalService', function ($window, $rootScope, $state, $http, userService, loginModalService) {
     $rootScope.user = {};
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {        
         var storedUser;
         try {
             storedUser = JSON.parse($window.localStorage['persica-user']);

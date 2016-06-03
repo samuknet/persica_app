@@ -17,6 +17,13 @@ app.service('userService', ['$window', '$http', 'socketService', 'notificationSe
         this.currentUser = user;
     }
 
+    this.logout = function() {
+        $http.defaults.headers.common.Authorization = null;
+        $window.localStorage['persica-user'] = null;
+        this.currentUser = null;
+        $window.location.href = '/';
+    }
+
     this.currentUser = {};
     this.observers = observers;
 
