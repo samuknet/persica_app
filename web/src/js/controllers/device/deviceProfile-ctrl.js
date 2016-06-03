@@ -161,15 +161,15 @@ angular.module('Persica').controller('DeviceLogsCtrl', ['$scope', '$stateParams'
     $scope.criticalStyles = [{
         'background-color': '#FFFFFF'
     }, {
-        'background-color': '#FFCCCC'
+        'background-color': '#F5FAA0'
     }, {
-        'background-color': '#FFB0B0'
+        'background-color': '#FAD173'
     }, {
-        'background-color': '#FF9090'
+        'background-color': '#FAB005'
     }, {
-        'background-color': '#FF7070'
+        'background-color': '#FA8405'
     }, {
-        'background-color': '#FF5050'
+        'background-color': '#FA3A05'
     }];
     var logs_observer = function() {
         $scope.logs = deviceService.devices[did] ? deviceService.devices[did].logs : [];
