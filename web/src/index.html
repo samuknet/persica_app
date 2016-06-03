@@ -1,196 +1,179 @@
 <!doctype html>
 <html lang="en" ng-app="Persica">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Persica</title>
-  <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
+    <title>Persica</title>
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
 
-  <!-- STYLES -->
-  <!-- build:css lib/css/main.min.css -->
-  <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="components/font-awesome/css/font-awesome.min.css" />
-  <link rel="stylesheet" type="text/css" href="components/rdash-ui/dist/css/rdash.min.css" />
-  <link rel="stylesheet" type="text/css" href="components/rdash-ui/dist/css/rdash.min.css" />  
-  <link rel="stylesheet" type="text/css" href="components/angular-chart.js/dist/angular-chart.css" />
-  <link rel="stylesheet" type="text/css" href="css/universal.css" />
-
-
-  <!-- endbuild -->
-  <!-- SCRIPTS -->
-  <!-- build:js lib/js/main.min.js -->
+    <!-- STYLES -->
+    <!-- build:css lib/css/main.min.css -->
+    <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="components/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="components/rdash-ui/dist/css/rdash.min.css" />
+    <link rel="stylesheet" type="text/css" href="components/rdash-ui/dist/css/rdash.min.css" />
+    <link rel="stylesheet" type="text/css" href="components/angular-chart.js/dist/angular-chart.css" />
+    <link rel="stylesheet" type="text/css" href="css/universal.css" />
 
 
-  <script type="text/javascript" src="components/angular/angular.min.js"></script>
-  <script type="text/javascript" src="components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-  <script type="text/javascript" src="components/angular-cookies/angular-cookies.min.js"></script>
-  <script type="text/javascript" src="components/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script type="text/javascript" src="components/Chart.js/Chart.js"></script>
-  <script type="text/javascript" src="components/angular-chart.js/dist/angular-chart.js"></script>
-  <script type="text/javascript" src="components/angular_page_visibility/dist/page_visibility.min.js"></script>
-  <script type="text/javascript" src="components/angular-notification-master/angular-notification.js"></script>
+    <!-- endbuild -->
+    <!-- SCRIPTS -->
+    <!-- build:js lib/js/main.min.js -->
 
-  <!-- endbuild -->
-  <!-- Custom Scripts -->
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-  <script type="text/javascript" src="socket.io/socket.io.js"></script>
-  <script type="text/javascript" src="js/dashboard.min.js"></script>
+    <script type="text/javascript" src="components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="components/angular-cookies/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="components/Chart.js/Chart.js"></script>
+    <script type="text/javascript" src="components/angular-chart.js/dist/angular-chart.js"></script>
+    <script type="text/javascript" src="components/angular_page_visibility/dist/page_visibility.min.js"></script>
+    <script type="text/javascript" src="components/angular-notification-master/angular-notification.js"></script>
+
+    <!-- endbuild -->
+    <!-- Custom Scripts -->
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script type="text/javascript" src="socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="js/dashboard.min.js"></script>
 </head>
-<body ng-controller="MasterCtrl">
-  <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
 
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-      <ul class="sidebar">
-        <li class="sidebar-main">
-          <a ng-click="toggleSidebar()">
+<body ng-controller="MasterCtrl">
+    <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar">
+                <li class="sidebar-main">
+                    <a ng-click="toggleSidebar()">
             Persica
             <span class="menu-icon glyphicon glyphicon-transfer"></span>
           </a>
-        </li>
-        <li class="sidebar-title"><span>NAVIGATION</span></li>
-        <li class="sidebar-list">
-          <a href="#">Dashboard<span class="menu-icon fa fa-tachometer"></span></a>
-        </li>
-        <li class="sidebar-list">
-          <a href="#/tables">Tables <span class="menu-icon fa fa-table"></span></a>
-        </li>
-      </ul>
-      <div class="sidebar-footer">
-        <div class="col-xs-4">
-          <a href="https://github.com/samuknet/persica_app" target="_blank">
+                </li>
+                <li class="sidebar-title"><span>NAVIGATION</span>
+                </li>
+                <li class="sidebar-list">
+                    <a href="#">Dashboard<span class="menu-icon fa fa-tachometer"></span></a>
+                </li>
+                <li class="sidebar-list">
+                    <a href="#/tables">Tables <span class="menu-icon fa fa-table"></span></a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="col-xs-4">
+                    <a href="https://github.com/samuknet/persica_app" target="_blank">
             Github
           </a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <!-- End Sidebar -->
+        <!-- End Sidebar -->
 
-    <div id="content-wrapper">
-      <div class="page-content">
+        <div id="content-wrapper">
+            <div class="page-content">
 
-        <!-- Header Bar -->
-        <div class="row header" ng-controller="HeaderCtrl">
-          <div class="col-xs-12">
-            <div class="user pull-right">
-              <div class="item dropdown" uib-dropdown>
-                <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
-                  <img src="img/avatar.jpg">
-                </a>
-                <ul class="dropdown-menu dropdown-menu-right">
-                  <li class="dropdown-header">
-                    {{currentUser.username}}
-                  </li>
-                  <li class="divider"></li>
-                  <li class="link">
-                    <a href="#">
+                <!-- Header Bar -->
+                <div class="row header" ng-controller="HeaderCtrl">
+                    <div class="col-xs-12">
+                        <div class="user pull-right">
+                            <div class="item dropdown" uib-dropdown>
+                                <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
+                                    <img src="img/avatar.jpg" />
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li class="dropdown-header">
+                                        {{currentUser.username}}
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="link">
+                                        <a href="#">
                       Profile
                     </a>
-                  </li>
-                  <li class="link">
-                    <a href="#">
+                                    </li>
+                                    <li class="link">
+                                        <a href="#">
                       Menu Item
                     </a>
-                  </li>
-                  <li class="link">
-                    <a href="#">
+                                    </li>
+                                    <li class="link">
+                                        <a href="#">
                       Menu Item
                     </a>
-                  </li>
-                  <li class="divider"></li>
-                  <li class="link">
-                    <a href="#">
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="link">
+                                        <a href="#">
                       Logout
                     </a>
-                  </li>
-                </ul>
-              </div>
+                                    </li>
+                                </ul>
+                            </div>
 
 
 
-              <div class="item dropdown" uib-dropdown autoClose="outsideClick">
-               <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
-                <i class="fa fa-bell-o"></i>
-              </a>
+                            <div class="item dropdown" uib-dropdown autoClose="outsideClick">
+                                <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
+                                    <i class="fa fa-bell-o"></i>
+                                </a>
 
 
 
 
-              <ul class="dropdown-menu dropdown-menu-right notifications" role="menu" aria-labelledby="dLabel">
-    
-    <div class="notification-heading"><h4 class="menu-title">Notifications</h4>
-    </div>
-    <li class="divider"></li>
-   <div class="notifications-wrapper">
-     <a ng-repeat="notification in notifications" ng-href="#/device/{{notification.did}}" class="content">
-       <div class="notification-item">
-        <h4 class="item-title">{{notification.did}} <span class="fa fa-check-circle fa-lg pull-right" ng-click="dismissNotification(notification); $event.stopPropagation();"></span></h4>
-        <p class="item-info">{{notification.message}}</p>
-      </div>
-       
-    </a>
-    
-    <a ng-if="notifications.length === 0" class="content">
-        <div class="notification-item">
-        <h4 class="item-title">No notifications to show</h4>
-      </div>
-    </a>
+                                <ul class="dropdown-menu dropdown-menu-right notifications" role="menu" aria-labelledby="dLabel">
 
-   </div>
-    <li class="divider"></li>
+                                    <div class="notification-heading">
+                                        <h4 class="menu-title">Notifications</h4>
+                                    </div>
+                                    <li class="divider"></li>
+                                    <div class="notifications-wrapper">
+                                        <a ng-repeat="notification in notifications" class="content">
+                                            <!-- ng-href="#/device/{{notification.did}}" -->
+                                            <div class="notification-item">
+                                                <h4 class="item-title">{{notification.did}} <span class="fa fa-check-circle fa-lg pointer pull-right" ng-click="dismissNotification(notification); $event.stopPropagation();"></span></h4>
+                                                <p class="item-info">{{notification.message}}</p>
+                                            </div>
 
-  </ul>
+                                        </a>
 
-             <!--  <ul class="dropdown-menu ">
+                                        <a ng-if="notifications.length === 0" class="content">
+                                            <div class="notification-item">
+                                                <h4 class="item-title">No notifications to show</h4>
+                                            </div>
+                                        </a>
 
-                <li class="dropdown-header">
-                  Notifications
-                </li>
-                
-                <div class="alert alert-info" ng-repeat = "notification in notifications">
-                  <li >
-           
-                      <i class="fa fa-check-circle"></i>
+                                    </div>
+                                    <li class="divider"></li>
 
-                      {{notification.did}} logged {{notification.message}}
-                    
-                    
-                      
-                   
+                                </ul>
+                            </div>
+                            
+                        </div>
+                        <div class="meta">
+                                <div class="page">
+                                    Persica
+                                </div>
+                                <div class="breadcrumb-links">
+                                    The Lions Feed Tonight
+                                </div>
+                            </div>
 
-
-
-                  </li>
-                  <li class="divider"></li>
-
+                    </div>
                 </div>
-              </div>
-            </ul>
- -->
+                <!-- End Header Bar -->
 
-          </div>
-          <div class="meta">
-            <div class="page">
-              Persica
+                <!-- Main Content -->
+                <div ui-view></div>
+
             </div>
-            <div class="breadcrumb-links">
-              The Lions Feed Tonight
-            </div>  
-          </div>
+            <!-- End Page Content -->
         </div>
-      </div>
-      <!-- End Header Bar -->
+        </div>
+        <!-- End Content Wrapper -->
+    <!-- End Page Wrapper -->
 
-      <!-- Main Content -->
-      <div ui-view></div>
-
-    </div><!-- End Page Content -->
-  </div><!-- End Content Wrapper -->
-</div><!-- End Page Wrapper -->
-
-<!-- <div class="dropdown">
+    <!-- <div class="dropdown">
   <a id="dLabel" role="button" data-toggle="dropdown" >
     <i class="glyphicon glyphicon-bell"></i>
   </a>
@@ -200,4 +183,5 @@
 </div>
  -->
 </body>
+
 </html>
