@@ -75,4 +75,7 @@
   font-size:300% !important;
  }
 
- 
+
+.pointer {
+  cursor: pointer;
+ }

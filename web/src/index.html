@@ -124,9 +124,10 @@
     </div>
     <li class="divider"></li>
    <div class="notifications-wrapper">
-     <a ng-repeat="notification in notifications" ng-href="#/device/{{notification.did}}" class="content">
+     <a ng-repeat="notification in notifications" class="content">
+     <!-- ng-href="#/device/{{notification.did}}" -->
        <div class="notification-item">
-        <h4 class="item-title">{{notification.did}} <span class="fa fa-check-circle fa-lg pull-right" ng-click="dismissNotification(notification); $event.stopPropagation();"></span></h4>
+        <h4 class="item-title">{{notification.did}} <span class="fa fa-check-circle fa-lg pointer pull-right" ng-click="dismissNotification(notification); $event.stopPropagation();"></span></h4>
         <p class="item-info">{{notification.message}}</p>
       </div>
        
