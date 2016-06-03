@@ -115,7 +115,10 @@
 
                             <div class="item dropdown" uib-dropdown autoClose="outsideClick">
                                 <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
-                                    <i class="fa fa-bell-o"></i>
+                                  <div class="icon-wrapper">
+                                     <i class="fa fa-bell-o icon-grey"></i>
+                                     <span class="badge" style="color:red" ng-if="notifications.length">{{notifications.length}}</span>
+                                  </div>
                                 </a>
 
 

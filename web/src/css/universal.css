@@ -78,3 +78,19 @@
 .pointer {
   cursor: pointer;
  }
+
+
+
+
+
+.badge{
+    background: rgba(0,0,0,0.5);
+    width: auto;
+    height: auto;
+    margin: 0;
+    border-radius: 50%;
+    position:absolute;
+    top:40px;
+    right:8px;
+    padding:5px;
+}
