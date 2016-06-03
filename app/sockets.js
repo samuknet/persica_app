@@ -6,7 +6,7 @@ module.exports = function(http) {
     var devices = {};
     var Device = require('./models/device');
     var User = require('./models/user');
-    var Notification = require('./models/Notification');
+    var Notification = require('./models/notification');
     var control = io.of('/control');
     var device = io.of('/device');
 
