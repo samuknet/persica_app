@@ -39,8 +39,6 @@ module.exports = function(router, ioService) {
     });
 
     router.put('/user/:username', function(req, res) {
-        // console.log(req.body.updateUser.notifyConfig);
-        // console.log(req.body.updateUser);
         var updateUser = JSON.parse(req.body.updateUser);
         var data = {notifyConfig: updateUser.notifyConfig};
         var query = {username: req.params.username};
