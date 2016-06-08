@@ -1,4 +1,5 @@
 var nodemailer = require('nodemailer');
+var twilio = require('twilio');
 
 var smtpTransport = nodemailer.createTransport("SMTP",{
    service: "Gmail",  // sets automatically host, port and connection security settings
@@ -21,7 +22,7 @@ exports.sendEmail = function(email, logObj) {
     smtpTransport.sendMail(mailOptions, function(error, info) {
     if(error){
        console.log(error);
-    }else{
+    } else {
        console.log("Message sent: " + info.message);
     }
    
@@ -31,9 +32,27 @@ exports.sendEmail = function(email, logObj) {
 };
 
 exports.sendSMS = function(phoneNumber, logObj) {
-  console.log('Sending a text message to', phoneNumber, 'containing the info', logObj);
+	var client = new twilio.RestClient('AC1d25d1a714a4c14adef5b8100d961694', 'dd128390134269f2f285d17a671545a8');
+	 
+	client.sms.messages.create({
+	    to: phoneNumber,
+	    from:'+441234480129',
+	    body: "Persica.io \nCritical Level " + logObj.critical + " detected on device " + logObj.did + ". \nLog: " + logObj.log
+	}, function(error, message) {
+	    if (!error) {
+	        console.log('Success! The SID for this SMS message is:');
+	        console.log(message.sid);
+	 
+	        console.log('Message sent on:');
+	        console.log(message.dateCreated);
+	    } else {
+	    	console.log(error);
+	        console.log('Oops! There was an error.');
+	    }
+	});
+
 };
 
-module.exports = exports 
+module.exports = exports;
 
 
