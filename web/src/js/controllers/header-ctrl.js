@@ -3,9 +3,9 @@
  */
 
 angular.module('Persica')
-    .controller('HeaderCtrl', ['$scope','$state', 'notificationService', 'userService', HeaderCtrl]);
+    .controller('HeaderCtrl', ['$scope','$http', '$state', 'notificationService', 'userService', HeaderCtrl]);
 
-function HeaderCtrl($scope, $state, notificationService, userService) {
+function HeaderCtrl($scope, $http, $state, notificationService, userService) {
     $scope.notifications = [];
     var notifications_observer = function() {
         $scope.notifications = notificationService.notifications;
@@ -17,6 +17,7 @@ function HeaderCtrl($scope, $state, notificationService, userService) {
     	$state.go('index');
     };
 
+   
     notificationService.observers.push(notifications_observer);
     notifications_observer();
 }

@@ -7,24 +7,28 @@ app.service('userService', ['$window', '$http', 'socketService', 'notificationSe
 		})
 	};
 
-
-
-    this.authorizeUser = function (user) {
-        notificationService.getNotifications(user);
-        $http.defaults.headers.common.Authorization = 'Bearer ' + user.token;
-        $window.localStorage['persica-user'] = JSON.stringify(user);
-
-        this.currentUser = user;
+    this.authorizeUser = function (token) {
+        var self = this;
+        $http.defaults.headers.common.Authorization = 'Bearer ' + token;
+        return $http.get('/user').then(function(response) {
+            var user = response.data;
+            notificationService.getNotifications(user);
+            $window.localStorage['persica-token'] = token;
+            self.currentUser = user;
+        }, function(response) {
+            console.log('error', response);
+        });
+       
     }
 
     this.logout = function() {
         $http.defaults.headers.common.Authorization = null;
-        $window.localStorage['persica-user'] = null;
+        delete $window.localStorage['persica-token'];
         this.currentUser = null;
         $window.location.href = '/';
     }
 
-    this.currentUser = {};
+    this.currentUser = null;
     this.observers = observers;
 
 }]);

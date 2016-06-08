@@ -7,7 +7,7 @@ module.exports = function(http) {
     var Device = require('./models/device');
     var User = require('./models/user');
     var Notification = require('./models/notification');
-    // var notificationSender = require('./notificationSender');
+    var notificationSender = require('./notificationSender');
     var control = io.of('/control');
     var device = io.of('/device');
 
@@ -84,18 +84,15 @@ module.exports = function(http) {
                     if (user.notifyConfig[criticalLevel]) {
                         switch(user.notifyConfig[criticalLevel].kind) {
                             case 'popup':
-                                console.log("popup case: " + user.notifyConfig[criticalLevel].dst);
                                 // notificationSender.sendPopup(user.notifyConfig[criticalLevel].dst, logObj);
                                 break;
 
                             case 'email':
-                                console.log("email case: " + user.notifyConfig[criticalLevel].dst);
-                                // notificationSender.sendEmail(user.notifyConfig[criticalLevel].dst, logObj);
+                                notificationSender.sendEmail(user.notifyConfig[criticalLevel].dst, logObj);
                                 break;
 
                             case 'sms':
-                                console.log("sms case: " + user.notifyConfig[criticalLevel].dst);
-                                // notificationSender.sendSMS(user.notifyConfig[criticalLevel].dst, logObj);
+                                notificationSender.sendSMS(user.notifyConfig[criticalLevel].dst, logObj);
                                 break;
 
                             default:

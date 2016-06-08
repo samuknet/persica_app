@@ -31,7 +31,7 @@ exports.sendEmail = function(email, logObj) {
 };
 
 exports.sendSMS = function(phoneNumber, logObj) {
-
+  console.log('Sending a text message to', phoneNumber, 'containing the info', logObj);
 };
 
 module.exports = exports 

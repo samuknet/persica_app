@@ -20,7 +20,7 @@ function LoginModalCtrl($scope, $http, $uibModal, $uibModalInstance) {
 
     $scope.login = function (username, password) {
         $http.post('/login', {username: username, password:password}).then(function (response) {
-            $uibModalInstance.close(response.data);
+            $uibModalInstance.close(response.data.token);
         }, function (response) {
            $scope.alertClass='alert alert-danger';                             
             if (response.status === 401) {
