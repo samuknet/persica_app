@@ -38,6 +38,20 @@ module.exports = function(router, ioService) {
         });
     });
 
+    router.put('/user/:username', function(req, res) {
+        var updateUser = JSON.parse(req.body.updateUser);
+        var data = {notifyConfig: updateUser.notifyConfig};
+        var query = {username: req.params.username};
+
+        User.update(query, data, {}, function(err, oldUser) {
+            if (err) {
+                res.status(406).json({message: err.message});
+            } else {
+                res.status(201).json({message: "User updated."});
+            }
+        });
+    });
+
     router.get('/device', function (req, res) {
         var did = req.query.did,
             searchObj = did ? {did: did} : {};
@@ -110,7 +124,7 @@ module.exports = function(router, ioService) {
 
         user.setPassword(req.body.password)
 
-        user.save(function(err) {
+        user.save(function(err, user) {
             if (err) {
                 if (err.code === 11000) {
                     return res.status(406).json({message:'Username already in use.'});
@@ -120,7 +134,8 @@ module.exports = function(router, ioService) {
 
             return res.json({
                 username: user.username,
-                token: user.generateJWT()
+                token: user.generateJWT(),
+                notifyConfig: user.notifyConfig
             })
         });
     });
@@ -140,7 +155,8 @@ module.exports = function(router, ioService) {
             if (user) {
                 return res.json({
                     username: req.body.username,
-                    token: user.generateJWT()
+                    token: user.generateJWT(),
+                    notifyConfig: user.notifyConfig
                 });
             } else {
                 return res.status(401).json(info);

@@ -7,6 +7,7 @@ module.exports = function(http) {
     var Device = require('./models/device');
     var User = require('./models/user');
     var Notification = require('./models/notification');
+    // var notificationSender = require('./notificationSender');
     var control = io.of('/control');
     var device = io.of('/device');
 
@@ -66,7 +67,8 @@ module.exports = function(http) {
 
         socket.on('device-log', function (data) {
             // data has a log property and critical property which is a number
-             var logObj = {did: did, critical: data.critical, log: data.log, timestamp: Date.now()};
+             var criticalLevel = data.critical;
+             var logObj = {did: did, critical: criticalLevel, log: data.log, timestamp: Date.now()};
 
              Device.findOneAndUpdate(
                     {did:did},
@@ -76,24 +78,46 @@ module.exports = function(http) {
                         if (err) {console.log(err); }
                     }
             );
-             if (data.critical == 5) { // The case that we send must send a notification
-                User.find({}, function (err, users) {
-                    _.forEach(users, function (user) {
-                        var notification = {type: 'criticalLog', did: did, message: data.log, username: user.username};
-                        new Notification(notification).save(function (err, model) {
-                            if (err) {
-                                console.log(err);
-                            }
-                            console.log('Added notification for user', user.username);
-                            control.emit('notification-new', model);
-                        });
-                    })                  
-                });
-             }
+                    
+            User.find({}, function (err, users) {
+                _.forEach(users, function (user) {
+                    if (user.notifyConfig[criticalLevel]) {
+                        switch(user.notifyConfig[criticalLevel].kind) {
+                            case 'popup':
+                                console.log("popup case: " + user.notifyConfig[criticalLevel].dst);
+                                // notificationSender.sendPopup(user.notifyConfig[criticalLevel].dst, logObj);
+                                break;
+
+                            case 'email':
+                                console.log("email case: " + user.notifyConfig[criticalLevel].dst);
+                                // notificationSender.sendEmail(user.notifyConfig[criticalLevel].dst, logObj);
+                                break;
+
+                            case 'sms':
+                                console.log("sms case: " + user.notifyConfig[criticalLevel].dst);
+                                // notificationSender.sendSMS(user.notifyConfig[criticalLevel].dst, logObj);
+                                break;
+
+                            default:
+
+                        }
+                    }
+                })                  
+            });
             control.emit('device-log', logObj);
 
         })
     });
+
+//POPUP CASE
+// var notification = {type: 'criticalLog', did: did, message: data.log, username: user.username};
+//                     new Notification(notification).save(function (err, model) {
+//                         if (err) {
+//                             console.log(err);
+//                         }
+//                         console.log('Added notification for user', user.username);
+//                         control.emit('notification-new', model);
+//                     });
 
     control.on('connection', function (socket) {
         socket.on('cmd', function (data) {
