@@ -24,6 +24,11 @@ app.service('userService', ['$window', '$http', 'socketService', 'notificationSe
         $window.location.href = '/';
     }
 
+    this.updateNotificationSettings = function (data) {
+       return  $http.put('/user/' + currentUser.username, data);
+
+    }
+
     this.currentUser = {};
     this.observers = observers;
 

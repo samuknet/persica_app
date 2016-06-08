@@ -1,0 +1,46 @@
+<div class="modal-header">
+        <h2 class="modal-title form-signin-heading">Settings</h2>
+
+</div>
+
+<div ng-class="alertClass" class="col-xs-12">
+   {{alertMsg}}
+</div>
+
+<form method="post" class="form-signin" ng-submit="login(username, password)"> 
+<div class="modal-body">
+
+<table class="table table-responsive">
+	<tr>
+		<th>Level</th>
+		<th>Action</th>
+		<th>Destination</th>
+	</tr>
+
+
+	<tr ng-repeat="level in levels">
+		<td>{{level.value}}</td>
+		<td>
+			<div class="btn-group">
+		        <label class="btn btn-success" ng-model="level.kind" uib-btn-radio="'SMS'" uncheckable>SMS</label>
+		        <label class="btn btn-success" ng-model="level.kind" uib-btn-radio="'Mail'" uncheckable>Mail</label>
+		        <label class="btn btn-success" ng-model="level.kind" uib-btn-radio="'PopUp'" uib-uncheckable="uncheckable">PopUp</label>
+		      	<label class="btn btn-success" ng-model="level.kind" uib-btn-radio="undefined" uib-uncheckable="uncheckable">None</label>
+	    	</div>
+    	</td>
+
+    	<td> 
+    		<input ng-show="level.kind == 'SMS'" type="email" class="form-control" ng-model="destination" placeholder="Email">
+    		<input ng-show="level.kind == 'Mail'" type="email" class="form-control" ng-model="destination" placeholder="Phone number">
+    		<input ng-show="!(level.kind == 'SMS' || level.kind == 'Mail')" type="email" class="form-control" disabled>
+    	</td>
+    </tr>
+</table>
+
+</div>
+
+<div class="modal-footer">
+        
+    <input type="submit" value="Save" class="btn btn-primary" />  
+</div>  
+</form>

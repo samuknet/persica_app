@@ -25,7 +25,6 @@ function MasterCtrl($scope, $cookieStore) {
         } else {
             $scope.toggle = false;
         }
-
     });
 
     $scope.toggleSidebar = function() {
