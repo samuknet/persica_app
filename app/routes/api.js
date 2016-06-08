@@ -38,6 +38,22 @@ module.exports = function(router, ioService) {
         });
     });
 
+    router.put('/user/:username', function(req, res) {
+        // console.log(req.body.updateUser.notifyConfig);
+        // console.log(req.body.updateUser);
+        var updateUser = JSON.parse(req.body.updateUser);
+        var data = {notifyConfig: updateUser.notifyConfig};
+        var query = {username: req.params.username};
+
+        User.update(query, data, {}, function(err, oldUser) {
+            if (err) {
+                res.status(406).json({message: err.message});
+            } else {
+                res.status(201).json({message: "User updated."});
+            }
+        });
+    });
+
     router.get('/device', function (req, res) {
         var did = req.query.did,
             searchObj = did ? {did: did} : {};

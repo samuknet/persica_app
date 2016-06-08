@@ -89,11 +89,13 @@ module.exports = function(http) {
                                 break;
 
                             case 'email':
-                                notificationSender.sendEmail(user.notifyConfig[criticalLevel].dst, logObj);
+                                console.log("email case: " + user.notifyConfig[criticalLevel].dst);
+                                // notificationSender.sendEmail(user.notifyConfig[criticalLevel].dst, logObj);
                                 break;
 
                             case 'sms':
-                                notificationSender.sendSMS(user.notifyConfig[criticalLevel].dst, logObj);
+                                console.log("sms case: " + user.notifyConfig[criticalLevel].dst);
+                                // notificationSender.sendSMS(user.notifyConfig[criticalLevel].dst, logObj);
                                 break;
 
                             default:
