@@ -126,7 +126,7 @@ module.exports = function(router, ioService) {
 
         user.setPassword(req.body.password)
 
-        user.save(function(err) {
+        user.save(function(err, user) {
             if (err) {
                 if (err.code === 11000) {
                     return res.status(406).json({message:'Username already in use.'});
@@ -136,7 +136,8 @@ module.exports = function(router, ioService) {
 
             return res.json({
                 username: user.username,
-                token: user.generateJWT()
+                token: user.generateJWT(),
+                notifyConfig: user.notifyConfig
             })
         });
     });
@@ -156,7 +157,8 @@ module.exports = function(router, ioService) {
             if (user) {
                 return res.json({
                     username: req.body.username,
-                    token: user.generateJWT()
+                    token: user.generateJWT(),
+                    notifyConfig: user.notifyConfig
                 });
             } else {
                 return res.status(401).json(info);
