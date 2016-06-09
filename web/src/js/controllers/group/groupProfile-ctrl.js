@@ -58,10 +58,9 @@ function GroupCmdsCtrl($scope, $stateParams, deviceService, groupService) {
                 $scope.cmds = $scope.cmds.concat(currDeviceCmds);
             }
         });
-        console.log($scope.cmds);
     };
 
-    $scope.sendCmd = function(cmd) {
+    $scope.groupCmd = function(cmd) {
         groupService.groupCommand(gid, cmd);
     };
 

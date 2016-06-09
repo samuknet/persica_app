@@ -15,11 +15,14 @@ module.exports = function(http) {
         var did = socket.handshake.query.did;
         Device.findOne({did: did}, function (err, device) {
             if (err) {
+                console.log("device not found error")
                 return socket.disconnect();
             } 
             if (device.group !== -1) {
-                console.log('device joining group', device.group);
-                socket.join(device.group);
+                var room = 'RM' + device.group;
+
+                console.log('device joining room', room);
+                socket.join(room);
             }
 
             devices[did] = {socket: socket, device: {did: did, cmds : []}};
@@ -27,14 +30,12 @@ module.exports = function(http) {
             devices[did].device.cmds = [];
             devices[did].device.liveVars = {};
             devices[did].device.establishTime = Date.now();
-
             control.emit('device-connected', devices[did].device);
             
 
             socket.on('device-register-cmd', function (cmd) {
                 // cmd.cmd
                 // check if command already registered
-                console.log('registering', cmd.cmd);
                 if (!_.contains(devices[did].device.cmds, cmd.cmd)) {
                     control.emit('device-register-cmd', {did: did, cmd: cmd.cmd});
                     devices[did].device.cmds.push(cmd.cmd);
@@ -139,10 +140,15 @@ module.exports = function(http) {
         });
 
         socket.on('group-cmd', function (data) {
-            var gid = data.gid,
-                cmd = data.cmd;
+            var gid = data.gid;
+                
             // gid is a room name
-            device.to(gid).emit({cmd: cmd});
+
+            // devices[200].socket.emit({cmd: cmd});
+            var room = 'RM' + gid;
+
+
+            device.to(room).emit('cmd',{cmd: data.cmd});
         });
 
         socket.on('control-chat-msg', function (msg) {
@@ -153,7 +159,8 @@ module.exports = function(http) {
 
         console.log('control connected');
         _.forEach(devices, function (obj, did) {
-            console.log('emitting device connected event', devices[did].device);
+            
+            console.log('emitting device connected event', devices[did].device.cmds);
             control.emit('device-connected', devices[did].device);
         });
     });
@@ -167,6 +174,9 @@ module.exports = function(http) {
         },
         updateGroup: function (updatedGroup) {
             control.emit('group-update', updatedGroup);
+        },
+        getDevices: function () {
+            return devices;
         }
     };
 }
