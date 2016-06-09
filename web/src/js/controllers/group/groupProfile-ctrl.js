@@ -29,9 +29,7 @@ function OnlineDeviceCtrl($scope, $stateParams, $timeout, groupService, deviceSe
 
         });
         }
-
     };
-
     groupService.observers.push(group_devices_observer);
     group_devices_observer();
 }
@@ -45,17 +43,25 @@ angular
 
 function GroupCmdsCtrl($scope, $stateParams, deviceService, groupService) {
     var gid = $stateParams.gid;
-  /*  var cmds_observer = function() {
-        $scope.cmds = deviceService.devices[did] ? deviceService.devices[did].cmds : [];
+    var cmds_observer = function() {
+        $scope.cmds = [];
+        var dids = groupService.groups[gid] ? groupService.groups[gid].dids : [];
+
+        _.forEach(dids, function (did) {
+            var currDeviceCmds = deviceService.devices[did] ? deviceService.devices[did].cmds : null;
+            if (currDeviceCmds) {
+                $scope.cmds = $scope.cmds.concat(currDeviceCmds);
+            }
+        });
+        console.log($scope.cmds);
     };
-    $scope.device = deviceService.devices[did];
 
     $scope.sendCmd = function(cmd) {
-        deviceService.sendCommand(did, cmd);
+        groupService.groupCommand(gid, cmd);
     };
 
     deviceService.observers.push(cmds_observer);
-    cmds_observer();*/
+    cmds_observer();
 }
 
 /**
