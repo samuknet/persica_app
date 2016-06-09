@@ -169,7 +169,7 @@ module.exports = function(http) {
         newDevice: function (device) {
             control.emit('device-new', device);
             if (device.group !== -1) {
-                control.emit('device')
+                control.emit('device');
             }
         },
         newGroup: function (group) {

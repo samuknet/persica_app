@@ -102,11 +102,12 @@
                    <div class="table-responsive">
                         <table class="table table" ng-controller='TimeCtrl'>
                             <thead>
-                                <tr><th>Timestamp</th><th>Log</th><th>Level</th></tr>
+                                <tr><th>Timestamp</th><th>DID</th><th>Log</th><th>Level</th></tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="log in logs | filter: {log: fields.search, critical: fields.critical}" ng-style="criticalStyles[log.critical]">
                                     <td>{{log.timestamp | date:'medium'}}</td>
+                                    <td>{{log.did}}</td>
                                     <td>{{log.log}}</td>
                                     <td>{{log.critical}}</td>
                                 </tr>
