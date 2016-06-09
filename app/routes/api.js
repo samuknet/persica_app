@@ -56,9 +56,23 @@ module.exports = function(router, ioService) {
         });
     });
 
-    router.put('/group/:gid', function(req, res) {
+    router.put('/group/:gid/add/:did', function(req, res) {
+        var gid = req.params.gid,
+            did = req.params.did;
 
-        
+        Group.findOneAndUpdate(
+            {gid: gid},
+            {$push: {dids: did}},
+            {safe: true, upsert: true},
+            function(err, group) {
+                if (err) {
+                    res.status(406).json({message: err.message});
+                } else {
+                    res.send(group);
+                    ioService.deviceAddedToGroup(group);
+                }
+            }
+        );
     });
 
 

@@ -25,6 +25,12 @@ app.service('groupService', ['$http', 'socketService', function ($http, socketSe
 		notify_observers();
     });
 
+    socketService.on('group-update', function(updatedGroup) {
+        // Group is the updated group
+        groups[group.gid] = _.extend(groups[group.gid] || {}, updatedGroup);
+        notify_observers();
+    });
+
     // not sure if needed
     // socketService.on('device-connected', function(device) {
     //     devices[device.did] = _.extend(devices[device.did] || {}, device);
@@ -85,20 +91,13 @@ app.service('groupService', ['$http', 'socketService', function ($http, socketSe
         }).then(success, fail);
     }
 
-	// Sends a command to all connected devices
-	this.broadcastCommand = function(cmdName){ 
-		socketService.emit('cmd', {cmd: cmdName});
-	};
-
-    // Sends a command to a specific device
-    // not sure if needed for group service
-	this.sendCommand = function (did, cmdName) {
-		socketService.emit('cmd', {did: did, cmd: cmdName});
-	};
+    this.addDeviceToGroup = function (group, device, success, fail) {
+        $http.put('/group/' + group.gid + '/add/' + device.did).then(success, fail);
+    }
 
 	// Sends a command to all devices in a given group
-	this.groupCommand = function (groupName, cmdName) {
-		socketService.emit('cmd', {gid: gid, cmd: cmdName})
+	this.groupCommand = function (gid, cmdName) {
+		socketService.emit('group-cmd', {gid: gid, cmd: cmdName})
 	};
 
 }]);
