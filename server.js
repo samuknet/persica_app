@@ -42,7 +42,7 @@ app.use(bodyParser.urlencoded({
 var ioService = require('./app/sockets')(http);
 
 // Authenticating routes
-app.use(jwt({ secret: config.super_secret}).unless({path: config.unprotected}));
+//app.use(jwt({ secret: config.super_secret}).unless({path: config.unprotected}));
 
 // Api endpoints 
 require('./app/routes/api')(app, ioService);

@@ -10,6 +10,53 @@ module.exports = function(http) {
     var notificationSender = require('./notificationSender');
     var control = io.of('/control');
     var device = io.of('/device');
+    var term_device = io.of('/term_device');
+    var term_control = io.of('/term_control');
+
+    term_device.on('connection', function (socket) {
+        console.log("connection")
+        term_device.emit("cmd",  "hello");
+        socket.on('cmd', function (data) {
+            /*
+                data of form:
+                {
+                    cmd: '...',
+                }
+            */
+            console.log("device:", data)
+            term_control.emit('data', data);
+            
+        });
+       
+
+
+
+    });
+
+    term_control.on('connection', function (socket) {
+        socket.on('data', function (data) {
+            
+        //         data of form:
+        //         {
+        //             cmd: '...',
+        //         }
+             console.log("control", data)
+            
+             term_device.emit('cmd', data);
+             
+        });
+
+
+
+    });
+
+
+
+
+
+
+
+
 
     device.on('connection', function (socket) {
         var did = socket.handshake.query.did;

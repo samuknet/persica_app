@@ -1,178 +1,71 @@
 <!doctype html>
-<html lang="en" ng-app="Persica">
+<title>term.js</title>
+<!--
+  term.js
+  Copyright (c) 2012-2013, Christopher Jeffrey (MIT License)
+-->
+<style>
+  html {
+    background: #555;
+  }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  h1 {
+    margin-bottom: 20px;
+    font: 20px/1.5 sans-serif;
+  }
 
-    <title>Persica</title>
-    <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+/*
+  .terminal {
+    float: left;
+    border: #000 solid 5px;
+    font-family: "DejaVu Sans Mono", "Liberation Mono", monospace;
+    font-size: 11px;
+    color: #f0f0f0;
+    background: #000;
+  }
 
-    <!-- STYLES -->
-    <!-- build:css lib/css/main.min.css -->
-    <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="components/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="components/rdash-ui/dist/css/rdash.min.css" />
-    <link rel="stylesheet" type="text/css" href="components/rdash-ui/dist/css/rdash.min.css" />
-    <link rel="stylesheet" type="text/css" href="components/angular-chart.js/dist/angular-chart.css" />
-    <link rel="stylesheet" type="text/css" href="css/universal.css" />
+  .terminal-cursor {
+    color: #000;
+    background: #f0f0f0;
+  }
+*/
+</style>
+<h1>term.js</h1>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script src="../src/term.js"></script>
+<script>
+;(function() {
+  window.onload = function() {
+    var socket = io("http://localhost:3000/term_control");
+    socket.on('connect', function() {
+      var term = new Terminal({
+        cols: 80,
+        rows: 24,
+        useStyle: true,
+        screenKeys: true,
+        cursorBlink: false
+      });
 
+      term.on('data', function(data) {
+        socket.emit('data', data);
+      });
 
+      term.on('title', function(title) {
+        document.title = title;
+      });
 
-    <!-- endbuild -->
-    <!-- SCRIPTS -->
-    <!-- build:js lib/js/main.min.js -->
+      term.open(document.body);
 
+      term.write('\x1b[31mWelcome to term.js!\x1b[m\r\n');
 
-    <script type="text/javascript" src="components/angular/angular.min.js"></script>
-    <script type="text/javascript" src="components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script type="text/javascript" src="components/angular-cookies/angular-cookies.min.js"></script>
-    <script type="text/javascript" src="components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script type="text/javascript" src="components/Chart.js/Chart.js"></script>
-    <script type="text/javascript" src="components/angular-chart.js/dist/angular-chart.js"></script>
-    <script type="text/javascript" src="components/angular_page_visibility/dist/page_visibility.min.js"></script>
-    <script type="text/javascript" src="components/angular-notification-master/angular-notification.js"></script>
+      socket.on('data', function(data) {
+        term.write(data);
+      });
 
-    <!-- endbuild -->
-    <!-- Custom Scripts -->
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script type="text/javascript" src="socket.io/socket.io.js"></script>
-    <script type="text/javascript" src="js/dashboard.min.js"></script>
-</head>
-
-<body ng-controller="MasterCtrl">
-    <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
-
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar">
-                <li class="sidebar-main">
-                    <a ng-click="toggleSidebar()">
-            Persica
-            <span class="menu-icon glyphicon glyphicon-transfer"></span>
-          </a>
-                </li>
-                <li class="sidebar-title"><span>NAVIGATION</span>
-                </li>
-                <li class="sidebar-list">
-                    <a href="#">Dashboard<span class="menu-icon fa fa-tachometer"></span></a>
-                </li>
-                <li class="sidebar-list">
-                    <a href="#/tables">Tables <span class="menu-icon fa fa-table"></span></a>
-                </li>
-            </ul>
-            <div class="sidebar-footer">
-                <div class="col-xs-4">
-                    <a href="https://github.com/samuknet/persica_app" target="_blank">
-            Github
-          </a>
-                </div>
-            </div>
-        </div>
-        <!-- End Sidebar -->
-
-        <div id="content-wrapper">
-            <div class="page-content">
-
-                <!-- Header Bar -->
-                <div class="row header" ng-controller="HeaderCtrl">
-                    <div class="col-xs-12">
-                        <div class="user pull-right" style="margin-left:20px">
-
-
-
-                            <div class="item dropdown" ng-click="logout()">
-                                  <div class="icon-wrapper">
-                                     <i class="fa fa-sign-out icon-grey"></i>
-                                  </div>
-                              
-                            </div>
-
-
-
-
-
-
-                            <div class="item dropdown" ng-click="openSettingsModal()">
-                                  <div class="icon-wrapper">
-                                     <i style="cursor:pointer" class="fa fa-cog icon-grey"></i>
-                                  </div>          
-                            </div>
-
-
-                            <div class="item dropdown" uib-dropdown autoClose="outsideClick">
-                                <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
-                                  <div class="icon-wrapper">
-                                     <i class="fa fa-bell-o icon-grey"></i>
-                                     <span class="badge" ng-if="notifications.length">{{notifications.length}}</span>
-                                  </div>
-                                </a>
-
-
-
-
-                                <ul class="dropdown-menu dropdown-menu-right notifications" role="menu" aria-labelledby="dLabel">
-
-                                    <div class="notification-heading">
-                                        <h4 class="menu-title">Notifications</h4>
-                                    </div>
-                                    <li class="divider"></li>
-                                    <div class="notifications-wrapper">
-                                        <a ng-repeat="notification in notifications" class="content">
-                                            <!-- ng-href="#/device/{{notification.did}}" -->
-                                            <div class="notification-item">
-                                                <h4 class="item-title">{{notification.did}} <span class="fa fa-check-circle fa-lg pointer pull-right" ng-click="dismissNotification(notification); $event.stopPropagation();"></span></h4>
-                                                <p class="item-info">{{notification.message}}</p>
-                                            </div>
-
-                                        </a>
-
-                                        <a ng-if="notifications.length === 0" class="content">
-                                            <div class="notification-item">
-                                                <h4 class="item-title">No notifications to show</h4>
-                                            </div>
-                                        </a>
-
-                                    </div>
-                                    <li class="divider"></li>
-
-                                </ul>
-                            </div>
-                            
-                        </div>
-                        <div class="meta">
-                                <div class="page">
-                                    Persica
-                                </div>
-                                <div class="breadcrumb-links">
-                                    The Lions Feed Tonight
-                                </div>
-                            </div>
-
-                    </div>
-                </div>
-                <!-- End Header Bar -->
-
-                <!-- Main Content -->
-                <div ui-view></div>
-
-            </div>
-            <!-- End Page Content -->
-        </div>
-        </div>
-        <!-- End Content Wrapper -->
-    <!-- End Page Wrapper -->
-
-    <!-- <div class="dropdown">
-  <a id="dLabel" role="button" data-toggle="dropdown" >
-    <i class="glyphicon glyphicon-bell"></i>
-  </a>
-  
-  
-  
-</div>
- -->
-</body>
-
-</html>
+      socket.on('disconnect', function() {
+        term.destroy();
+      });
+    });
+  };
+}).call(this);
+</script>
