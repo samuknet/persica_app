@@ -31,56 +31,6 @@ app.service('groupService', ['$http', 'socketService', function ($http, socketSe
         notify_observers();
     });
 
-    // not sure if needed
-    // socketService.on('device-connected', function(device) {
-    //     devices[device.did] = _.extend(devices[device.did] || {}, device);
-    //     devices[device.did].online = true;
-    //     devices[device.did].establishTime = device.establishTime;
-    //     notify_observers();
-    // });
-
-    // not sure if needed
-    // socketService.on('device-disconnected', function(device) {
-    //     devices[device.did] = _.extend(devices[device.did] || {}, device);
-    //     devices[device.did].online = false;
-    //     notify_observers();
-    // });
-
-    // not sure if needed
-    // socketService.on('device-register-cmd', function (register) {
-    // 	devices[register.did] = _.extend(devices[register.did] || {}, {did: register.did});
-    // 	devices[register.did].cmds.push(register.cmd);
-    // 	notify_observers();
-    // });
-
-    // not sure if needed
-    // socketService.on('device-updateVariable', function(updateObj) {
-    // 	var variable = {
-    // 		value : updateObj.value,
-    // 		timestamp : updateObj.timestamp
-    // 	};
-    // 	var device = devices[updateObj.did]
-    // 	device.liveVars = device.liveVars || {}
-    // 	device.liveVars[updateObj.handle] = variable
-    // 	notify_observers()
-    // });
-
-    // not sure if needed
-    // socketService.on('device-log', function(updateObj) {
-    // 	var log = {
-    // 		did: updateObj.did,
-    // 		critical : updateObj.critical,
-    // 		log: updateObj.log,
-    // 		timestamp : updateObj.timestamp
-    // 	};
-
-    // 	var device = devices[updateObj.did]
-    // 	device.logs = device.logs || [];
-    // 	device.logs.push(log);
-    // 	notify_observers()
-    // });
-
-
 	this.groups = groups;
 	this.observers = observers;
 
