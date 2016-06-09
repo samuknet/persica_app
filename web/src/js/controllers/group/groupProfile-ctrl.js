@@ -19,9 +19,9 @@ angular
   .controller('OnlineDeviceCtrl', ['$scope', '$stateParams', '$timeout', 'groupService', OnlineDeviceCtrl]);
 
 function OnlineDeviceCtrl($scope, $stateParams, $timeout, groupService) {
-
+    var gid = $stateParams.gid;
     var group_devices_observer = function() {
-        $scope.devices = groupService.groups[0].dids;
+        $scope.devices = groupService.groups[gid] ? groupService.groups[gid].dids : [];
     };
 
     groupService.observers.push(group_devices_observer);
@@ -37,7 +37,7 @@ angular
 
 function GroupCmdsCtrl($scope, $stateParams, deviceService, groupService) {
     var gid = $stateParams.gid;
-    var cmds_observer = function() {
+  /*  var cmds_observer = function() {
         $scope.cmds = deviceService.devices[did] ? deviceService.devices[did].cmds : [];
     };
     $scope.device = deviceService.devices[did];
@@ -47,7 +47,7 @@ function GroupCmdsCtrl($scope, $stateParams, deviceService, groupService) {
     };
 
     deviceService.observers.push(cmds_observer);
-    cmds_observer();
+    cmds_observer();*/
 }
 
 /**
