@@ -16,9 +16,9 @@ function GroupProfileCtrl($scope, $stateParams, $http, groupService) {
 
 angular
   .module('Persica')
-  .controller('OnlineDeviceCtrl', ['$scope', '$stateParams', '$timeout', 'groupService', 'deviceService', OnlineDeviceCtrl]);
+  .controller('OnlineDeviceCtrl', ['$scope', '$stateParams', '$state', '$timeout', 'groupService', 'deviceService', OnlineDeviceCtrl]);
 
-function OnlineDeviceCtrl($scope, $stateParams, $timeout, groupService, deviceService) {
+function OnlineDeviceCtrl($scope, $stateParams, $state, $timeout, groupService, deviceService) {
     var gid = $stateParams.gid;
 
     var group_devices_observer = function() {
@@ -30,6 +30,10 @@ function OnlineDeviceCtrl($scope, $stateParams, $timeout, groupService, deviceSe
         });
         }
 
+    };
+        $scope.navigateToDevice = function(did) { // Called when device table row is clicked
+        // Navigate to device profile page
+        $state.go('device', {did: did});
     };
 
     groupService.observers.push(group_devices_observer);
