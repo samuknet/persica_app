@@ -168,6 +168,9 @@ module.exports = function(http) {
     return {
         newDevice: function (device) {
             control.emit('device-new', device);
+            if (device.group !== -1) {
+                control.emit('device')
+            }
         },
         newGroup: function (group) {
             control.emit('group-new', group);

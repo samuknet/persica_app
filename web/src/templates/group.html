@@ -47,7 +47,7 @@
                                  <tr><th>DeviceID</th><th>Alias</th><th><center>Online</center></th></tr>
                              </thead>
                              <tbody>
-                                 <tr style="cursor:pointer;" ng-repeat="device in devices" ng-click="navigateToDevice(device.did)" >
+                                 <tr style="cursor:pointer;" ng-repeat="device in devices track by $index"  ng-click="navigateToDevice(device.did)" >
                                     <td>{{device.did}}</td>
                                     <td>{{device.alias}}</td>
                                     <td>
