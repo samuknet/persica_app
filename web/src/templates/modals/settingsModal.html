@@ -1,0 +1,47 @@
+<div class="modal-header">
+        <h2 class="modal-title form-signin-heading">Settings</h2>
+
+</div>
+
+<div ng-class="alertClass" class="col-xs-12">
+   {{alertMsg}}
+</div>
+
+<form method="post" class="form-signin"> 
+<div class="modal-body">
+
+<table class="table table-responsive">
+	<tr>
+		<th>Level</th>
+		<th>Action</th>
+		<th>Destination</th>
+	</tr>
+
+
+	<tr ng-repeat="level in levels">
+		<td>{{$index}}</td>
+		<td>
+			<div class="btn-group">
+		        <label class="btn btn-primary" ng-model="level.kind" uib-btn-radio="'sms'" uncheckable>SMS</label>
+		        <label class="btn btn-primary" ng-model="level.kind" uib-btn-radio="'email'" uncheckable>Mail</label>
+		        <label class="btn btn-primary" ng-model="level.kind" uib-btn-radio="'popup'" uib-uncheckable="uncheckable">PopUp</label>
+		      	<label class="btn btn-primary" ng-model="level.kind" uib-btn-radio="undefined" uib-uncheckable="uncheckable">None</label>
+	    	</div>
+    	</td>
+
+    	<td> 
+    		<input ng-show="level.kind == 'sms'" type="text" class="form-control" ng-model="level.dst" placeholder="Phone Number">
+    		<input ng-show="level.kind == 'email'" type="text" class="form-control" ng-model="level.dst" placeholder="Email">
+    		<input ng-show="!(level.kind == 'sms' || level.kind == 'email')" type="email" class="form-control" disabled>
+    	</td>
+    </tr>
+</table>
+
+</div>
+
+<div class="modal-footer">
+        
+    <input type="button" value="Save" class="btn btn-success" ng-click="updateNotificationSettings()" />  
+    <input type="button" value="Cancel" class="btn btn-default" ng-click="cancel()" />  
+</div>  
+</form>
