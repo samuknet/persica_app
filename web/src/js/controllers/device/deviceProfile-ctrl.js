@@ -41,9 +41,9 @@ function TimeCtrl($scope, $stateParams, $timeout, deviceService) {
 
     var updateConnectionTimes = function() {
         $scope.establishTime = deviceService.devices[did] ? deviceService.devices[did].establishTime : 0;
+
         $scope.lastOnline = deviceService.devices[did] ? deviceService.devices[did].lastOnline : 0;
     };
-
     deviceService.observers.push(updateConnectionTimes);
     updateConnectionTimes();
 
@@ -52,7 +52,6 @@ function TimeCtrl($scope, $stateParams, $timeout, deviceService) {
 
     var tick = function() {
             var upTime = Math.floor((Date.now() - $scope.establishTime)/1000);
-
             var timeVars = ['sec', 'min', 'hour', 'day'];
 
             var stringTime = '';

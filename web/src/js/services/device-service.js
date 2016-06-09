@@ -22,10 +22,10 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 
 
 	socketService.on('device-connected', function(device) {
-        console.log('device.cmds', device.cmds);
+        console.log(device);
 		devices[device.did] = _.extend(devices[device.did] || {}, device);
 		devices[device.did].online = true;
-        devices[device.did].establishTime = device.establishTime;
+        devices[device.did].establishTime = Date.now();
 		notify_observers();
     });
 
