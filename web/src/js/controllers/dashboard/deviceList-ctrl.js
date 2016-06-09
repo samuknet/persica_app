@@ -41,3 +41,8 @@ app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', 'd
 		$uibModalInstance.close();
 	};
 }]);
+
+app.controller('InputDropdownController', ['inputDropdown', function() {
+  this.selectedDropdownItem = null;
+  this.dropdownItems = ['hello', 'from', 'the', 'other', 'side'];
+}]);

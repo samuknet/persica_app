@@ -13,7 +13,17 @@
         <br />
             <label for="alias">Alias</label>
             <input required type="text" class="form-control" id="alias" ng-model="alias" placeholder="Alias">
-        <nbr />
+        <br />
+            <label for="gid">Group</label>
+            <div ng-controller="InputDropdownController as dropdownCtrl">
+              <input-dropdown
+                selected-item="dropdownCtrl.selectedDropdownItem"
+                default-dropdown-items="dropdownCtrl.dropdownItems">
+              </input-dropdown>
+            </div>
+<!--             <label for="gid">Group</label>
+            <input type="text" class="form-control" id="alias" ng-model="alias" placeholder="Alias"> -->
+        <br />
             <label for="description">Description</label><br>
             <textarea required class="form-control" id="description" ng-model="description" placeholder="Description..."></textarea>
 
