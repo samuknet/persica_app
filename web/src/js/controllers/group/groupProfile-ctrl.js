@@ -25,7 +25,10 @@ function OnlineDeviceCtrl($scope, $stateParams, $state, $timeout, groupService, 
         $scope.devices = []
         if (groupService.groups[gid]) {
             _.forEach(groupService.groups[gid].dids, function(did) {
-            $scope.devices.push(deviceService.devices[did]);
+                if (deviceService.devices[did]) {
+                    $scope.devices.push(deviceService.devices[did]);
+                }
+                
 
         });
         }
@@ -36,6 +39,7 @@ function OnlineDeviceCtrl($scope, $stateParams, $state, $timeout, groupService, 
     };
 
     groupService.observers.push(group_devices_observer);
+    deviceService.observers.push(group_devices_observer);
     group_devices_observer();
 }
 
