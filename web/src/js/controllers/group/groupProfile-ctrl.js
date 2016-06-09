@@ -7,20 +7,25 @@ angular
 
 function GroupProfileCtrl($scope, $stateParams, $http, groupService) {
     var gid = $stateParams.gid;
-    var device_observer = function() {
-        $scope.device = groupService.groups[gid];
+    var group_observer = function() {
+        $scope.group = groupService.groups[gid];
     };
-    groupService.observers.push(device_observer);
-    device_observer();
-
+    groupService.observers.push(group_observer);
+    group_observer();
 }
 
 angular
   .module('Persica')
-  .controller('OnlineDeviceCtrl', ['$scope', '$stateParams', '$timeout', 'deviceService', OnlineDeviceCtrl]);
+  .controller('OnlineDeviceCtrl', ['$scope', '$stateParams', '$timeout', 'groupService', OnlineDeviceCtrl]);
 
-function OnlineDeviceCtrl($scope, $stateParams, $timeout, deviceService) {
+function OnlineDeviceCtrl($scope, $stateParams, $timeout, groupService) {
 
+    var group_devices_observer = function() {
+        $scope.devices = groupService.groups[0].dids;
+    };
+
+    groupService.observers.push(group_devices_observer);
+    group_devices_observer();
 }
 
 /**
