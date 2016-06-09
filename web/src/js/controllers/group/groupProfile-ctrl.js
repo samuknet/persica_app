@@ -16,9 +16,9 @@ function GroupProfileCtrl($scope, $stateParams, $http, groupService) {
 
 angular
   .module('Persica')
-  .controller('OnlineDeviceCtrl', ['$scope', '$stateParams', '$state', '$timeout', 'groupService', 'deviceService', OnlineDeviceCtrl]);
+  .controller('OnlineDeviceCtrl', ['$scope', '$stateParams', '$state', '$timeout', 'groupService', 'deviceService', '$uibModal', OnlineDeviceCtrl]);
 
-function OnlineDeviceCtrl($scope, $stateParams, $state, $timeout, groupService, deviceService) {
+function OnlineDeviceCtrl($scope, $stateParams, $state, $timeout, groupService, deviceService, $uibModal) {
     var gid = $stateParams.gid;
     
     var group_devices_observer = function() {
@@ -35,15 +35,60 @@ function OnlineDeviceCtrl($scope, $stateParams, $state, $timeout, groupService, 
 
         }
     };
-        $scope.navigateToDevice = function(did) { // Called when device table row is clicked
+    
+    $scope.navigateToDevice = function(did) { // Called when device table row is clicked
         // Navigate to device profile page
         $state.go('device', {did: did});
     };
+
+    $scope.addDeviceToGroupModal = function () {
+        var modalInstance = $uibModal.open({
+          animation: true,
+          templateUrl: '/templates/modals/addDeviceToGroupModal.html',
+          controller: 'AddDeviceToGroupModalCtrl'
+        });
+    };   
 
     groupService.observers.push(group_devices_observer);
     deviceService.observers.push(group_devices_observer);
     group_devices_observer();
 }
+
+angular
+  .module('Persica')
+  .controller('AddDeviceToGroupModalCtrl', ['$scope', '$uibModalInstance', '$http', 'groupService', '$stateParams', 'deviceService', '$uibModal', function($scope, $uibModalInstance, $http, groupService, $stateParams, deviceService) {
+    $scope.alertMsg   = 'Choose an existing device to add to group.';
+    $scope.alertClass = 'alert alert-info';
+
+    $scope.submit = function() {
+        
+        if ($scope.newDid == undefined) {
+            if (!($scope.did in groupService.groups[$stateParams.gid].dids)) {
+                groupService.addDIDToGroup($stateParams.gid, $scope.did);
+            } else {
+                console.log("Device already in group!");
+            }
+        } else {
+            deviceService.newDevice(
+            {did: $scope.newDid, alias: $scope.alias, description: $scope.description, group: $stateParams.gid},
+            function (response) {
+                $uibModalInstance.close();
+            },
+            function (response) {
+                $scope.alertMsg = response.data.message;
+                $scope.alertClass = 'alert alert-danger';
+            });
+
+            groupService.groups[$stateParams.gid].dids.push($scope.newDid);
+        }
+        $uibModalInstance.close();
+    };
+    $scope.cancel = function() {
+        $uibModalInstance.close();
+    };
+
+}]);
+
 
 /**
  * Device Cmds Controller

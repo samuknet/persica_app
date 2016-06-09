@@ -69,7 +69,7 @@ module.exports = function(router, ioService) {
                     res.status(406).json({message: err.message});
                 } else {
                     res.send(group);
-                    ioService.deviceAddedToGroup(group);
+                    //ioService.deviceAddedToGroup(group);
                 }
             }
         );

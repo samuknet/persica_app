@@ -22,9 +22,10 @@
                                 <tr><td>Alias</td><td>{{device.alias}}</td></tr>
                                 <tr><td>DID</td><td>{{device.did}}</td></tr>
                                 <tr><td>Description</td><td>{{device.description}} </td></tr>
-                					<tr ng-show="device.online"><td> Device Online Since:</td><td> {{establishTime | date:'medium'}} </td></tr>
-               						<tr ng-show="device.online"><td> Current Uptime: </td><td> {{ clock }} </td></tr>
-               						<tr ng-show="!device.online"><td> Last Online: </td><td> {{device.lastOnline | date:'medium'}} </td></tr>
+               					<tr><td>Group</td><td>{{ device.group }}</td></tr>
+                					<tr ng-show="device.online"><td> Device Online Since</td><td> {{establishTime | date:'medium'}} </td></tr>
+               						<tr ng-show="device.online"><td> Current Uptime </td><td> {{ clock }} </td></tr>
+               						<tr ng-show="!device.online"><td> Last Online </td><td> {{device.lastOnline | date:'medium'}} </td></tr>
                             </tbody>
                         </table>
                     </div>

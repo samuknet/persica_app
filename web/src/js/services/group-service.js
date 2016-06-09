@@ -45,6 +45,14 @@ app.service('groupService', ['$http', 'socketService', function ($http, socketSe
         $http.put('/group/' + group.gid + '/add/' + device.did).then(success, fail);
     }
 
+
+    this.addDIDToGroup = function (gid, did, success, fail) {
+        $http.put('/group/' + gid + '/add/' + did);
+        groups[gid].dids.push(did);
+        notify_observers();
+    }
+
+
 	// Sends a command to all devices in a given group
 	this.groupCommand = function (gid, cmdName) {
 		socketService.emit('group-cmd', {gid: gid, cmd: cmdName})

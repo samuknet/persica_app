@@ -37,6 +37,7 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 
     socketService.on('device-new', function(device) {
     	devices[device.did] = _.extend(devices[device.did] || {}, device);
+        devices[device.did].lastOnline = "Device has not been online yet.";
 		notify_observers();
     });
 

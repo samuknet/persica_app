@@ -31,17 +31,20 @@
 
     
 
-        <div class="col-lg-6">
+        <div class="col-lg-6" ng-controller="OnlineDeviceCtrl">
             <rd-widget>
                     <rd-widget-header icon="fa-tasks" title="Devices">
                         <!-- <a href="#">Manage Devices</a> -->
-<!--                             <div style="text-align:right">
-                               <a href="" ng-click="openNewDeviceModal()"><i class="fa fa-plus" aria-hidden="true"></i></a>
-
-                            </div> -->
+                        <div style="text-align:right">
+                            <a href="" ng-click="addDeviceToGroupModal()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        </div>
+<!-- 
+                            <button style="text-align:right" class="btn btn-primary">
+                               <a href="" ng-click="()"><font color="white">Add Existing Device</font></a>
+                            </button> -->
                     </rd-widget-header>
                     <rd-widget-body classes="medium no-padding">
-                        <div class="table-responsive" ng-controller="OnlineDeviceCtrl">
+                        <div class="table-responsive" >
                            <table class="table table-hover">
                               <thead>
                                  <tr><th>DeviceID</th><th>Alias</th><th><center>Online</center></th></tr>
