@@ -1,5 +1,5 @@
 /**
- * Device List Controller
+ * Group List Controller
  */
 
 var app = angular.module('Persica');
@@ -11,6 +11,7 @@ function GroupListCtrl($scope, groupService, $uibModal, $state) {
 
     $scope.navigateToGroup = function(gid) { // Called when group's row in table is clicked
         // Navigate to device profile page
+        console.log(gid);
         $state.go('group', {gid: gid});
     };
 
@@ -28,7 +29,7 @@ app.controller('NewGroupModalCtrl', ['$scope', '$uibModalInstance', '$http', 'gr
     $scope.alertClass = 'alert alert-info';
     $scope.submit = function() {
         groupService.newGroup(
-            {gid: $scope.gid, name: $scope.name, description: $scope.description},
+            {name: $scope.name, description: $scope.description},
             function (response) {
                 $uibModalInstance.close();
             },

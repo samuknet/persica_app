@@ -6,7 +6,7 @@ var app = angular.module('Persica');
 
 app.controller('DeviceListCtrl', ['$scope', 'deviceService', '$uibModal', '$state', DeviceListCtrl]);
 
-function DeviceListCtrl($scope, deviceService, $uibModal, $state, groupService) {
+function DeviceListCtrl($scope, deviceService, $uibModal, $state) {
     $scope.devices = deviceService.devices;
     
     $scope.navigateToDevice = function(did) { // Called when device table row is clicked

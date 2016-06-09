@@ -10,18 +10,19 @@
                 <div class="table-responsive">
                    <table class="table table-hover">
                       <thead>
-                         <tr><th>Group ID</th><th>Name</th><th><center>Online</center></th></tr>
+                         <tr><th>Group ID</th><th>Name</th><th><center>Size</center></th></tr>
                      </thead>
                      <tbody>
-                         <tr style="cursor:pointer;" ng-repeat="group in groups" ng-click="navigateToDevice(group.did)" >
-                            <td>{{group.did}}</td>
+                         <tr style="cursor:pointer;" ng-repeat="group in groups" ng-click="navigateToGroup(group.gid)" >
+                            <td>{{group.gid}}</td>
                             <td>{{group.name}}</td>
-                            <td>
+                            <td><!-- {{totalOnlineInGroup}} /  -->{{group.dids.length}}</td>
+<!--                             <td>
                                 <center>
                                     <span class="fa fa-circle" style="color:#5cb85c" ng-if="group.online"></span>
                                     <span class="fa fa-circle-o" style="color:#d9534f" ng-if="!group.online"></span>
                                 </center>
-                            </td>
+                            </td> -->
                         </tr>
 
                     </tbody>
