@@ -23,12 +23,13 @@ function DeviceListCtrl($scope, deviceService, $uibModal, $state) {
     };    
 }
 
-app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', 'deviceService', function($scope, $uibModalInstance, $http, deviceService) {
+app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', 'deviceService', 'groupService', function($scope, $uibModalInstance, $http, deviceService, groupService) {
     $scope.alertMsg   = 'Device ID and alias required.';
     $scope.alertClass = 'alert alert-info';
+    $scope.groups = groupService.groups;
     $scope.submit = function() {
         deviceService.newDevice(
-            {did: $scope.did, alias: $scope.alias, description: $scope.description},
+            {did: $scope.did, alias: $scope.alias, description: $scope.description, gid: $scope.gid},
             function (response) {
                 $uibModalInstance.close();
             },
@@ -41,18 +42,3 @@ app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', 'd
 		$uibModalInstance.close();
 	};
 }]);
-
-app.controller('InputDropdownController', ['$scope', 'inputDropdown', function($scope, inputDropdown) {
-  this.selectedDropdownItem = null;
-  this.dropdownItems = ['hello', 'from', 'the', 'other', 'side'];
-}]);
-
-// app.controller('testCtrl', [function() {
-//   this.selectedDropdownItem = null;
-//   this.dropdownItems = ['hello', 'from', 'the', 'other', 'side'];
-// }]);
-
-// app.controller('testCtrl', ['$scope', 'groupService', function($scope, groupService) {
-//     console.log(groupService.groups);
-//     $scope.names = _.pluck(groupService.groups, 'name');
-// }]);

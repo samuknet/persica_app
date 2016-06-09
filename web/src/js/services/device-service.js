@@ -78,7 +78,8 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
         $http.post('/device', {
             did: device.did,
             alias: device.alias,
-            description: device.description
+            description: device.description,
+            gid: device.gid
         }).then(success, fail);
     }
 
