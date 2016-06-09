@@ -14,8 +14,6 @@ function HeaderCtrl($scope, $state, $uibModal, notificationService, userService)
 
     $scope.dismissNotification = function (not) {notificationService.deleteNotification(not);};
     $scope.logout = function() {
-        console.log("logout")
-
     	userService.logout();
     	$state.go('index');
     };

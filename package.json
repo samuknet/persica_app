@@ -24,7 +24,9 @@
     "jsonwebtoken": "^7.0.0",
     "mocha": "^2.5.3",
     "mongoose": "latest",
+    "mongoose-auto-increment": "^5.0.1",
     "morgan": "latest",
+    "nodemailer": "0.7.1",
     "nodemon": "^1.9.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
@@ -32,9 +34,8 @@
     "should": "^8.4.0",
     "socket.io": "^1.4.6",
     "socket.io-client": "^1.4.6",
-    "underscore": "^1.8.3",
-    "nodemailer": "0.7.1",
-    "twilio": "2.9.1"
+    "twilio": "2.9.1",
+    "underscore": "^1.8.3"
   },
   "repository": {
     "type": "git",

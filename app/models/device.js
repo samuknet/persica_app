@@ -12,26 +12,25 @@ var DeviceSchema = new Schema ({
         required: true,
         dropDups: true
     },
-
+    group: {
+        type: Number,
+        default: -1
+    },
     alias: {
     	type: String,
         required: true
     },
-    
     description: {
     	type: String
     },
-    
     lastOnline: {
     	type: Date
     },
-
     varUpdates: [{
         handle : String,
         value : String,
         timestamp : Date
     }],
-
     logs: [{
             critical: Number, 
             log: String,

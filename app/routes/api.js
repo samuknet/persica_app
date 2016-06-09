@@ -5,6 +5,7 @@ module.exports = function(router, ioService) {
 
     var mongoose = require('mongoose'),
         Device = require('../models/device'),
+        Group = require('../models/group'),
         User = require('../models/user'),
         Notification = require('../models/notification'),
         passport = require('passport'),
@@ -13,6 +14,68 @@ module.exports = function(router, ioService) {
         auth = jwt({secret: 'SECRET', userProperty: 'payload'}),
         _ = require('underscore');
 
+
+    router.get('/group', function (req, res) {
+        Group.find({}, function (err, groups) {
+            if (err) {
+                res.status(406).json({message: 'Could not get groups'});
+            } else {
+                res.send(groups);
+            }
+        });
+    });
+
+    router.get('/group/:gid', function (req, res) {
+        var gid = req.params.gid;
+            
+        if (!gid) {
+            res.status(406).json({message: 'Group id not specified'})
+        }
+
+        Group.findOne({gid: gid}, function(err, group) {
+            if (err) {
+                res.status(406).json({message: 'Error occured while getting group width id ' + gid + '.'});
+            } else {
+                res.send(group);
+            }
+        });
+    });
+
+    router.post('/group', function (req, res) {
+        var name = req.body.name,
+            description = req.body.description;
+
+        var group = {name: name, description: description};
+        new Group(group).save(function (err, groupDocument) {
+            if (err) {
+                res.status(406).json({message: err.message});
+            } else {
+                ioService.newGroup(groupDocument);
+                res.status(201).json(groupDocument);
+            }
+        });
+    });
+
+    router.put('/group/:gid', function(req, res) {
+
+        
+    });
+
+
+    router.get('/device', function (req, res) {
+        var did = req.query.did,
+            searchObj = did ? {did: did} : {};
+        Device.find(searchObj, function(err, devices) {
+            if (err) {
+                res.status(406).json({message: 'Error occured while getting devices.'});
+            } else {
+                _.forEach(devices, function (device) {
+                    device.cmds = [];
+                });
+                res.send(devices);
+            }
+        });
+    });
 
     router.post('/device', function (req, res) {
         var did = req.body.did,
@@ -52,21 +115,6 @@ module.exports = function(router, ioService) {
                 res.status(406).json({message: err.message});
             } else {
                 res.status(201).json({message: "User updated."});
-            }
-        });
-    });
-
-    router.get('/device', function (req, res) {
-        var did = req.query.did,
-            searchObj = did ? {did: did} : {};
-        Device.find(searchObj, function(err, devices) {
-            if (err) {
-                res.send({message: 'Error occured while getting devices.'});
-            } else {
-                _.forEach(devices, function (device) {
-                    device.cmds = [];
-                });
-                res.send(devices);
             }
         });
     });
