@@ -19,7 +19,7 @@ module.exports = function(http) {
             } 
             if (device.group !== -1) {
                 console.log('device joining group', device.group);
-                socket.join(device[did].group);
+                socket.join(device.group);
             }
 
             devices[did] = {socket: socket, device: {did: did, cmds : []}};
