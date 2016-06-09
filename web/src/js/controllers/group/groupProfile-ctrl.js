@@ -174,9 +174,8 @@ angular.module('Persica').controller('DeviceVariableGraphModalCtrl', ['$scope', 
     }
 }]);
 
-angular.module('Persica').controller('DeviceLogsCtrl', ['$scope', '$stateParams', 'deviceService', function($scope, $stateParams, deviceService) {
-    var did = $stateParams.did;
-    $scope.test = '';
+angular.module('Persica').controller('GroupLogsCtrl', ['$scope', '$stateParams', 'groupService', 'deviceService', function($scope, $stateParams, groupService, deviceService) {
+    var gid = $stateParams.gid;
     // Styles for each critical value
     $scope.criticalStyles = [{
         'background-color': '#FFFFFF'
@@ -192,7 +191,15 @@ angular.module('Persica').controller('DeviceLogsCtrl', ['$scope', '$stateParams'
         'background-color': '#FA3A05'
     }];
     var logs_observer = function() {
-        $scope.logs = deviceService.devices[did] ? deviceService.devices[did].logs : [];
+        $scope.logs = [];
+        var dids  = groupService.groups[gid] ? groupService.groups[gid].dids : [];
+        _.forEach(dids, function(did) {
+            if (deviceService.devices[did] && deviceService.devices[did].logs) {
+                $scope.logs = $scope.logs.concat(_.map(deviceService.devices[did].logs, function(log) {
+                    return _.extend(log, {did: did});
+                }));
+            }
+        });
     };
 
     deviceService.observers.push(logs_observer);

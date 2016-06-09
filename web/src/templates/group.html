@@ -96,20 +96,21 @@
 
         <div class="col-lg-6" ng-init="fields={}" ng-controller="GroupLogsCtrl">
             <rd-widget>
-                <rd-widget-header icon="fa-angle-double-up" title="Group Logs">
+                 <rd-widget-header icon="fa-angle-double-up" title="Logs">
                         Filter by: 
                             <input type="text" ng-model="fields.search" placeholder="Log"  />
                             <input type="text" ng-model="fields.critical" placeholder="Critical Value" />
                 </rd-widget-header>
                 <rd-widget-body classes="medium no-padding">
                    <div class="table-responsive">
-                        <table class="table table" ng-controller='TimeCtrl'>
+                        <table class="table table">
                             <thead>
-                                <tr><th>Timestamp</th><th>Log</th><th>Level</th></tr>
+                                <tr><th>Timestamp</th><th>DID</th><th>Log</th><th>Level</th></tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="log in logs | filter: {log: fields.search, critical: fields.critical}" ng-style="criticalStyles[log.critical]">
                                     <td>{{log.timestamp | date:'medium'}}</td>
+                                    <td>{{log.did}}</td>
                                     <td>{{log.log}}</td>
                                     <td>{{log.critical}}</td>
                                 </tr>
