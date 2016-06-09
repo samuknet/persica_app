@@ -30,9 +30,6 @@ module.exports = function(router, ioService) {
     });
 
     router.get('/user', function (req, res) {
-
-
-
         var token = req.headers.authorization.split(' ')[1];
         var username = decode(token).username
 

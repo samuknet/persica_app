@@ -13,7 +13,7 @@ app.service('groupService', ['$http', 'socketService', function ($http, socketSe
 		// Success
 		var groupList = response.data;
 		_.forEach(groupList, function (group) {
-			groups[group.gid] = _.extend(groups[group.did] || {}, group);
+			groups[group.gid] = _.extend(groups[group.gid] || {}, group);
 		});
 		notify_observers();
 	}, function (response) {
@@ -21,7 +21,7 @@ app.service('groupService', ['$http', 'socketService', function ($http, socketSe
 	});
 
     socketService.on('group-new', function(group) {
-    	groups[group.did] = _.extend(groups[group.did] || {}, group);
+    	groups[group.gid] = _.extend(groups[group.gid] || {}, group);
 		notify_observers();
     });
 

@@ -1,5 +1,5 @@
 /**
- * Device List Controller
+ * Group List Controller
  */
 
 var app = angular.module('Persica');
@@ -28,7 +28,7 @@ app.controller('NewGroupModalCtrl', ['$scope', '$uibModalInstance', '$http', 'gr
     $scope.alertClass = 'alert alert-info';
     $scope.submit = function() {
         groupService.newGroup(
-            {gid: $scope.gid, name: $scope.name, description: $scope.description},
+            {name: $scope.name, description: $scope.description},
             function (response) {
                 $uibModalInstance.close();
             },
