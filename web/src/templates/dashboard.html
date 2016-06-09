@@ -1,26 +1,20 @@
 <div class="container" ng-controller="DashboardCtrl">
     <div class="row alerts-container" data-ng-controller="AlertsCtrl" data-ng-show="alerts.length">
-      <div class="col-xs-12">
-        <uib-alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+        <div class="col-xs-12">
+            <uib-alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+        </div>
     </div>
+
+    <div class="row" ng-controller="DashboardHeaderCtrl" ng-include="'templates/dashboard/dashboardHeaderWidgets.html'">
     </div>
 
-<div class="row" ng-controller="DashboardHeaderCtrl" ng-include="'templates/dashboard/dashboardHeaderWidgets.html'">
-	
-</div>
+    <div class="row">
+    	<div class="col-lg-6" ng-include="'templates/dashboard/groupListWidget.html'" ng-controller="GroupListCtrl">
+    	</div>
 
-<div class="row">
-	<div class="col-lg-6" ng-include="'templates/dashboard/deviceListWidget.html'" ng-controller="DeviceListCtrl">
-		
-
-	</div>
-
-	<div class="col-lg-6" ng-include="'templates/dashboard/chatWidget.html'" ng-controller="ChatCtrl">
-   
-	</div>
-
-</div>
-
+    	<div class="col-lg-6" ng-include="'templates/dashboard/chatWidget.html'" ng-controller="ChatCtrl">
+    	</div>
+    </div>
 </div>
 <!--
 <div class="row">
