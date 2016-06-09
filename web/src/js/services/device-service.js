@@ -22,6 +22,7 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 
 
 	socketService.on('device-connected', function(device) {
+        console.log('device.cmds', device.cmds);
 		devices[device.did] = _.extend(devices[device.did] || {}, device);
 		devices[device.did].online = true;
         devices[device.did].establishTime = device.establishTime;
@@ -41,7 +42,11 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 
     socketService.on('device-register-cmd', function (register) {
     	devices[register.did] = _.extend(devices[register.did] || {}, {did: register.did});
-    	devices[register.did].cmds.push(register.cmd);
+    	if (devices[register.did].cmds) {
+            devices[register.did].cmds.push(register.cmd);
+        } else {
+            devices[register.did].cmds = [register.cmd];
+        }
     	notify_observers();
     });
 

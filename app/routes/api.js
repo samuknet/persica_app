@@ -83,9 +83,17 @@ module.exports = function(router, ioService) {
             if (err) {
                 res.status(406).json({message: 'Error occured while getting devices.'});
             } else {
-                _.forEach(devices, function (device) {
-                    device.cmds = [];
+                var connectedDevices = ioService.getDevices();
+                _.forEach(connectedDevices, function(connectedDevice, did) {
+                    _.forEach(devices, function(device, i) {
+
+                        if (device.did == connectedDevice.device.did) {
+                            devices[i] = connectedDevice.device;
+                            
+                        }
+                    })
                 });
+
                 res.send(devices);
             }
         });

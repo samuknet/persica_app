@@ -78,7 +78,7 @@
                             <tbody>
                                 <tr style="cursor:pointer;" ng-repeat="cmd in cmds">
                                     <td>
-                                        <button ng-click="sendCmd(cmd)" ng-enabled="device.online" class="btn btn-primary btn-block">
+                                        <button ng-click="groupCmd(cmd)" ng-enabled="device.online" class="btn btn-primary btn-block">
                                             {{cmd}}
                                         </button>
                                     </td>
