@@ -20,14 +20,13 @@ angular
 
 function OnlineDeviceCtrl($scope, $stateParams, $state, $timeout, groupService, deviceService) {
     var gid = $stateParams.gid;
-
+    
     var group_devices_observer = function() {
         $scope.devices = []
         if (groupService.groups[gid]) {
             _.forEach(groupService.groups[gid].dids, function(did) {
-            $scope.devices.push(deviceService.devices[did]);
-
-        });
+                $scope.devices.push(deviceService.devices[did]);
+            });
         }
     };
         $scope.navigateToDevice = function(did) { // Called when device table row is clicked
