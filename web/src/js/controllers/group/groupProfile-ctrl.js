@@ -16,12 +16,23 @@ function GroupProfileCtrl($scope, $stateParams, $http, groupService) {
 
 angular
   .module('Persica')
-  .controller('OnlineDeviceCtrl', ['$scope', '$stateParams', '$timeout', 'groupService', OnlineDeviceCtrl]);
+  .controller('OnlineDeviceCtrl', ['$scope', '$stateParams', '$state', '$timeout', 'groupService', 'deviceService', OnlineDeviceCtrl]);
 
-function OnlineDeviceCtrl($scope, $stateParams, $timeout, groupService) {
+function OnlineDeviceCtrl($scope, $stateParams, $state, $timeout, groupService, deviceService) {
+    var gid = $stateParams.gid;
 
     var group_devices_observer = function() {
-        $scope.devices = groupService.groups[0].dids;
+        $scope.devices = []
+        if (groupService.groups[gid]) {
+            _.forEach(groupService.groups[gid].dids, function(did) {
+            $scope.devices.push(deviceService.devices[did]);
+
+        });
+        }
+    };
+        $scope.navigateToDevice = function(did) { // Called when device table row is clicked
+        // Navigate to device profile page
+        $state.go('device', {did: did});
     };
 
     groupService.observers.push(group_devices_observer);
@@ -33,17 +44,25 @@ function OnlineDeviceCtrl($scope, $stateParams, $timeout, groupService) {
  */
 angular
     .module('Persica')
-    .controller('GroupCmdsCtrl', ['$scope', '$stateParams', 'deviceService', GroupCmdsCtrl]);
+    .controller('GroupCmdsCtrl', ['$scope', '$stateParams', 'deviceService', 'groupService', GroupCmdsCtrl]);
 
-function GroupCmdsCtrl($scope, $stateParams, deviceService) {
-    var did = $stateParams.did;
+function GroupCmdsCtrl($scope, $stateParams, deviceService, groupService) {
+    var gid = $stateParams.gid;
     var cmds_observer = function() {
-        $scope.cmds = deviceService.devices[did] ? deviceService.devices[did].cmds : [];
+        $scope.cmds = [];
+        var dids = groupService.groups[gid] ? groupService.groups[gid].dids : [];
+
+        _.forEach(dids, function (did) {
+            var currDeviceCmds = deviceService.devices[did] ? deviceService.devices[did].cmds : null;
+            if (currDeviceCmds) {
+                $scope.cmds = $scope.cmds.concat(currDeviceCmds);
+            }
+        });
+        console.log($scope.cmds);
     };
-    $scope.device = deviceService.devices[did];
 
     $scope.sendCmd = function(cmd) {
-        deviceService.sendCommand(did, cmd);
+        groupService.groupCommand(gid, cmd);
     };
 
     deviceService.observers.push(cmds_observer);
