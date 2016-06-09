@@ -9,6 +9,7 @@ module.exports = function(router, ioService) {
         Notification = require('../models/notification'),
         passport = require('passport'),
         jwt = require('express-jwt'),
+        decode = require('jsonwebtoken').decode,
         auth = jwt({secret: 'SECRET', userProperty: 'payload'}),
         _ = require('underscore');
 
@@ -29,13 +30,19 @@ module.exports = function(router, ioService) {
     });
 
     router.get('/user', function (req, res) {
-        User.find(function(err, models) {
+
+
+
+        var token = req.headers.authorization.split(' ')[1];
+        var username = decode(token).username
+
+       User.findOne({username: username}, function (err, user) {
             if (err) {
-                res.send({message: 'Error while getting users'});
+                res.status(406).json({message: err.message});
             } else {
-                res.send(models);
+                res.status(200).json(user);
             }
-        });
+       }); 
     });
 
     router.put('/user/:username', function(req, res) {
@@ -131,7 +138,6 @@ module.exports = function(router, ioService) {
                 }
                 return next(err)
             }
-
             return res.json({
                 username: user.username,
                 token: user.generateJWT(),

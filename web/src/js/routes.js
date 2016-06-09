@@ -43,26 +43,21 @@ angular.module('Persica').config(['$stateProvider', '$urlRouterProvider', '$http
 ]);
 
 angular.module('Persica').run(['$window', '$rootScope', '$state', '$http', 'userService', 'loginModalService', function ($window, $rootScope, $state, $http, userService, loginModalService) {
-    $rootScope.user = {};
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {        
-        var storedUser;
-        try {
-            storedUser = JSON.parse($window.localStorage['persica-user']);
-        } catch (err) {
-            storedUser = false;
-        }
+        var storedToken = $window.localStorage['persica-token'];
         
         var requireLogin = toState.data.requireLogin;
-        if (storedUser && storedUser.token && typeof $rootScope.currentUser === 'undefined') {
+        if (storedToken && !userService.currentUser) {
             // The case we need to fill in the user in scope
-            userService.authorizeUser(storedUser);
+            userService.authorizeUser(storedToken);
             return;
-        } else if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
+        } else if (requireLogin && !userService.currentUser) {
             event.preventDefault();
             loginModalService()
-            .then(function (user) {
-                userService.authorizeUser(user);                
-                $state.go(toState.name, toParams);   
+            .then(function (token) {
+                userService.authorizeUser(token).then(function () {
+                    $state.go(toState.name, toParams);   
+                });
             })
             .catch(function(err) { // Hopefully defunct as modal handles everything
                 // There was a horrible error

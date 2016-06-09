@@ -22,10 +22,10 @@
 		<td>{{$index}}</td>
 		<td>
 			<div class="btn-group">
-		        <label class="btn btn-success" ng-model="level.kind" uib-btn-radio="'sms'" uncheckable>SMS</label>
-		        <label class="btn btn-success" ng-model="level.kind" uib-btn-radio="'email'" uncheckable>Mail</label>
-		        <label class="btn btn-success" ng-model="level.kind" uib-btn-radio="'popup'" uib-uncheckable="uncheckable">PopUp</label>
-		      	<label class="btn btn-success" ng-model="level.kind" uib-btn-radio="undefined" uib-uncheckable="uncheckable">None</label>
+		        <label class="btn btn-primary" ng-model="level.kind" uib-btn-radio="'sms'" uncheckable>SMS</label>
+		        <label class="btn btn-primary" ng-model="level.kind" uib-btn-radio="'email'" uncheckable>Mail</label>
+		        <label class="btn btn-primary" ng-model="level.kind" uib-btn-radio="'popup'" uib-uncheckable="uncheckable">PopUp</label>
+		      	<label class="btn btn-primary" ng-model="level.kind" uib-btn-radio="undefined" uib-uncheckable="uncheckable">None</label>
 	    	</div>
     	</td>
 
@@ -41,6 +41,7 @@
 
 <div class="modal-footer">
         
-    <input type="button" value="Save" class="btn btn-primary" ng-click="updateNotificationSettings()" />  
+    <input type="button" value="Save" class="btn btn-success" ng-click="updateNotificationSettings()" />  
+    <input type="button" value="Cancel" class="btn btn-default" ng-click="cancel()" />  
 </div>  
 </form>
