@@ -24,15 +24,14 @@ function SettingsModalCtrlf($scope, $http, $uibModal, $uibModalInstance, userSer
     
     $scope.updateNotificationSettings = function () {
         userService.updateNotificationSettings({notifyConfig : $scope.levels}).then(function (data) {
-
-                
+            $uibModalInstance.close();
             }, function(err) {
                 errorMsg("The backend connection threw an uknown error.")
             });
     };
 
     $scope.cancel = function () {
-        $uibModalInstance.close()
+        $uibModalInstance.close();
     }
 
 

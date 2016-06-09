@@ -1,63 +1,27 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
-    // autoIncrement = require('mongoose-auto-increment');
+    Schema = mongoose.Schema,
+    autoIncrement = require('mongoose-auto-increment');
 
-
-/* connect to your database here */
-
-/* define your CounterSchema here */
-
-// autoIncrement.initialize(mongoose.connection);
-// CounterSchema.plugin(autoIncrement.plugin, 'Counter');
-// var Counter = mongoose.model('Counter', CounterSchema);
+autoIncrement.initialize(mongoose.connection);
 
 // Group Schema
-/*var DeviceSchema = new Schema ({
-    did: {
+var GroupSchema = new Schema ({
+    gid: {
         type: Number,
         unique: true,
         required: true,
         dropDups: true
     },
-
-    alias: {
+    name: {
     	type: String,
         required: true
     },
-    
     description: {
     	type: String
     },
-    
-    lastOnline: {
-    	type: Date
-    },
-
-    varUpdates: [{
-        handle : String,
-        value : String,
-        timestamp : Date
-    }],
-
-    logs: [{
-            critical: Number, 
-            log: String,
-            timestamp: Date
-    }]
+    dids: [Number]
 });
 
-var Device = mongoose.model('Device', DeviceSchema);
-
-DeviceSchema.pre('save', function (next) {
-    var self = this;
-   
-    Device.find({did : self.did}, function (err, docs) {
-        if (!docs.length){
-            next();
-        }else{                
-            next(new Error('Device ' + self.alias + ' with DID ' + self.did + ' already exists.'));
-        }
-    });    
-});
-*/
-// module.exports = Device;
+GroupSchema.plugin(autoIncrement.plugin, { model: 'Group', field: 'gid' });
+var Group = mongoose.model('Group', GroupSchema);
+module.exports = Group;

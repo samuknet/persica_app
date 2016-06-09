@@ -14,14 +14,29 @@ module.exports = function(router, ioService) {
         auth = jwt({secret: 'SECRET', userProperty: 'payload'}),
         _ = require('underscore');
 
-     router.get('/group', function (req, res) {
-        var gid = req.query.gid,
-            searchObj = gid ? {gid: gid} : {};
-        Group.find(searchObj, function(err, groups) {
+
+    router.get('/group', function (req, res) {
+        Group.find({}, function (err, groups) {
             if (err) {
-                res.status(406).json({message: 'Error occured while getting devices.'});
+                res.status(406).json({message: 'Could not get groups'});
             } else {
                 res.send(groups);
+            }
+        });
+    });
+
+    router.get('/group/:gid', function (req, res) {
+        var gid = req.params.gid;
+            
+        if (!gid) {
+            res.status(406).json({message: 'Group id not specified'})
+        }
+
+        Group.findOne({gid: gid}, function(err, group) {
+            if (err) {
+                res.status(406).json({message: 'Error occured while getting group width id ' + gid + '.'});
+            } else {
+                res.send(group);
             }
         });
     });
@@ -40,6 +55,12 @@ module.exports = function(router, ioService) {
             }
         });
     });
+
+    router.put('/group/:gid', function(req, res) {
+
+        
+    });
+
 
     router.get('/device', function (req, res) {
         var did = req.query.did,
