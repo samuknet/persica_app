@@ -165,7 +165,7 @@ module.exports = function(http) {
         newGroup: function (group) {
             control.emit('group-new', group);
         },
-        updateGroup(updatedGroup) {
+        updateGroup: function (updatedGroup) {
             control.emit('group-update', updatedGroup);
         }
     };
