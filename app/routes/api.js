@@ -102,8 +102,9 @@ module.exports = function(router, ioService) {
     router.post('/device', function (req, res) {
         var did = req.body.did,
             alias = req.body.alias,
-            description = req.body.description;
-        var device = {did: did, alias: alias, description: description};
+            description = req.body.description,
+            gid = req.body.gid;
+        var device = {did: did, alias: alias, description: description, gid: gid};
         new Device(device).save(function(err, product) {
             if (err) {
                 res.status(406).json({message: err.message});
