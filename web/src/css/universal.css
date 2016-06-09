@@ -2,7 +2,7 @@
 
 .dropdown {
     display:inline-block;
-    margin-left:20px;
+    color:#919191;
     padding:10px;
   }
 
@@ -14,7 +14,7 @@
   }
 
 .notifications {
-   min-width:420px; 
+   min-width:80vw; 
   }
 
   .notifications-wrapper {

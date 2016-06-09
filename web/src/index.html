@@ -77,40 +77,27 @@
                 <!-- Header Bar -->
                 <div class="row header" ng-controller="HeaderCtrl">
                     <div class="col-xs-12">
-                        <div class="user pull-right">
-                            <div class="item dropdown" uib-dropdown>
-                                <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
-                                    <img src="img/avatar.jpg" />
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li class="dropdown-header">
-                                        {{currentUser.username}}
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li class="link">
-                                        <a href="#">
-                      Profile
-                    </a>
-                                    </li>
-                                    <li class="link">
-                                        <a href="#">
-                      Menu Item
-                    </a>
-                                    </li>
-                                    <li class="link">
-                                        <a href="#">
-                      Menu Item
-                    </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li class="link">
-                                        <a href="#" ng-click="logout();">
-                      Logout
-                    </a>
-                                    </li>
-                                </ul>
+                        <div class="user pull-right" style="margin-left:20px">
+
+
+
+                            <div class="item dropdown" ng-click="logout()">
+                                  <div class="icon-wrapper">
+                                     <i class="fa fa-sign-out icon-grey"></i>
+                                  </div>
+                              
                             </div>
 
+
+
+
+
+
+                            <div class="item dropdown" ng-click="openSettingsModal()">
+                                  <div class="icon-wrapper">
+                                     <i class="fa fa-cog icon-grey"></i>
+                                  </div>          
+                            </div>
 
 
                             <div class="item dropdown" uib-dropdown autoClose="outsideClick">
