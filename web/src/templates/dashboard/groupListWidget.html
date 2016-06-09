@@ -10,11 +10,11 @@
                 <div class="table-responsive">
                    <table class="table table-hover">
                       <thead>
-                         <tr><th>Name</th><th><center>Size</center></th></tr>
+                         <tr><th>Group ID</th><th>Name</th><th><center>Size</center></th></tr>
                      </thead>
                      <tbody>
-                         <tr style="cursor:pointer;" ng-repeat="group in groups" ng-click="navigateToDevice(group.did)" >
-                            <!-- <td>{{group.did}}</td> -->
+                         <tr style="cursor:pointer;" ng-repeat="group in groups" ng-click="navigateToGroup(group.gid)" >
+                            <td>{{group.gid}}</td>
                             <td>{{group.name}}</td>
                             <td><!-- {{totalOnlineInGroup}} /  -->{{group.dids.length}}</td>
 <!--                             <td>
