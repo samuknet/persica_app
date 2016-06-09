@@ -5,6 +5,7 @@ module.exports = function(router, ioService) {
 
     var mongoose = require('mongoose'),
         Device = require('../models/device'),
+        Group = require('../models/group'),
         User = require('../models/user'),
         Notification = require('../models/notification'),
         passport = require('passport'),
@@ -13,6 +14,47 @@ module.exports = function(router, ioService) {
         auth = jwt({secret: 'SECRET', userProperty: 'payload'}),
         _ = require('underscore');
 
+     router.get('/group', function (req, res) {
+        var gid = req.query.gid,
+            searchObj = gid ? {gid: gid} : {};
+        Group.find(searchObj, function(err, groups) {
+            if (err) {
+                res.status(406).json({message: 'Error occured while getting devices.'});
+            } else {
+                res.send(groups);
+            }
+        });
+    });
+
+    router.post('/group', function (req, res) {
+        var name = req.body.name,
+            description = req.body.description;
+
+        var group = {name: name, description: description};
+        new Group(group).save(function (err, groupDocument) {
+            if (err) {
+                res.status(406).json({message: err.message});
+            } else {
+                ioService.newGroup(groupDocument);
+                res.status(201).json(groupDocument);
+            }
+        });
+    });
+
+    router.get('/device', function (req, res) {
+        var did = req.query.did,
+            searchObj = did ? {did: did} : {};
+        Device.find(searchObj, function(err, devices) {
+            if (err) {
+                res.status(406).json({message: 'Error occured while getting devices.'});
+            } else {
+                _.forEach(devices, function (device) {
+                    device.cmds = [];
+                });
+                res.send(devices);
+            }
+        });
+    });
 
     router.post('/device', function (req, res) {
         var did = req.body.did,
@@ -30,9 +72,6 @@ module.exports = function(router, ioService) {
     });
 
     router.get('/user', function (req, res) {
-
-
-
         var token = req.headers.authorization.split(' ')[1];
         var username = decode(token).username
 
@@ -55,21 +94,6 @@ module.exports = function(router, ioService) {
                 res.status(406).json({message: err.message});
             } else {
                 res.status(201).json({message: "User updated."});
-            }
-        });
-    });
-
-    router.get('/device', function (req, res) {
-        var did = req.query.did,
-            searchObj = did ? {did: did} : {};
-        Device.find(searchObj, function(err, devices) {
-            if (err) {
-                res.send({message: 'Error occured while getting devices.'});
-            } else {
-                _.forEach(devices, function (device) {
-                    device.cmds = [];
-                });
-                res.send(devices);
             }
         });
     });
