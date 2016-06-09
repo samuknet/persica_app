@@ -15,7 +15,22 @@ function SettingsModalCtrlf($scope, $http, $uibModal, $uibModalInstance, userSer
         $scope.alertClass = 'alert alert-info';
         $scope.alertMsg = msg;
     };
-    $scope.levels = userService.currentUser.notifyConfig;
+    console.log(userService.currentUser)
+    if (userService.currentUser.notifyConfig.length != 6) {
+        $scope.levels = [{}, {}, {}, {}, {}, {}];
+    } else {
+        $scope.levels = userService.currentUser.notifyConfig;
+    }
+    
+    $scope.updateNotificationSettings = function () {
+        userService.updateNotificationSettings({notifyConfig : $scope.levels}).then(function (data) {
+
+            }, function(err) {
+                console.log("something terrible happened", err)
+            });
+    };
+
+    
 
 }
 

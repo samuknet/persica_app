@@ -25,7 +25,7 @@ app.service('userService', ['$window', '$http', 'socketService', 'notificationSe
     }
 
     this.updateNotificationSettings = function (data) {
-       return  $http.put('/user/' + currentUser.username, data);
+       return  $http.put('/user/' + this.currentUser.username, data);
 
     }
 
