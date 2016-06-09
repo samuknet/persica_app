@@ -181,10 +181,10 @@ angular.module('Persica').controller('DeviceLogsCtrl', ['$scope', '$stateParams'
 
 
 /* Controller for the graph modal for a device variable */
-angular.module('Persica').controller('TermCtrl', ['$scope', '$stateParams', '$document', 'deviceService', function($scope, $stateParams, $document, deviceService) {
-
-
-    var socket = io.connect("/term_control");
+angular.module('Persica').controller('TermCtrl', ['$scope', '$stateParams', '$document', 'deviceService', 'daemonService', function($scope, $stateParams, $document, deviceService, daemonService) {
+    var did = $stateParams.did;
+    daemonService.connectToDaemon(did, 'term');
+/*    var socket = io.connect("/term_control");
 
     socket.on('connect', function() {
       var term = new Terminal({
@@ -208,5 +208,5 @@ angular.module('Persica').controller('TermCtrl', ['$scope', '$stateParams', '$do
         term.destroy();
       });
     });
-  
+  */
 }]);

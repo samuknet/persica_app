@@ -28,6 +28,8 @@ import sys
 import termios
 import tty
 
+DID_CONST = sys.argv[1] ## HARD CODED DEVICE ID OF THIS TERMINAL (FOR NOW)
+
 # The following escape codes are xterm codes.
 # See http://rtfm.etla.org/xterm/ctlseq.html for more.
 START_ALTERNATE_MODE = set('\x1b[?{0}h'.format(i) for i in ('1049', '47', '1047'))
@@ -180,7 +182,7 @@ import thread
 import time
 if __name__ == '__main__':
     i = Interceptor()
-    socketIO = SocketIO('localhost', 3000)
+    socketIO = SocketIO('localhost', 3000, params={'did': DID_CONST})
     class Namespace(BaseNamespace):
         def on_cmd(self, *args):
             i.write_master(args[0])
@@ -188,16 +190,11 @@ if __name__ == '__main__':
  
             i.socketIO = self  
 
-
-
     term_device = socketIO.define(Namespace, '/term_device')
-
 		
-
-
     def ws_func():
         
         socketIO.wait()
     thread.start_new_thread( ws_func, () )
-    i.spawn(sys.argv[1:])
+    i.spawn(sys.argv[2:])
 

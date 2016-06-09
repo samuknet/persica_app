@@ -11,7 +11,20 @@
 	</div>
 
 	<div class="row">
-		<div class="col-lg-6" >
+
+		<div class="col-lg-6" ng-controller="TermCtrl">
+			<rd-widget>
+				<rd-widget-header icon="fa-tasks" title="Console">
+				</rd-widget-header>
+				<div id="term"> </div>
+
+
+				</rd-widget-body>
+			</rd-widget>
+		</div>
+
+
+		<!-- <div class="col-lg-6" >
             <rd-widget>
                 <rd-widget-header icon="fa-laptop" title="Device Profile">
                 </rd-widget-header>
@@ -30,7 +43,7 @@
                     </div>
                 </rd-widget-body>
             </rd-widget>
-        </div>
+        </div> -->
 
         <div class="col-lg-6" ng-init="fields={}" ng-controller="DeviceLogsCtrl">
             <rd-widget>
@@ -113,21 +126,7 @@
 		</div>
 
 	</div>
-
+<!-- 
 	<div class="row">
-		
-		<div class="col-lg-6" ng-controller="TermCtrl">
-			<rd-widget>
-				<rd-widget-header icon="fa-tasks" title="Commands">
-				</rd-widget-header>
-				<div id="term"> </div>
 
-
-				</rd-widget-body>
-			</rd-widget>
-		</div>
-
-
-
-
-	</div>
+	</div> -->
