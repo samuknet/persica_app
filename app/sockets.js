@@ -15,7 +15,6 @@ module.exports = function(http) {
 
     term_device.on('connection', function (socket) {
         console.log("connection")
-        term_device.emit("cmd",  "hello");
         socket.on('cmd', function (data) {
             /*
                 data of form:
