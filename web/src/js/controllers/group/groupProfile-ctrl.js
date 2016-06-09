@@ -16,12 +16,20 @@ function GroupProfileCtrl($scope, $stateParams, $http, groupService) {
 
 angular
   .module('Persica')
-  .controller('OnlineDeviceCtrl', ['$scope', '$stateParams', '$timeout', 'groupService', OnlineDeviceCtrl]);
+  .controller('OnlineDeviceCtrl', ['$scope', '$stateParams', '$timeout', 'groupService', 'deviceService', OnlineDeviceCtrl]);
 
-function OnlineDeviceCtrl($scope, $stateParams, $timeout, groupService) {
+function OnlineDeviceCtrl($scope, $stateParams, $timeout, groupService, deviceService) {
     var gid = $stateParams.gid;
+
     var group_devices_observer = function() {
-        $scope.devices = groupService.groups[gid] ? groupService.groups[gid].dids : [];
+        $scope.devices = []
+        if (groupService.groups[gid]) {
+            _.forEach(groupService.groups[gid].dids, function(did) {
+            $scope.devices.push(deviceService.devices[did]);
+
+        });
+        }
+
     };
 
     groupService.observers.push(group_devices_observer);
