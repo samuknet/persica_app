@@ -35,10 +35,10 @@
             <rd-widget>
                     <rd-widget-header icon="fa-tasks" title="Devices">
                         <!-- <a href="#">Manage Devices</a> -->
-                            <div style="text-align:right">
+<!--                             <div style="text-align:right">
                                <a href="" ng-click="openNewDeviceModal()"><i class="fa fa-plus" aria-hidden="true"></i></a>
 
-                            </div>
+                            </div> -->
                     </rd-widget-header>
                     <rd-widget-body classes="medium no-padding">
                         <div class="table-responsive" ng-controller="OnlineDeviceCtrl">
@@ -47,7 +47,7 @@
                                  <tr><th>DeviceID</th><th>Alias</th><th><center>Online</center></th></tr>
                              </thead>
                              <tbody>
-                                 <tr style="cursor:pointer;" ng-repeat="device in devices" ng-click="navigateToDevice(device.did)" >
+                                 <tr style="cursor:pointer;" ng-repeat="device in devices track by $index"  ng-click="navigateToDevice(device.did)" >
                                     <td>{{device.did}}</td>
                                     <td>{{device.alias}}</td>
                                     <td>

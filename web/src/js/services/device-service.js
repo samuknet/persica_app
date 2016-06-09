@@ -84,7 +84,7 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
             did: device.did,
             alias: device.alias,
             description: device.description,
-            gid: device.gid
+            group: device.group
         }).then(success, fail);
     }
 

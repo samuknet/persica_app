@@ -103,8 +103,9 @@ module.exports = function(router, ioService) {
         var did = req.body.did,
             alias = req.body.alias,
             description = req.body.description,
-            gid = req.body.gid;
-        var device = {did: did, alias: alias, description: description, gid: gid};
+            group = req.body.group;
+        console.log("__"+group+"__");
+        var device = {did: did, alias: alias, description: description, group: group};
         new Device(device).save(function(err, product) {
             if (err) {
                 res.status(406).json({message: err.message});

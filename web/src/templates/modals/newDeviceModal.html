@@ -15,8 +15,8 @@
             <input required type="text" class="form-control" id="alias" ng-model="alias" placeholder="Alias">
         <br />
             <label for="gid" style="display: block">Group</label>
-            <select id="gid" ng-model="gid" style="display: block">
-                <option ng-repeat="group in groups">{{group.name}} ({{group.gid}})</option>
+            <select name="gid" id="gid" ng-model="gid" style="display: block">
+                <option ng-repeat="group in groups" value="{{group.gid}}">{{group.name}} ({{group.gid}})</option>
             </select>
         <br />
             <label for="description">Description</label><br>

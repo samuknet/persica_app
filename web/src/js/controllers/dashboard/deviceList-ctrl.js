@@ -29,7 +29,7 @@ app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', 'd
     $scope.groups = groupService.groups;
     $scope.submit = function() {
         deviceService.newDevice(
-            {did: $scope.did, alias: $scope.alias, description: $scope.description, gid: $scope.gid},
+            {did: $scope.did, alias: $scope.alias, description: $scope.description, group: $scope.gid},
             function (response) {
                 $uibModalInstance.close();
             },
