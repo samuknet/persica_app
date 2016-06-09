@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add New Group</h3>
+</div>
+
+<div ng-class="alertClass" class="col-xs-12">
+   {{alertMsg}}
+</div>
+
+<form method="post" ng-submit="submit()">
+<div class="modal-body">
+            <label for="did">Group ID</label>
+            <input required type="number" class="form-control" id="gid" ng-model="gid" placeholder="GID">
+        <br />
+            <label for="alias">Name</label>
+            <input required type="text" class="form-control" id="name" ng-model="name" placeholder="Name">
+        <nbr />
+            <label for="description">Description</label><br>
+            <textarea required class="form-control" id="description" ng-model="description" placeholder="Description..."></textarea>
+
+</div>
+
+<div class="modal-footer">
+    <input type="submit" class="btn btn-primary" value="Submit" />
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>   
+</form>

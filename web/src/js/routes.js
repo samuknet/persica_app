@@ -23,6 +23,11 @@ angular.module('Persica').config(['$stateProvider', '$urlRouterProvider', '$http
                 url: '/device/:did',
                 templateUrl: 'templates/device.html',
                 data: {requireLogin: true}
+            })
+            .state('group', {
+                url: '/group/:gid',
+                templateUrl: 'templates/group.html',
+                data: {requireLogin: true}
             });
 
         $httpProvider.interceptors.push(['$injector', function($injector) {

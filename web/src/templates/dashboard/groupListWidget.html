@@ -1,0 +1,31 @@
+<rd-widget>
+            <rd-widget-header icon="fa-tasks" title="Groups">
+                <!-- <a href="#">Manage Groups</a> -->
+                    <div style="text-align:right">
+                       <a href="" ng-click="openNewGroupModal()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+
+                    </div>
+            </rd-widget-header>
+            <rd-widget-body classes="medium no-padding">
+                <div class="table-responsive">
+                   <table class="table table-hover">
+                      <thead>
+                         <tr><th>Group ID</th><th>Name</th><th><center>Online</center></th></tr>
+                     </thead>
+                     <tbody>
+                         <tr style="cursor:pointer;" ng-repeat="group in groups" ng-click="navigateToDevice(group.did)" >
+                            <td>{{group.did}}</td>
+                            <td>{{group.name}}</td>
+                            <td>
+                                <center>
+                                    <span class="fa fa-circle" style="color:#5cb85c" ng-if="group.online"></span>
+                                    <span class="fa fa-circle-o" style="color:#d9534f" ng-if="!group.online"></span>
+                                </center>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </rd-widget-body>
+    </rd-widget>
