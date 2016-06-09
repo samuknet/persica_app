@@ -33,10 +33,10 @@ function OnlineDeviceCtrl($scope, $stateParams, $timeout, groupService) {
  */
 angular
     .module('Persica')
-    .controller('GroupCmdsCtrl', ['$scope', '$stateParams', 'deviceService', GroupCmdsCtrl]);
+    .controller('GroupCmdsCtrl', ['$scope', '$stateParams', 'deviceService', 'groupService', GroupCmdsCtrl]);
 
-function GroupCmdsCtrl($scope, $stateParams, deviceService) {
-    var did = $stateParams.did;
+function GroupCmdsCtrl($scope, $stateParams, deviceService, groupService) {
+    var gid = $stateParams.gid;
     var cmds_observer = function() {
         $scope.cmds = deviceService.devices[did] ? deviceService.devices[did].cmds : [];
     };
