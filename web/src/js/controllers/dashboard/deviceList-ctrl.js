@@ -42,7 +42,17 @@ app.controller('NewDeviceModalCtrl', ['$scope', '$uibModalInstance', '$http', 'd
 	};
 }]);
 
-app.controller('InputDropdownController', ['inputDropdown', function() {
+app.controller('InputDropdownController', ['$scope', 'inputDropdown', function($scope, inputDropdown) {
   this.selectedDropdownItem = null;
   this.dropdownItems = ['hello', 'from', 'the', 'other', 'side'];
 }]);
+
+// app.controller('testCtrl', [function() {
+//   this.selectedDropdownItem = null;
+//   this.dropdownItems = ['hello', 'from', 'the', 'other', 'side'];
+// }]);
+
+// app.controller('testCtrl', ['$scope', 'groupService', function($scope, groupService) {
+//     console.log(groupService.groups);
+//     $scope.names = _.pluck(groupService.groups, 'name');
+// }]);
