@@ -17,6 +17,11 @@ module.exports = function(http) {
             if (err) {
                 return socket.disconnect();
             } 
+            if (device.group !== -1) {
+                console.log('device joining group', device.group);
+                socket.join(device[did].group);
+            }
+
             devices[did] = {socket: socket, device: {did: did, cmds : []}};
             devices[did].device = device;
             devices[did].device.cmds = [];
@@ -29,7 +34,7 @@ module.exports = function(http) {
             socket.on('device-register-cmd', function (cmd) {
                 // cmd.cmd
                 // check if command already registered
-
+                console.log('registering', cmd.cmd);
                 if (!_.contains(devices[did].device.cmds, cmd.cmd)) {
                     control.emit('device-register-cmd', {did: did, cmd: cmd.cmd});
                     devices[did].device.cmds.push(cmd.cmd);
@@ -131,11 +136,13 @@ module.exports = function(http) {
                 }
             */
             device.emit('cmd', {cmd: data.cmd});
-            if (data.did) {
-                // devices[data.did].socket.emit('cmd', {cmd:data.cmd});
-            } else { // If no specific device specified then send to all devices
+        });
 
-            }
+        socket.on('group-cmd', function (data) {
+            var gid = data.gid,
+                cmd = data.cmd;
+            // gid is a room name
+            device.to(gid).emit({cmd: cmd});
         });
 
         socket.on('control-chat-msg', function (msg) {

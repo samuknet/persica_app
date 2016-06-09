@@ -85,20 +85,9 @@ app.service('groupService', ['$http', 'socketService', function ($http, socketSe
         }).then(success, fail);
     }
 
-	// Sends a command to all connected devices
-	this.broadcastCommand = function(cmdName){ 
-		socketService.emit('cmd', {cmd: cmdName});
-	};
-
-    // Sends a command to a specific device
-    // not sure if needed for group service
-	this.sendCommand = function (did, cmdName) {
-		socketService.emit('cmd', {did: did, cmd: cmdName});
-	};
-
 	// Sends a command to all devices in a given group
-	this.groupCommand = function (groupName, cmdName) {
-		socketService.emit('cmd', {gid: gid, cmd: cmdName})
+	this.groupCommand = function (gid, cmdName) {
+		socketService.emit('group-cmd', {gid: gid, cmd: cmdName})
 	};
 
 }]);
