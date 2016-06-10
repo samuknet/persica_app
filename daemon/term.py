@@ -27,7 +27,7 @@ import signal
 import sys
 import termios
 import tty
-
+SERVER_ADDR = '129.31.189.182' ## Set to Localhost when developing locally
 DID_CONST = sys.argv[1] ## HARD CODED DEVICE ID OF THIS TERMINAL (FOR NOW)
 
 # The following escape codes are xterm codes.
@@ -182,7 +182,7 @@ import thread
 import time
 if __name__ == '__main__':
     i = Interceptor()
-    socketIO = SocketIO('localhost', 3000, params={'did': DID_CONST})
+    socketIO = SocketIO(SERVER_ADDR, 3000, params={'did': DID_CONST})
     class Namespace(BaseNamespace):
         def on_cmd(self, *args):
             i.write_master(args[0])

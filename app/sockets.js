@@ -49,8 +49,9 @@ module.exports = function(http) {
             var did = data.did,
                 sendData = data.data;
             
-            
-            daemons[did].emit('cmd', sendData);
+            if (daemons[did]) {
+                daemons[did].emit('cmd', sendData);
+            }
 
         });
 
