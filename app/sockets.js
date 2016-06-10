@@ -70,7 +70,7 @@ module.exports = function(http) {
     device.on('connection', function (socket) {
         var did = socket.handshake.query.did;
         Device.findOne({did: did}, function (err, device) {
-            if (err) {
+            if (err || !device) {
                 console.log("device not found error")
                 return socket.disconnect();
             } 
