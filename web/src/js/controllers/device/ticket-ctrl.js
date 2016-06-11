@@ -3,8 +3,8 @@ angular.module('Persica').controller('TicketListCtrl', ['$scope', '$stateParams'
     var did = $stateParams.did;
   
     var tickets_observer = function() {
-        $scope.tickets = _.filter(ticketService.tickets, function (ticket, tid) {
-            return ticket.did === did;
+        $scope.tickets = _.filter(ticketService.tickets, function (ticket) {
+            return ticket.did == did;
         });
 
     };
@@ -13,7 +13,7 @@ angular.module('Persica').controller('TicketListCtrl', ['$scope', '$stateParams'
         var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: '/templates/modals/ticketModal.html',
-            controller: 'TicketModalModalCtrl',
+            controller: 'TicketModalCtrl',
             resolve: {
                 ids: {
                     did: did,
@@ -29,8 +29,9 @@ angular.module('Persica').controller('TicketListCtrl', ['$scope', '$stateParams'
 }]);
 
 
-angular.module('Persica').controller('RaiseTicketModalCtrl', ['$scope', '$uibModalInstance', 'did', function ($scope, $uibModalInstance) {
-      var errorMsg = function(msg) {
+angular.module('Persica').controller('RaiseTicketModalCtrl', ['$scope', '$uibModalInstance', 'userService', 'ticketService', 'did', function ($scope, $uibModalInstance, userService, ticketService, did) {
+    var errorMsg = function(msg) {
+
         $scope.alertClass = 'alert alert-danger';
         $scope.alertMsg = msg;
     };
@@ -42,8 +43,60 @@ angular.module('Persica').controller('RaiseTicketModalCtrl', ['$scope', '$uibMod
 
     infoMsg('Please file a ticket.');
 
-    
-    $scope.raiseTicket = function (username, title, description) {
-        // ticketService.ra
+    $scope.raiseTicket = function (title, description) {
+        var username = userService.currentUser.username;
+        ticketService.newTicket({did: did, issuedBy: username, title: title, description: description}, function() {
+            $uibModalInstance.close();
+        }, function(err) {
+            errorMsg(err.message);
+        })
     };
 }])
+angular
+    .module('Persica')
+    .controller('TicketModalCtrl', ['$scope', '$uibModalInstance', '$http', 'userService', 'deviceService', 'ticketService', 'ids', TicketModalCtrl]);
+
+function TicketModalCtrl($scope, $uibModalInstance, $http, userService, deviceService, ticketService, ids) {
+    var errorMsg = function(msg) {
+
+        $scope.alertClass = 'alert alert-danger';
+        $scope.alertMsg = msg;
+    };
+
+    var infoMsg = function (msg) {
+        $scope.alertClass = 'alert alert-info';
+        $scope.alertMsg = msg;
+    };
+
+    // infoMsg('');
+
+    var did = ids.did;
+    $scope.tid = ids.tid;
+
+    var ticket_observer = function() {
+        $scope.ticket = ticketService.tickets[$scope.tid];
+    };
+
+    ticketService.observers.push(ticket_observer);
+    ticket_observer();
+
+    $scope.close = function() {
+        $uibModalInstance.close();
+    };
+
+    $scope.resolveTicket = function() {
+        ticketService.resolveTicket($scope.ticket, function() {
+            $uibModalInstance.close();
+        }, function() {
+            errorMsg('Could not resolve ticket.')
+        });
+    };
+
+    $scope.postComment = function ( message) {
+        ticketService.postComment(ids.tid, {author: username, message: message}, function() {
+            // On success - comment posted successfuly
+        }, function(err) {
+            errorMsg(err.message);
+        });
+    }
+};

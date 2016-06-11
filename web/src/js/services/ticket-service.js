@@ -47,6 +47,14 @@ app.service('ticketService', ['$http', 'socketService', function ($http, socketS
         }).then(success, fail);
     };
 
+    this.updateTicket = function(ticket, success, fail) {
+        $http.put('/ticket', ticket).then(success, fail);
+    };
+
+    this.postComment = function (tid, comment, success, fail) {
+        $http.post('/ticket/' + tid + '/comment', comment).then(success, fail);
+    }
+
     this.resolveTicket = function(ticket, success, fail) {
         $http.delete('/ticket/'+ticket.tid).then(success, fail);
     };

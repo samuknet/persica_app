@@ -6,13 +6,12 @@
    {{alertMsg}}
 </div>
 
-<form method="post" class="form-signin" ng-submit="raiseTicket(username, title, description)"> 
+<form method="post" class="form-signin" ng-submit="raiseTicket(title, description)"> 
 <div class="modal-body">
 
-            <input ng-model="username" type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="" />
-            <br />
-            <input ng-model="title" type="text" class="form-control" name="title" placeholder="Password" required="" />
-
+             <label for="title">Title</label><br>
+            <input ng-model="title" type="text" class="form-control" name="title" placeholder="Title" required="" />
+			<br />
              <label for="description">Description</label><br>
             <textarea required class="form-control" id="description" ng-model="description" placeholder="Description..."></textarea>      
 

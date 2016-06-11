@@ -246,8 +246,8 @@ control.on('connection', function (socket) {
         updateTicket: function (updatedTicket) {
             control.emit('ticket-update', updatedTicket);
         },
-        resolveTicket: function (tid) {
-          control.emit('ticket-resolve', {tid: tid});  
+        resolveTicket: function (resolvedTicket) {
+          control.emit('ticket-resolve', resolvedTicket);  
         }
 };
 }

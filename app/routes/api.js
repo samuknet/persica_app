@@ -253,7 +253,7 @@ module.exports = function(router, ioService) {
         })(req, res, next);
     });
 
-    router.get('/ticket/:did', function (req, res) {
+    router.get('/ticket/:did?', function (req, res) {
         var did = req.params.did,
             query = !did ? {} : {did: did};
 
@@ -312,12 +312,8 @@ module.exports = function(router, ioService) {
                 return res.status(501).json({message: 'Error occured deleting'});
             }
 
-            if (numRemoved === 0) {
-                return res.status(406).json({message: 'Ticket specified could not be deleted'});
-            } else {
-                ioService.resolveTicket(deletedTicket);
-                return res.status(200).json({message: 'Ticket deleted successfully'});
-            }
+            ioService.resolveTicket(deletedTicket);
+            return res.status(200).json({message: 'Ticket deleted successfully'});
         });
     });
 

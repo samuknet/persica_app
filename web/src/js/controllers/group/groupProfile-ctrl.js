@@ -28,7 +28,6 @@ function OnlineDeviceCtrl($scope, $stateParams, $state, $timeout, groupService, 
                 if (deviceService.devices[did]) {
                     $scope.devices.push(deviceService.devices[did]);
                 }
-
           });
 
         }

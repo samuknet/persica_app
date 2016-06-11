@@ -3,9 +3,9 @@
  */
 angular
     .module('Persica')
-    .controller('DeviceProfileCtrl', ['$scope', '$stateParams', '$http', 'deviceService', DeviceProfileCtrl]);
+    .controller('DeviceProfileCtrl', ['$scope', '$stateParams', '$uibModal', 'deviceService', DeviceProfileCtrl]);
 
-function DeviceProfileCtrl($scope, $stateParams, $http, deviceService) {
+function DeviceProfileCtrl($scope, $stateParams, $uibModal, deviceService) {
     var did = $stateParams.did;
     var device_observer = function() {
         $scope.device = deviceService.devices[did];
@@ -36,9 +36,9 @@ function DeviceProfileCtrl($scope, $stateParams, $http, deviceService) {
             animation: true,
             templateUrl: '/templates/modals/raiseTicketModal.html',
             controller: 'RaiseTicketModalCtrl',
-            resolve: function() {
-                return {
-                    did: did
+            resolve:  {
+                did: function() {
+                    return did;
                 }
             }
         });

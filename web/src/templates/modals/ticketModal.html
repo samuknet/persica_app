@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+    Ticket #{{tid}} - {{ticket.title}}
+    
+    <button class="btn btn-success pull-right" ng-click="resolveTicket()"><span class="fa fa-2x fa-check"></span>
+    </button>
+    </h3>
+     <small>Issued by {{ticket.issuedBy}} on {{ticket.timestamp | date:'short'}}</small>
+    
+    <br />
+
+    
+</div>
+
+<div ng-class="alertClass" class="col-xs-12">
+   {{alertMsg}}
+</div>
+
+<div class="modal-body">
+    <strong>Description:</strong>
+     <p>
+        <small>
+        <i>
+            {{ticket.description}}
+        </i>
+        </small>
+    </p>
+
+    <hr />
+    <strong>Discussion:</strong>
+    <br />
+    <span ng-show="ticket.comments.length === 0">
+        <small>
+            <i>
+                No comments to show.
+            </i>
+        </small>
+    </span>
+    <div ng-repeat="comment in ticket.comments | orderBy: 'comment.timestamp'">
+        {{comment.author}}: {{comment.message}}
+    </div>
+
+    <div>
+            <textarea ng-enter="postComment(newCommentMessage);newCommentMessage=''" required class="form-control" ng-model="newCommentMessage" placeholder="Discussion...Press enter to post"></textarea> 
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="close()">Close</button>
+</div>
