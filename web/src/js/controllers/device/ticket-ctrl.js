@@ -37,4 +37,4 @@ function TicketModalCtrl($scope, $uibModalInstance, $http, deviceService, ticket
             errorMsg('Could not delete Ticket.')
         });
     };
-}]);
+};
