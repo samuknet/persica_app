@@ -307,7 +307,7 @@ module.exports = function(router, ioService) {
 
     router.delete('/ticket/:tid', function (req, res) {
         var tid = req.params.tid;
-        Ticket.find({tid: tid}).remove().exec(function(err, numRemoved) {
+        Ticket.findOneAndRemove({tid: tid}, {}, function (err, deletedTicket) {
             if (err) {
                 return res.status(501).json({message: 'Error occured deleting'});
             }
@@ -315,7 +315,7 @@ module.exports = function(router, ioService) {
             if (numRemoved === 0) {
                 return res.status(406).json({message: 'Ticket specified could not be deleted'});
             } else {
-                ioService.resolveTicket(tid)
+                ioService.resolveTicket(deletedTicket);
                 return res.status(200).json({message: 'Ticket deleted successfully'});
             }
         });
