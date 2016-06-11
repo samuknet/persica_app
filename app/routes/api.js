@@ -1,12 +1,12 @@
 // Module for API Routes (serving JSON)
 
-
 module.exports = function(router, ioService) {
 
     var mongoose = require('mongoose'),
         Device = require('../models/device'),
         Group = require('../models/group'),
         User = require('../models/user'),
+        Ticket = require('../models/ticket'),
         Notification = require('../models/notification'),
         Ticket = require('../models/ticket'),
         passport = require('passport'),
@@ -14,7 +14,6 @@ module.exports = function(router, ioService) {
         decode = require('jsonwebtoken').decode,
         auth = jwt({secret: 'SECRET', userProperty: 'payload'}),
         _ = require('underscore');
-
 
     router.get('/group', function (req, res) {
         Group.find({}, function (err, groups) {
@@ -120,8 +119,8 @@ module.exports = function(router, ioService) {
             alias = req.body.alias,
             description = req.body.description,
             group = req.body.group;
-        var device = {did: did, alias: alias, description: description, group: group};
-        new Device(device).save(function(err, product) {
+        var dev = {did: did, alias: alias, description: description, group: group};
+        new Device(dev).save(function(err, device) {
             if (err) {
                 res.status(406).json({message: err.message});
             } else {
@@ -177,7 +176,7 @@ module.exports = function(router, ioService) {
             }
 
             if (numRemoved === 0) {
-                return res.status(406).json({message: 'Notifcation specified could not be deleted'});
+                return res.status(406).json({message: 'Notification specified could not be deleted'});
             } else {
                 return res.status(200).json({message: 'Notification deleted successfully'});
             }
@@ -266,4 +265,60 @@ module.exports = function(router, ioService) {
             }
         });
     });
+
+    router.post('/ticket', function (req, res) {
+        var did = req.body.did,
+            title = req.body.title,
+            description = req.body.description,
+            issuedBy = req.body.issuedBy;
+
+        var tick = {
+                // tid is auto increment
+                did: did,
+                title: title,
+                description: description,
+                issuedBy: issuedBy,
+                timestamp: Date.now(),
+                comments: []
+        };
+        new Ticket(tick).save(function(err, ticket) {
+            if (err) {
+                res.status(406).json({message: err.message});
+            } else {
+                ioService.newTicket(ticket);
+                res.status(201).json({message: 'Ticket added.'});                
+            }
+        }); 
+    });
+
+    router.put('/ticket/:tid', function(req, res) {
+        var updateTicket = req.body;
+        var query = {tid: req.params.tid};
+
+        ticket.update(query, updateTicket, {new: true}, function(err, updatedTicket) {
+            if (err) {
+                res.status(406).json({message: err.message});
+            } else {
+                ioService.updateTicket(updatedTicket);
+                res.status(201).json({message: "User updated."});
+            }
+        });
+    });
+
+    router.delete('/ticket/:tid', function (req, res) {
+        var tid = req.params.tid;
+        Ticket.find({tid: tid}).remove().exec(function(err, numRemoved) {
+            if (err) {
+                return res.status(501).json({message: 'Error occured deleting'});
+            }
+
+            if (numRemoved === 0) {
+                return res.status(406).json({message: 'Ticket specified could not be deleted'});
+            } else {
+                ioService.resolveTicket(tid)
+                return res.status(200).json({message: 'Ticket deleted successfully'});
+            }
+        });
+    });
+
 }

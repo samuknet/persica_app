@@ -165,7 +165,7 @@ module.exports = function(http) {
                                 break;
 
                                 case 'sms':
-                                // console.log('Sending SMS!!!');
+                                    // console.log('Sending SMS!!!');
                                     notificationSender.sendSMS(user.notifyConfig[criticalLevel].dst, logObj);
                                     break;
 
@@ -239,6 +239,15 @@ control.on('connection', function (socket) {
         },
         getDevices: function () {
             return devices;
+        },
+        newTicket: function (ticket) {
+            control.emit('ticket-new', ticket);
+        },
+        updateTicket: function (updatedTicket) {
+            control.emit('ticket-update', updatedTicket);
+        },
+        resolveTicket: function (tid) {
+          control.emit('ticket-resolve', {tid: tid});  
         }
 };
 }
