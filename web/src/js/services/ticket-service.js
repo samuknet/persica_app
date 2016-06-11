@@ -20,16 +20,20 @@ app.service('ticketService', ['$http', 'socketService', function ($http, socketS
 		// Error
 	});
 
- //    socketService.on('device-new', function(device) {
- //    	devices[device.did] = _.extend(devices[device.did] || {}, device);
- //        devices[device.did].lastOnline = 'Device has not been online yet.';
-	// 	notify_observers();
- //    });
+    socketService.on('ticket-new', function(ticket) {
+    	tickets[ticket.tid] = _.extend(tickets[ticket.tid] || {}, ticket);
+		notify_observers();
+    });
 
- //   socketService.on('device-update', function(updatedDevice) {
- //        devices[updatedDevice.did] = updatedDevice;
- //        notify_observers();
- //    });
+    socketService.on('ticket-update', function(updatedTicket) {
+        tickets[updatedTicket.tid] = updatedTicket;
+        notify_observers();
+    });
+
+    socketService.on('ticket-resolve', function(resolvedTicket) {
+        delete tickets[resolvedTicket.tid];
+        notify_observers();
+    });
 
 	this.tickets = tickets;
 	this.observers = observers;
@@ -41,6 +45,10 @@ app.service('ticketService', ['$http', 'socketService', function ($http, socketS
             description: ticket.description,
             issuedBy: ticket.issuedBy
         }).then(success, fail);
-    }
+    };
+
+    this.resolveTicket = function(ticket, success, fail) {
+        $http.delete('/ticket/'+ticket.tid).then(success, fail);
+    };
 
 }]);
