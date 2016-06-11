@@ -8,6 +8,7 @@ module.exports = function(router, ioService) {
         User = require('../models/user'),
         Ticket = require('../models/ticket'),
         Notification = require('../models/notification'),
+        Ticket = require('../models/ticket'),
         passport = require('passport'),
         jwt = require('express-jwt'),
         decode = require('jsonwebtoken').decode,
@@ -252,6 +253,19 @@ module.exports = function(router, ioService) {
         })(req, res, next);
     });
 
+    router.get('/ticket/:did', function (req, res) {
+        var did = req.params.did,
+            query = !did ? {} : {did: did};
+
+        Ticket.find(query, function(err, tickets) {
+            if (err) {
+                res.status(406).json({message: 'Could not get tickets.'});
+            } else {
+                res.send(tickets);
+            }
+        });
+    });
+
     router.post('/ticket', function (req, res) {
         var did = req.body.did,
             title = req.body.title,
@@ -304,6 +318,5 @@ module.exports = function(router, ioService) {
                 ioService.resolveTicket(tid)
                 return res.status(200).json({message: 'Ticket deleted successfully'});
             }
-        });
     });
 }
