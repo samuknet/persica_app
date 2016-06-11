@@ -8,67 +8,23 @@
 				<span class="fa fa-circle" style="color:#5cb85c" ng-if="device.online"></span>
 				<span class="fa fa-circle-o" style="color:#d9534f" ng-if="!device.online"></span>
 
+
 				<span class="pull-right">
-					<small>
-					<span ng-show="device.online">
-						<small>
-						<i>
-							Online since {{device.establishTime | date:'medium'}}
-						</i>
-						</small>
+				
+					<span>
+						<button class="btn btn-danger">Raise Ticket</button>
 					</span>
-
-					<span ng-show="!device.online">
-						<small>
-						<i>
-							Last online {{device.lastOnline | date:'medium'}}
-						</i>
-						</small>
-					</span>
-
 
 				</span>
 			</h1>
-
-			<h4>
-				DID: {{device.did}} <br />
-				Group: {{device.group}}
-			</h4>
-
-
-			<h6>{{device.description}}</h6>
-
-
+			
 		</div>
 	</div>
 
 	<div class="row">
-<!-- 
-		<div class="col-lg-6" ng-controller="TermCtrl">
-			<rd-widget>
-				<rd-widget-header icon="fa-tasks" title="Console">
-				</rd-widget-header>
-				<div id="term"> </div>
 
 
-				</rd-widget-body>
-			</rd-widget>
-		</div>
- -->
-
-		<div class="col-lg-6" ng-controller="DaemonCtrl">
-			<rd-widget>
-				<rd-widget-header icon="fa-tasks" title="Directive Test">
-				</rd-widget-header>
-
-				<div terminal did="{{did}}">
-
-				</div>
-				</rd-widget-body>
-			</rd-widget>
-		</div>
-
-		<!-- <div class="col-lg-6" >
+		<div class="col-lg-6" >
             <rd-widget>
                 <rd-widget-header icon="fa-laptop" title="Device Profile">
                 </rd-widget-header>
@@ -88,33 +44,23 @@
                     </div>
                 </rd-widget-body>
             </rd-widget>
-        </div> -->
+        </div>
 
-        <div class="col-lg-6" ng-init="fields={}" ng-controller="DeviceLogsCtrl">
+
+        <div class="col-lg-6" ng-controller="DaemonCtrl">
             <rd-widget>
-                <rd-widget-header icon="fa-angle-double-up" title="Logs">
-                    	Filter by: 
-                    		<input type="text" ng-model="fields.search" placeholder="Log"  />
-                    		<input type="text" ng-model="fields.critical" placeholder="Critical Value" />
+                <rd-widget-header icon="fa-tasks" title="Console">
                 </rd-widget-header>
-                <rd-widget-body classes="medium no-padding">
-                   <div class="table-responsive">
-                        <table class="table table">
-                        	<thead>
-								<tr><th>Timestamp</th><th>Log</th><th>Critical Level</th></tr>
-                        	</thead>
-                            <tbody>
-                                <tr ng-repeat="log in logs | filter: {log: fields.search, critical: fields.critical}" ng-style="criticalStyles[log.critical]">
-									<td>{{log.timestamp | date:'medium'}}</td>
-									<td>{{log.log}}</td>
-									<td>{{log.critical}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+
+                <div terminal did="{{did}}">
+
+                </div>
                 </rd-widget-body>
             </rd-widget>
         </div>
+
+
+      
 	</div>
 
 	<div class="row">
@@ -171,7 +117,72 @@
 		</div>
 
 	</div>
-<!-- 
-	<div class="row">
 
-	</div> -->
+	<div class="row">
+				
+
+          <div class="col-lg-6" ng-init="fields={}" ng-controller="DeviceLogsCtrl">
+            <rd-widget>
+                <rd-widget-header icon="fa-angle-double-up" title="Logs">
+                        Filter by: 
+                            <input type="text" ng-model="fields.search" placeholder="Log"  />
+                            <input type="text" ng-model="fields.critical" placeholder="Critical Value" />
+                </rd-widget-header>
+                <rd-widget-body classes="medium no-padding">
+                   <div class="table-responsive">
+                        <table class="table table">
+                            <thead>
+                                <tr><th>Timestamp</th><th>Log</th><th>Critical Level</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="log in logs | filter: {log: fields.search, critical: fields.critical}" ng-style="criticalStyles[log.critical]">
+                                    <td>{{log.timestamp | date:'medium'}}</td>
+                                    <td>{{log.log}}</td>
+                                    <td>{{log.critical}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </rd-widget-body>
+            </rd-widget>
+        </div>
+
+		<div class="col-lg-6" ng-controller="TicketListCtrl">
+			<rd-widget>
+				<rd-widget-header icon="fa-ticket" title="Open Tickets">
+				</rd-widget-header>
+				<rd-widget-body classes="medium no-padding">
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<thead>
+								<th>TID</th>
+								<th>Title</th>
+								<th>Issued By</th>
+								<th>Timestamp</th>
+							</thead>
+							<tbody>
+								<tr style="cursor:pointer;" ng-click="viewTicket(ticket)" ng-repeat="ticket in tickets">
+									<td>
+										{{ticket.tid}}
+									</td>
+									<td>
+										{{ticket.title}}
+									</td>
+									<td>
+										{{ticket.issuedBy}}
+									</td>
+
+									<td>
+										{{ticket.timestamp | date: 'short'}}
+									</td>
+								
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</rd-widget-body>
+			</rd-widget>
+		</div>
+
+
+	</div>

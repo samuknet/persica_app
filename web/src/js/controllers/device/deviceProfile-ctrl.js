@@ -30,6 +30,19 @@ function DeviceProfileCtrl($scope, $stateParams, $http, deviceService) {
         var averageUpTime = sum / uptimePairs.length;
         return averageUpTime;
     }
+
+    $scope.openRaiseTicketModal = function() {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: '/templates/modals/raiseTicketModal.html',
+            controller: 'RaiseTicketModalCtrl',
+            resolve: function() {
+                return {
+                    did: did
+                }
+            }
+        });
+    }
 }
 
 angular
