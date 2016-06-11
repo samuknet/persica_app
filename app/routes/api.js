@@ -68,8 +68,8 @@ module.exports = function(router, ioService) {
                 if (err) {
                     res.status(406).json({message: err.message});
                 } else {
+                    ioService.updateGroup(group);
                     res.send(group);
-                    //ioService.deviceAddedToGroup(group);
                 }
             }
         );

@@ -236,7 +236,6 @@ control.on('connection', function (socket) {
         },
         getDevices: function () {
             return devices;
-
         }
 };
 }
