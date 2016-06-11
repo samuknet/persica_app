@@ -305,6 +305,26 @@ module.exports = function(router, ioService) {
         });
     });
 
+    router.post('/ticket/:tid/comment', function(req, res) {
+        var comment = req.body,
+            tid = req.params.tid;
+
+        comment.timestamp = new Date().now();
+
+        Ticket.findOneAndUpdate(
+            {tid: tid},
+            {$push: {comments: comment}},
+            {safe: true, upsert: true, new: true},
+            function(err, updatedTicket) {
+                if (err) {
+                    return res.status(406).json({message: 'Error occured adding comment.'});
+                }
+                ioService.updatedTicket(updatedTicket);
+                return res.status(201).json({message: 'Comment added successfully.'});
+            }
+        );
+    });
+
     router.delete('/ticket/:tid', function (req, res) {
         var tid = req.params.tid;
         Ticket.findOneAndRemove({tid: tid}, {}, function (err, deletedTicket) {
