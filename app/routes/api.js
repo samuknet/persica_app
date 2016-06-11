@@ -318,5 +318,7 @@ module.exports = function(router, ioService) {
                 ioService.resolveTicket(tid)
                 return res.status(200).json({message: 'Ticket deleted successfully'});
             }
+        });
     });
+
 }
