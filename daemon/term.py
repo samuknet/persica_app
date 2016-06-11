@@ -27,7 +27,7 @@ import signal
 import sys
 import termios
 import tty
-SERVER_ADDR = '129.31.189.182' ## Set to Localhost when developing locally
+SERVER_ADDR = 'localhost' ## Set to Localhost when developing locally
 DID_CONST = sys.argv[1] ## HARD CODED DEVICE ID OF THIS TERMINAL (FOR NOW)
 
 # The following escape codes are xterm codes.
