@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h3 class="modal-title">Ticket #{{tid}}</h3>
+</div>
+
+<div ng-class="alertClass" class="col-xs-12">
+   {{alertMsg}}
+</div>
+
+<div class="modal-body">
+    <rd-widget>
+        <rd-widget-header icon="fa-users" title="Ticket #{{tid}} Discussion">
+        </rd-widget-header>
+
+        <rd-widget-body classes="medium no-padding">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr ng-repeat="comment in comments | orderBy: 'comment.timestamp'">
+                        <td>{{comment.author}}: {{comment.message}}</td>
+                    </tr>
+                </table>
+            </div>
+        </rd-widget-body>
+    </rd-widget>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="close()">Close</button>
+    <button class="btn btn-warning" type="button" ng-click="delete()">Delete</button>
+</div>
