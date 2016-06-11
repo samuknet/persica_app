@@ -37,12 +37,14 @@
         </small>
     </span>
         <div class="panel-group pre-scrollable">
-            <div style="margin:3%;" class="clearfix" ng-class="getCommentStyles(comment)" ng-repeat="comment in ticket.comments | orderBy: 'comment.timestamp'">
+            <div style="margin:0.5%;" class="clearfix" ng-class="getCommentStyles(comment)" ng-repeat="comment in ticket.comments | orderBy: 'comment.timestamp'">
+            <span ng-show="!isMyComment(comment)"><small class="grey">{{comment.author}}</small></span>
             <div class="panel panel-default" >
-                <div class="panel-heading">
-                    {{comment.message}}
+                <div ng-class="getCommentPanelStyles(comment)">
+                    <div class="panel-heading">
+                        {{comment.message}}
+                    </div>
                 </div>
-                <!-- {{comment.author}} -->
             </div>
             </div>
         </div>

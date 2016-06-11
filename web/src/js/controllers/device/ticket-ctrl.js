@@ -91,14 +91,26 @@ function TicketModalCtrl($scope, $uibModalInstance, $http, userService, deviceSe
             errorMsg('Could not resolve ticket.')
         });
     };
+
     $scope.getCommentStyles = function(comment) {
-        if (comment.author === userService.currentUser.username) {
+        if ($scope.isMyComment(comment)) {
             return 'pull-right text-right';
         } else {
             return 'pull-left text-left';
         }
     };
 
+     $scope.getCommentPanelStyles = function(comment) {
+        if ($scope.isMyComment(comment)) {
+            return 'blue-bg';
+        } else {
+            return 'green-bg';
+        }
+    };
+
+    $scope.isMyComment = function(comment) {
+        return comment.author === userService.currentUser.username;
+    }
     $scope.postComment = function ( message) {
         var username = userService.currentUser.username;
         ticketService.postComment(ids.tid, {author: username, message: message}, function() {
