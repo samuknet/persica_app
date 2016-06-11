@@ -79,10 +79,6 @@
   cursor: pointer;
  }
 
-
-
-
-
 .badge{
     background: rgba(0,0,0,0.5);
     width: auto;
@@ -93,4 +89,12 @@
     top:40px;
     right:8px;
     padding:5px;
+}
+
+.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
+    border: none;
+}
+
+.clearfix {
+  clear: both;
 }

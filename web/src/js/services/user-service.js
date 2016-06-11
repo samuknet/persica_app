@@ -15,6 +15,7 @@ app.service('userService', ['$window', '$http', 'socketService', 'notificationSe
             notificationService.getNotifications(user);
             $window.localStorage['persica-token'] = token;
             self.currentUser = user;
+            notify_observers();
         }, function(response) {
             console.log('error', response);
         });
@@ -26,6 +27,7 @@ app.service('userService', ['$window', '$http', 'socketService', 'notificationSe
         delete $window.localStorage['persica-token'];
         this.currentUser = null;
         $window.location.href = '/';
+        notify_observers();
     }
 
     this.updateNotificationSettings = function (data) {
@@ -33,10 +35,9 @@ app.service('userService', ['$window', '$http', 'socketService', 'notificationSe
 
     }
 
-    this.currentUser = {};
+    // this.currentUser = {};
 
     this.currentUser = null;
-
     this.observers = observers;
 
 }]);

@@ -213,13 +213,13 @@ module.exports = function(router, ioService) {
         user.username = req.body.username;
 
         user.setPassword(req.body.password)
-
         user.save(function(err, user) {
+
             if (err) {
                 if (err.code === 11000) {
                     return res.status(406).json({message:'Username already in use.'});
                 }
-                return next(err)
+                return next(err);
             }
             return res.json({
                 username: user.username,
@@ -309,7 +309,7 @@ module.exports = function(router, ioService) {
         var comment = req.body,
             tid = req.params.tid;
 
-        comment.timestamp = new Date().now();
+        comment.timestamp = Date.now();
 
         Ticket.findOneAndUpdate(
             {tid: tid},
@@ -319,7 +319,7 @@ module.exports = function(router, ioService) {
                 if (err) {
                     return res.status(406).json({message: 'Error occured adding comment.'});
                 }
-                ioService.updatedTicket(updatedTicket);
+                ioService.updateTicket(updatedTicket);
                 return res.status(201).json({message: 'Comment added successfully.'});
             }
         );

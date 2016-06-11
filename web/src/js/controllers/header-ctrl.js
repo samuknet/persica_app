@@ -8,8 +8,12 @@ angular.module('Persica')
 function HeaderCtrl($scope, $state, $uibModal, notificationService, userService) {
 
     $scope.notifications = [];
+    var user_obs
     var notifications_observer = function() {
         $scope.notifications = notificationService.notifications;
+    };
+     var users_observer = function() {
+        $scope.currentUser = userService.currentUser;
     };
 
     $scope.dismissNotification = function (not) {notificationService.deleteNotification(not);};
@@ -23,10 +27,12 @@ function HeaderCtrl($scope, $state, $uibModal, notificationService, userService)
           controller: 'SettingsModalCtrl',
 
         });
-
-
     };    
 
+
+
+    userService.observers.push(users_observer);
+    users_observer();
     notificationService.observers.push(notifications_observer);
     notifications_observer();
 

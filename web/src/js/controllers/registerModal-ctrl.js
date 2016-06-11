@@ -19,11 +19,10 @@ function RegisterModalCtrl($scope, $http, $uibModalInstance) {
     infoMsg('Please register');
 
     $scope.register = function (username, password, confirmPassword) {
-
         if (password !== confirmPassword) {
             return errorMsg('Passwords do not match.');
         }
-        $http.post('/register', {username: username, password:password}).then(function (response) {
+        $http.post('/register', {username: username, password: password}).then(function (response) {
             // If registering was successful then just forward the new user data (including token) to the login modal
             $uibModalInstance.close(response.data);
         }, function (response) {

@@ -36,9 +36,18 @@
             </i>
         </small>
     </span>
-    <div ng-repeat="comment in ticket.comments | orderBy: 'comment.timestamp'">
-        {{comment.author}}: {{comment.message}}
-    </div>
+        <div class="panel-group pre-scrollable">
+            <div style="margin:3%;" class="clearfix" ng-class="getCommentStyles(comment)" ng-repeat="comment in ticket.comments | orderBy: 'comment.timestamp'">
+            <div class="panel panel-default" >
+                <div class="panel-heading">
+                    {{comment.message}}
+                </div>
+                <!-- {{comment.author}} -->
+            </div>
+            </div>
+        </div>
+    
+        
 
     <div>
             <textarea ng-enter="postComment(newCommentMessage);newCommentMessage=''" required class="form-control" ng-model="newCommentMessage" placeholder="Discussion...Press enter to post"></textarea> 
