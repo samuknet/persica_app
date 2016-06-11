@@ -75,7 +75,6 @@ module.exports = function(router, ioService) {
         );
     });
 
-
     router.get('/device', function (req, res) {
         var did = req.query.did,
             searchObj = did ? {did: did} : {};
