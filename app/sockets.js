@@ -7,12 +7,14 @@ module.exports = function(http) {
     var Device = require('./models/device');
     var User = require('./models/user');
     var Notification = require('./models/notification');
-    var notificationSender = require('./notificationSender');
     var control = io.of('/control');
     var device = io.of('/device');
     var term_device = io.of('/term_device');
     var term_control = io.of('/term_control');
     var daemons = {};
+
+    var notificationSender = require('./notificationSender')(control);
+
 
     term_device.on('connection', function (socket) {
         var did = socket.handshake.query.did;
@@ -58,12 +60,6 @@ module.exports = function(http) {
 
 
     });
-
-
-
-
-
-
 
 
 
@@ -151,13 +147,7 @@ module.exports = function(http) {
                         if (user.notifyConfig[criticalLevel]) {
                             switch(user.notifyConfig[criticalLevel].kind) {
                                 case 'popup':
-                                var notification = {type: 'criticalLog', did: did, message: data.log, username: user.username};
-                                new Notification(notification).save(function (err, model) {
-                                    if (err) {
-                                        console.log(err);
-                                    }
-                                    control.emit('notification-new', model);
-                                });
+                                notificationSender.sendPopupTo('criticalLog', did, data.log, user.username)
                                 break;
 
                                 case 'email':
@@ -213,10 +203,7 @@ control.on('connection', function (socket) {
         });
 
 
-    console.log('control connected');
     _.forEach(devices, function (obj, did) {
-
-        console.log('emitting device connected event', devices[did].device.cmds);
         control.emit('device-connected', devices[did].device);
     });
 });
@@ -241,6 +228,7 @@ control.on('connection', function (socket) {
             return devices;
         },
         newTicket: function (ticket) {
+            notificationSender.sendPopupToAllUsers('newTicket', ticket.did, ticket.title, ticket.issuedBy);
             control.emit('ticket-new', ticket);
         },
         updateTicket: function (updatedTicket) {
