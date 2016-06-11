@@ -1,0 +1,33 @@
+<rd-widget>
+    <rd-widget-header icon="fa-ticket" title="Open Tickets">
+    </rd-widget-header>
+    <rd-widget-body classes="medium no-padding">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <th>TID</th>
+                    <th>Title</th>
+                    <th>Issued By</th>
+                    <th>Timestamp</th>
+                </thead>
+                <tbody>
+                    <tr style="cursor:pointer;" ng-click="viewTicket(ticket)" ng-repeat="ticket in tickets">
+                        <td>
+                            {{ticket.tid}}
+                        </td>
+                        <td>
+                            {{ticket.title}}
+                        </td>
+                        <td>
+                            {{ticket.issuedBy}}
+                        </td>
+
+                        <td>
+                            {{ticket.timestamp | date: 'short'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </rd-widget-body>
+</rd-widget>

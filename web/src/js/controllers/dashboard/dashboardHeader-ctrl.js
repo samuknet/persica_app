@@ -1,6 +1,6 @@
 angular
     .module('Persica')
-    .controller('DashboardHeaderCtrl', ['$scope', 'deviceService', DashboardHeaderCtrl]);
+    .controller('DashboardHeaderCtrl', ['$scope', 'deviceService', 'ticketService', DashboardHeaderCtrl]);
 
 function DashboardHeaderCtrl($scope, deviceService) {
 	var devices_observer = function() {
