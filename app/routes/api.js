@@ -8,6 +8,7 @@ module.exports = function(router, ioService) {
         Group = require('../models/group'),
         User = require('../models/user'),
         Notification = require('../models/notification'),
+        Ticket = require('../models/ticket'),
         passport = require('passport'),
         jwt = require('express-jwt'),
         decode = require('jsonwebtoken').decode,
@@ -251,5 +252,18 @@ module.exports = function(router, ioService) {
                 return res.status(401).json(info);
             }
         })(req, res, next);
+    });
+
+    router.get('/ticket/:did', function (req, res) {
+        var did = req.params.did,
+            query = !did ? {} : {did: did};
+
+        Ticket.find(query, function(err, tickets) {
+            if (err) {
+                res.status(406).json({message: 'Could not get tickets.'});
+            } else {
+                res.send(tickets);
+            }
+        });
     });
 }
