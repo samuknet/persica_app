@@ -180,7 +180,11 @@ from socketIO_client import SocketIO, BaseNamespace
 import websocket
 import thread
 import time
+reload(sys)  
+sys.setdefaultencoding('utf8')
+
 if __name__ == '__main__':
+	
     i = Interceptor()
     socketIO = SocketIO(SERVER_ADDR, 3000, params={'did': DID_CONST})
     class Namespace(BaseNamespace):
