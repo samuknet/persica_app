@@ -25,11 +25,9 @@ function OnlineDeviceCtrl($scope, $stateParams, $state, $timeout, groupService, 
         $scope.devices = []
         if (groupService.groups[gid]) {
             _.forEach(groupService.groups[gid].dids, function(did) {
-
                 if (deviceService.devices[did]) {
                     $scope.devices.push(deviceService.devices[did]);
                 }
-                
 
           });
 
@@ -64,7 +62,11 @@ angular
         
         if ($scope.newDid == undefined) {
             if (!($scope.did in groupService.groups[$stateParams.gid].dids)) {
-                groupService.addDIDToGroup($stateParams.gid, $scope.did);
+                /* TODO: handle errors on line below
+                   addDeviceToGroup also takes on success and on failure
+                   functions .
+                */
+                groupService.addDeviceToGroup($stateParams.gid, $scope.did);
             } else {
                 console.log("Device already in group!");
             }
@@ -119,60 +121,6 @@ function GroupCmdsCtrl($scope, $stateParams, deviceService, groupService) {
     cmds_observer();
 }
 
-/**
- * Device Cmds Controller
- */
-angular
-    .module('Persica')
-    .controller('GroupLogsCtrl', ['$scope', '$stateParams', '$uibModal', 'deviceService', GroupLogsCtrl]);
-
-function GroupLogsCtrl($scope, $stateParams, $uibModal, deviceService) {
-    var did = $stateParams.did;
-
-    $scope.openGraphModal = function(varName) {
-        var modalInstance = $uibModal.open({
-            animation: true,
-            templateUrl: '/templates/modals/deviceVariableGraphModal.html',
-            controller: 'DeviceVariableGraphModalCtrl',
-            resolve: {
-                did: function() {
-                    return did;
-                },
-                varHandle: function () {
-                    return varName;
-                }
-            }
-        });
-    };
-
-    var vars_observer = function() {
-        var device = deviceService.devices[did];
-        $scope.liveVars = device ? device.liveVars : {};
-    }
-    deviceService.observers.push(vars_observer);
-    vars_observer();
-}
-
-/* Controller for the graph modal for a device variable */
-angular.module('Persica').controller('DeviceVariableGraphModalCtrl', ['$scope', '$uibModalInstance', '$http', 'deviceService', 'did', 'varHandle', function($scope, $uibModalInstance, $http, deviceService, did, varHandle) {
-    $scope.varHandle = varHandle;
-    var varUpdates = deviceService.devices[did].varUpdates;
-        varUpdates = _.filter(varUpdates, function (update) { return update.handle === varHandle; });
-    $scope.data = [_.pluck(varUpdates, 'value')];
-    $scope.labels = _.pluck(varUpdates, 'timestamp');
-    $scope.series = [varHandle];
-    $scope.options = {
-      
-      showScale: false,
-      showTooltips: true,
-      pointDot: false,
-      datasetStrokeWidth: 1,
-      pointDotRadius: 1,
-    };
-    $scope.close = function() {
-        $uibModalInstance.close();
-    }
-}]);
 
 angular.module('Persica').controller('GroupLogsCtrl', ['$scope', '$stateParams', 'groupService', 'deviceService', function($scope, $stateParams, groupService, deviceService) {
     var gid = $stateParams.gid;

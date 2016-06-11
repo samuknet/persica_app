@@ -52,11 +52,16 @@ DeviceSchema.pre('save', function (next) {
         }
     });
 
+    if (self.group == -1) {
+        // Case where the device is deliberately assigned no group.
+        return next();
+    }
+
+    // Otherwise, add the device to the corresponding group document
     Group.find({gid: self.group}, function (err, docs) {
         if (!docs.length) {
             next(new Error('Group with GID ' + self.group + ' does not exist.'));
         } else {
-            console.log("got here");
             Group.findOneAndUpdate(
                 {gid: self.group},
                 {$push: {dids: self.did}},

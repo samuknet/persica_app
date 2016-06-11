@@ -20,7 +20,6 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 		// Error
 	});
 
-
 	socketService.on('device-connected', function(device) {
         console.log(device);
 		devices[device.did] = _.extend(devices[device.did] || {}, device);
@@ -37,8 +36,13 @@ app.service('deviceService', ['$http', 'socketService', function ($http, socketS
 
     socketService.on('device-new', function(device) {
     	devices[device.did] = _.extend(devices[device.did] || {}, device);
-        devices[device.did].lastOnline = "Device has not been online yet.";
+        devices[device.did].lastOnline = 'Device has not been online yet.';
 		notify_observers();
+    });
+
+   socketService.on('device-update', function(updatedDevice) {
+        devices[updatedDevice.did] = updatedDevice;
+        notify_observers();
     });
 
     socketService.on('device-register-cmd', function (register) {

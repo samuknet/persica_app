@@ -225,13 +225,16 @@ control.on('connection', function (socket) {
         newDevice: function (device) {
             control.emit('device-new', device);
             if (device.group !== -1) {
-                control.emit('device');
+                control.emit('device'); // DOES ANYONE KNOW WHY THIS IS HERE?
             }
+        },
+        updateDevice: function (updatedDevice) { // Signals that a device has been updated
+            control.emit('device-update', updatedDevice);
         },
         newGroup: function (group) {
             control.emit('group-new', group);
         },
-        updateGroup: function (updatedGroup) {
+        updateGroup: function (updatedGroup) { // Signals that a group has been updated
             control.emit('group-update', updatedGroup);
         },
         getDevices: function () {

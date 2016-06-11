@@ -63,16 +63,32 @@ module.exports = function(router, ioService) {
         Group.findOneAndUpdate(
             {gid: gid},
             {$push: {dids: did}},
-            {safe: true, upsert: true},
-            function(err, group) {
+            {safe: true, upsert: true, new: true}, // new set to true so we received the updatedGroup
+            function(err, updatedGroup) {
                 if (err) {
-                    res.status(406).json({message: err.message});
-                } else {
-                    ioService.updateGroup(group);
-                    res.send(group);
+                    return res.status(406).json({message: err.message});
                 }
+
+                Device.findOneAndUpdate(
+                    {did: did},
+                    {$set: {group: gid}},
+                    {new: true},
+                    function (err, updatedDevice) {
+                        if (err) {
+                            res.status(406).json({message: err.message});
+                        } else {
+                            ioService.updateGroup(updatedGroup);
+                            ioService.updateDevice(updatedDevice);
+                            res.send(updatedGroup);        
+                        }
+                    }
+                );
             }
         );
+
+        // Additionally update the device;
+
+       
     });
 
     router.get('/device', function (req, res) {
@@ -103,7 +119,6 @@ module.exports = function(router, ioService) {
             alias = req.body.alias,
             description = req.body.description,
             group = req.body.group;
-        console.log("__"+group+"__");
         var device = {did: did, alias: alias, description: description, group: group};
         new Device(device).save(function(err, product) {
             if (err) {
