@@ -98,3 +98,15 @@
 .clearfix {
   clear: both;
 }
+
+.grey {
+  color: #8C8C8C;
+}
+
+.blue-bg {
+ background-color:#1AD6FD;
+}
+
+.green-bg {
+ background-color:#87FC70;
+}

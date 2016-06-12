@@ -5,7 +5,7 @@
 					<i class="fa fa-users"></i>
 				</div>
 				<div class="title">{{deviceCount}}</div>
-				<div class="comment">Devices</div>
+				<div class="comment">Device<span ng-show="deviceCount !== 1">s</span></div>
 			</rd-widget-body>
 		</rd-widget>
 	</div>
@@ -15,8 +15,8 @@
 				<div class="widget-icon red pull-left">
 					<i class="fa fa-tasks"></i>
 				</div>
-				<div class="title">{{160}}</div>
-				<div class="comment">Servers</div>
+				<div class="title">{{unresolvedTicketCount}}</div>
+				<div class="comment">Ticket<span ng-show="unresolvedTicketCount !== 1">s</span></div>
 			</rd-widget-body>
 		</rd-widget>
 	</div>
