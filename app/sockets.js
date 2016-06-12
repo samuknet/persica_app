@@ -58,7 +58,6 @@ module.exports = function(http) {
         });
 
 
-
     });
 
 
@@ -194,7 +193,9 @@ control.on('connection', function (socket) {
                     cmd: '...',
                 }
                 */
-                device.emit('cmd', {cmd: data.cmd});
+                var did = data.did;
+                console.log(did);
+                devices[did].socket.emit('cmd', {cmd: data.cmd});
             });
 
     socket.on('group-cmd', function (data) {

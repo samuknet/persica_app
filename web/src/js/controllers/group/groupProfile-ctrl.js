@@ -106,8 +106,12 @@ function GroupCmdsCtrl($scope, $stateParams, deviceService, groupService) {
 
         _.forEach(dids, function (did) {
             var currDeviceCmds = deviceService.devices[did] ? deviceService.devices[did].cmds : null;
+            
             if (currDeviceCmds) {
-                $scope.cmds = $scope.cmds.concat(currDeviceCmds);
+
+                $scope.cmds = $scope.cmds.concat(_.filter(currDeviceCmds, function(cmdName) {
+                    return !_.contains($scope.cmds, cmdName);
+                }));
             }
         });
     };
@@ -117,6 +121,7 @@ function GroupCmdsCtrl($scope, $stateParams, deviceService, groupService) {
     };
 
     deviceService.observers.push(cmds_observer);
+    groupService.observers.push(cmds_observer);
     cmds_observer();
 }
 
