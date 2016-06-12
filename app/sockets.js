@@ -77,24 +77,34 @@ module.exports = function(http) {
             if (device.group !== -1) {
                 var room = 'RM' + device.group;
 
-                console.log('device joining room', room);
+                //console.log('device joining room', room);
                 socket.join(room);
             }
 
-            devices[did] = {socket: socket, device: {did: did, cmds : []}};
-            devices[did].device = device;
+            devices[did] = {socket: socket, device: {}};
             devices[did].device.cmds = [];
             devices[did].device.liveVars = {};
             devices[did].device.establishTime = Date.now();
+            // devices[did].device.group = device.group;
+            // devices[did].device.varUpdates = device.varUpdates;
+            // devices[did].device.logs = device.logs;
+            // devices[did].device.lastOnline = device.lastOnline;
+            // devices[did].device.description = device.description;
+            // devices[did].device.alias = device.alias;
+            // devices[did].device.did = device.did;
+            devices[did].device = _.extend(devices[did].device, device.toObject());
+            //console.log(devices[did])
             control.emit('device-connected', devices[did].device);
             
 
             socket.on('device-register-cmd', function (cmd) {
                 // cmd.cmd
                 // check if command already registered
+                console.log("cmd req", cmd)
                 if (!_.contains(devices[did].device.cmds, cmd.cmd)) {
                     control.emit('device-register-cmd', {did: did, cmd: cmd.cmd});
                     devices[did].device.cmds.push(cmd.cmd);
+                    console.log("cmd registered", cmd)
                 }
             });
 
@@ -123,8 +133,10 @@ module.exports = function(http) {
                     {$push: {"varUpdates": updateObj}},
                     {safe: true, upsert: true, new : true},
                     function(err, model) {
+                        if(err) {
+                            console.log(err);
 
-                        console.log(err);
+                        }
                     }
                     );
 
@@ -213,11 +225,12 @@ control.on('connection', function (socket) {
         });
 
 
-    console.log('control connected');
+    console.log('control connected', devices);
     _.forEach(devices, function (obj, did) {
 
         console.log('emitting device connected event', devices[did].device.cmds);
-        control.emit('device-connected', devices[did].device);
+        control.emit('device-connected', _.extend(devices[did].device, {cmds: devices[did].device.cmds}));
+
     });
 });
 
