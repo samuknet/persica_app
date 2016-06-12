@@ -1,9 +1,9 @@
-
-
 from socketIO_client import SocketIO, BaseNamespace
 import time
 import threading 
 import subprocess
+
+IP = 'localhost'
 
 class Namespace(BaseNamespace):
 
@@ -50,7 +50,7 @@ class WsThread(threading.Thread):
 
 
     def run(self):
-        self.socketIO = SocketIO('localhost', 3000, params={'did': self.did})
+        self.socketIO = SocketIO(IP, 3000, params={'did': self.did})
         self.device_namespace = self.socketIO.define(Namespace, '/device')
         self._set_ready() 
         self.socketIO.wait()

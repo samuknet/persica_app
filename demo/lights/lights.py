@@ -1,8 +1,9 @@
 import array
 import standaloneDMX as dmx
-import persica.persica as persica
 import time
 import sys
+sys.path.insert(0, '../')
+import persica.persica as persica
 dids = [sys.argv[1], sys.argv[2], sys.argv[3]]
 
 def redF(i):

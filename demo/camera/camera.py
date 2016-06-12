@@ -1,14 +1,14 @@
 import cv2
 import sys
 import os
-import persica.persica as persica
 import time
-
+sys.path.insert(0, '../')
+import persica.persica as persica
 
 cascPath = './haarcascade_frontalface_alt.xml'
 faceCascade = cv2.CascadeClassifier(cascPath)
-
-app = persica.Persica(30)
+DID_CONST = sys.argv[1]
+app = persica.Persica(DID_CONST)
 
 time.sleep(2)
 
@@ -58,8 +58,8 @@ while True:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     mean = cv2.mean(gray)
     if mean[0] < 40 :
-        os.system("say 'Orange alert, environement too dark.'")
-        app.sendLog(4, 'Orange alert, environement too dark.')
+        os.system("say 'Orange alert, environment too dark.'")
+        app.sendLog(4, 'Orange alert, environment too dark.')
         break   
     faces = faceCascade.detectMultiScale(
         gray,

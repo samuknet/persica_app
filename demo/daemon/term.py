@@ -27,8 +27,11 @@ import signal
 import sys
 import termios
 import tty
+import time
+
 SERVER_ADDR = 'localhost' ## Set to Localhost when developing locally
-DID_CONST = sys.argv[1] ## HARD CODED DEVICE ID OF THIS TERMINAL (FOR NOW)
+DID_CONST = sys.argv[1]
+
 
 # The following escape codes are xterm codes.
 # See http://rtfm.etla.org/xterm/ctlseq.html for more.
@@ -180,8 +183,8 @@ from socketIO_client import SocketIO, BaseNamespace
 import websocket
 import thread
 import time
-reload(sys)  
-sys.setdefaultencoding('utf8')
+# reload(sys)  
+# sys.setdefaultencoding('utf8')
 
 if __name__ == '__main__':
 	
@@ -197,8 +200,8 @@ if __name__ == '__main__':
     term_device = socketIO.define(Namespace, '/term_device')
 		
     def ws_func():
-        
         socketIO.wait()
+
     thread.start_new_thread( ws_func, () )
     i.spawn(sys.argv[2:])
 
